@@ -77,7 +77,7 @@ export default function ImageSelector({
         </div>
       )}
 
-      <div className="input-group my-3" onClick={showOpenFileDialog}>
+      <div className="input-group my-1" onClick={showOpenFileDialog}>
         <div className="input-group-append m-0">
           {/* <div className="d-flex align-items-center">
             {is_edit && (

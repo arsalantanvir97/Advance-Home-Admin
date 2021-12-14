@@ -60,10 +60,10 @@ const App = () => {
         component={ContentManagement}
       />{" "}
       <PrivateRoute exact path="/Doctor" component={Doctor} />{" "}
-      <PrivateRoute exact path="/DoctorRooster" component={DoctorRooster} />{" "}
+      <PrivateRoute exact path="/DoctorRooster/:id" component={DoctorRooster} />{" "}
       <PrivateRoute
         exact
-        path="/DoctorVerification"
+        path="/DoctorVerification/:id"
         component={DoctorVerification}
       />{" "}
       <PrivateRoute
@@ -71,7 +71,7 @@ const App = () => {
         path="/EditContentManagement"
         component={EditContentManagement}
       />{" "}
-      <PrivateRoute exact path="/EditDoctor" component={EditDoctor} />{" "}
+      <PrivateRoute exact path="/EditDoctor/:id" component={EditDoctor} />{" "}
       <PrivateRoute
         exact
         path="/EditLabTEchnician"
@@ -99,9 +99,9 @@ const App = () => {
       <PrivateRoute exact path="/TestDetail" component={TestDetail} />{" "}
       <PrivateRoute exact path="/TestManagement" component={TestManagement} />{" "}
       <PrivateRoute exact path="/User" component={User} />{" "}
-      <PrivateRoute exact path="/ViewDoctor" component={ViewDoctor} />{" "}
+      <PrivateRoute exact path="/ViewDoctor/:id" component={ViewDoctor} />{" "}
       <PrivateRoute exact path="/ViewFeedback" component={ViewFeedback} />{" "}
-      <PrivateRoute exact path="/ViewUser" component={ViewUser} />{" "}
+      <PrivateRoute exact path="/ViewUser/:id" component={ViewUser} />{" "}
     </Router>
   );
 };

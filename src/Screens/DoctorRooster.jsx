@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const DoctorRooster = () => {
     return (
@@ -11,9 +12,9 @@ const DoctorRooster = () => {
           <div className="col-12">
             <div className="row">
               <div className="col-lg-6">
-                <a href="view-doctor.php">
+                <Link to='/Doctor'>
                   <h1 className="ml-1 main-heading"><i className="fas fa-angle-left mr-1" />Doctor Rooster</h1>
-                </a>
+                </Link>
               </div>
             </div>
             <div className="dataTables_wrapper">

@@ -16,7 +16,6 @@ const AddUser = ({ history }) => {
   const [bloodtypee, setbloodtypee] = useState();
   const [phoneNumber, setphoneNumber] = useState();
   const [birthDate, setbirthDate] = useState();
-
   const [image, setimage] = useState();
   const [is_edit, setIsEdit] = useState(true);
   const dispatch = useDispatch();
@@ -48,7 +47,7 @@ const AddUser = ({ history }) => {
           Authorization: `Bearer ${adminInfo.token}`,
         },
       };
-      const res = await axios.post(`${baseURL}/user/register`, body, config);
+      const res = await axios.post(`${baseURL}/user/createUser`, body, config);
       if (res?.status == 201) {
         Swal.fire({
           icon: "success",
@@ -126,6 +125,7 @@ const AddUser = ({ history }) => {
                           selected={birthDate}
                           onChange={(birthDate) => setbirthDate(birthDate)}
                           className="sort-date customdate form-control"
+                          
                         />
                       </div>
                     </div>
@@ -138,7 +138,7 @@ const AddUser = ({ history }) => {
                       <p className="d-inline-block mr-1">
                         <input
                           value={gender}
-                          onClick={() => {
+                          onChange={() => {
                             setgender("Male");
                           }}
                           type="radio"
@@ -154,7 +154,7 @@ const AddUser = ({ history }) => {
                           id="test2"
                           name="radio-group"
                           value={gender}
-                          onClick={() => {
+                          onChange={() => {
                             setgender("Female");
                           }}
                         />
@@ -191,6 +191,7 @@ const AddUser = ({ history }) => {
                     </label>
                     <input
                       type="text"
+                      maxlength="9"
                       className="all-inputt w-100"
                       placeholder="Enter Insurance No"
                       value={insuranceNumber}
