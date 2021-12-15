@@ -38,7 +38,7 @@ const Sidebar = (props) => {
               props?.match?.path == "/LabTechnician" ||
               props?.match?.path == "/Labortaries"
                 ? "nav-item has-sub active open"
-                : "nav-item"
+                : "nav-item "
             }
           >
             <Link to="#">

@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import AddDoctor from "./Screens/AddDoctor";
+import AddLabortary from "./Screens/AddLabortary";
 import AddLabTechnician from "./Screens/AddLabTechnician";
 import AddTest from "./Screens/AddTest";
 import AddUser from "./Screens/AddUser";
@@ -44,6 +45,7 @@ const App = () => {
       <PrivateRoute exact path="/dashboard" component={Dashboard} />{" "}
       <PrivateRoute exact path="/Notification" component={Notification} />{" "}
       <PrivateRoute exact path="/AddDoctor" component={AddDoctor} />{" "}
+      <PrivateRoute exact path="/AddLabortary" component={AddLabortary} />{" "}
       <PrivateRoute
         exact
         path="/AddLabTechnician"
@@ -74,18 +76,22 @@ const App = () => {
       <PrivateRoute exact path="/EditDoctor/:id" component={EditDoctor} />{" "}
       <PrivateRoute
         exact
-        path="/EditLabTEchnician"
+        path="/EditLabTEchnician/:id"
         component={EditLabTEchnician}
       />{" "}
-      <PrivateRoute exact path="/EditLabortary" component={EditLabortary} />{" "}
+      <PrivateRoute exact path="/EditLabortary/:id" component={EditLabortary} />{" "}
       <PrivateRoute exact path="/EditProfile" component={EditProfile} />{" "}
       <PrivateRoute exact path="/EditTest" component={EditTest} />{" "}
       <PrivateRoute exact path="/Feedback" component={Feedback} />{" "}
-      <PrivateRoute exact path="/FeedbackDetail/:id" component={FeedbackDetail} />{" "}
+      <PrivateRoute
+        exact
+        path="/FeedbackDetail/:id"
+        component={FeedbackDetail}
+      />{" "}
       <PrivateRoute exact path="/LabTechnician" component={LabTechnician} />{" "}
       <PrivateRoute
         exact
-        path="/LabTechnicianDetails"
+        path="/LabTechnicianDetails/:id"
         component={LabTechnicianDetails}
       />{" "}
       <PrivateRoute exact path="/Labortaries" component={Labortaries} />{" "}

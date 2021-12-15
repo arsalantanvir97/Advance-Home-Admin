@@ -51,7 +51,7 @@ const User = () => {
   };
 
   const handleChangeStatus = async (id, status) => {
-    console.log('id',id);
+    console.log("id", id);
     try {
       const res = await axios({
         url: `${baseURL}/user/toggle-active/${id}`,
@@ -157,8 +157,8 @@ const User = () => {
                             setPage(1);
                           }}
                         >
-                          <option value={true}>Active</option>
-                          <option value={false}>Inactive</option>
+                          <option value={"Active"}>Active</option>
+                          <option value={"Inactive"}>Inactive</option>
                         </select>
                       </div>
                     </div>
@@ -223,54 +223,68 @@ const User = () => {
                                 </tr>
                               </thead>
                               <tbody>
-                              {users?.docs?.length>0 && users?.docs?.map((user, index) => (
-                                <tr>
-                                  <td>{index+1}</td>
-                                  <td>{user?.username}</td>
-                                  <td>{user?._id}</td>
-                                  <td>{user?.email}</td>
-                                  <td>{ moment
-                                              .utc(user?.createdAt)
-                                              .format("LL")}</td>
-                                  <td>
-                                    <span cclassName={user?.status==true?"active-td":'red'}>{user?.status==true?'Active':'Inactive'}</span>
-                                  </td>
-                                  <td>
-                                    <div className="btn-group ml-1">
-                                      <button
-                                        type="button"
-                                        className="btn dropdown-toggle"
-                                        data-toggle="dropdown"
-                                      >
-                                        <i className="fa fa-ellipsis-v" />
-                                      </button>
-                                      <div className="dropdown-menu">
-                                      <Link to={`/ViewUser/${user?._id}`}
-                                          className="dropdown-item"
-                                      
+                                {users?.docs?.length > 0 &&
+                                  users?.docs?.map((user, index) => (
+                                    <tr>
+                                      <td>{index + 1}</td>
+                                      <td>{user?.username}</td>
+                                      <td>{user?._id}</td>
+                                      <td>{user?.email}</td>
+                                      <td>
+                                        {moment
+                                          .utc(user?.createdAt)
+                                          .format("LL")}
+                                      </td>
+                                      <td>
+                                        <span
+                                          cclassName={
+                                            user?.status == true
+                                              ? "active-td"
+                                              : "red"
+                                          }
                                         >
-                                          View
-                                        </Link>
-                                        <Link onClick={() =>
-                                                    handleChangeStatus(
-                                                      user?._id,
-                                                      !user?.status
-                                                    )
-                                                  }
-                                                  to='#'
-                                          className="dropdown-item"
-                                          data-toggle="modal"
-                                          data-target="#inactivate"
-                                        >
-                                          {!user?.status
-                                                    ? "Active"
-                                                    : "Inactive"}
-                                        </Link>
-                                      </div>
-                                    </div>
-                                  </td>
-                                </tr>
-                              ))}
+                                          {user?.status == true
+                                            ? "Active"
+                                            : "Inactive"}
+                                        </span>
+                                      </td>
+                                      <td>
+                                        <div className="btn-group ml-1">
+                                          <button
+                                            type="button"
+                                            className="btn dropdown-toggle"
+                                            data-toggle="dropdown"
+                                          >
+                                            <i className="fa fa-ellipsis-v" />
+                                          </button>
+                                          <div className="dropdown-menu">
+                                            <Link
+                                              to={`/ViewUser/${user?._id}`}
+                                              className="dropdown-item"
+                                            >
+                                              View
+                                            </Link>
+                                            <Link
+                                              onClick={() =>
+                                                handleChangeStatus(
+                                                  user?._id,
+                                                  !user?.status
+                                                )
+                                              }
+                                              to="#"
+                                              className="dropdown-item"
+                                              data-toggle="modal"
+                                              data-target="#inactivate"
+                                            >
+                                              {!user?.status
+                                                ? "Active"
+                                                : "Inactive"}
+                                            </Link>
+                                          </div>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  ))}
                               </tbody>
                             </table>
                           </div>

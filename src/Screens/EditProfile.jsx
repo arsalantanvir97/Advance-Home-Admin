@@ -5,9 +5,9 @@ import ImageSelector from "../components/ImageSelector";
 import { updateAdminInfoAction } from "../actions/adminActions";
 
 const EditProfile = () => {
-  const [firstName, setfirstName] = useState();
-  const [lastName, setlastName] = useState();
-  const [image, setimage] = useState();
+  const [firstName, setfirstName] = useState('');
+  const [lastName, setlastName] = useState('');
+  const [image, setimage] = useState('');
   const [is_edit, setIsEdit] = useState(false);
   const dispatch = useDispatch();
 

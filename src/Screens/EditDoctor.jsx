@@ -7,16 +7,16 @@ import ImageSelector from "../components/ImageSelector";
 import { baseURL } from "../utils/api";
 
 const EditDoctor = ({ match, history }) => {
-  const [fullname, setfullname] = useState();
-  const [qualification, setqualification] = useState();
-  const [specialization, setspecialization] = useState();
-  const [email, setemail] = useState();
-  const [address, setaddress] = useState();
-  const [experience, setexperience] = useState();
-  const [phoneNumber, setphoneNumber] = useState();
-  const [password, setpassword] = useState();
+  const [fullname, setfullname] = useState('');
+  const [qualification, setqualification] = useState('');
+  const [specialization, setspecialization] = useState('');
+  const [email, setemail] = useState('');
+  const [address, setaddress] = useState('');
+  const [experience, setexperience] = useState('');
+  const [phoneNumber, setphoneNumber] = useState('');
+  const [password, setpassword] = useState('');
 
-  const [image, setimage] = useState();
+  const [image, setimage] = useState('');
   const [is_edit, setIsEdit] = useState(false);
   const dispatch = useDispatch();
 

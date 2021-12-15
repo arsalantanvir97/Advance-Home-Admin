@@ -1,8 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import ImageSelector from "../components/ImageSelector";
-import DatePicker from "react-datepicker";
 import axios from "axios";
 import { baseURL } from "../utils/api";
 import Swal from "sweetalert2";
