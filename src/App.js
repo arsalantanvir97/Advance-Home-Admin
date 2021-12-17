@@ -54,7 +54,7 @@ const App = () => {
       <PrivateRoute exact path="/AddTest" component={AddTest} />{" "}
       <PrivateRoute exact path="/AddUser" component={AddUser} />{" "}
       <PrivateRoute exact path="/Booking" component={Booking} />{" "}
-      <PrivateRoute exact path="/BookingDetail" component={BookingDetail} />{" "}
+      <PrivateRoute exact path="/BookingDetail/:id" component={BookingDetail} />{" "}
       <PrivateRoute exact path="/ChangePassword" component={ChangePassword} />{" "}
       <PrivateRoute
         exact
@@ -81,7 +81,7 @@ const App = () => {
       />{" "}
       <PrivateRoute exact path="/EditLabortary/:id" component={EditLabortary} />{" "}
       <PrivateRoute exact path="/EditProfile" component={EditProfile} />{" "}
-      <PrivateRoute exact path="/EditTest" component={EditTest} />{" "}
+      <PrivateRoute exact path="/EditTest/:id" component={EditTest} />{" "}
       <PrivateRoute exact path="/Feedback" component={Feedback} />{" "}
       <PrivateRoute
         exact
