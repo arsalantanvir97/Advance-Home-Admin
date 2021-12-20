@@ -140,7 +140,15 @@ const Booking = () => {
                             setPage(1);
                           }}
                         >
-                          <option value>Select</option>
+                          <option value={"Pending"}>Pending</option>
+                          <option value={"Approved"}>Approved</option>
+                          <option value={"Rejected"}>Rejected</option>
+                          <option value={"Completed"}>Completed</option>
+                          <option value={"Delivered to Courier"}>
+                            Delivered to Courier
+                          </option>
+                          <option value={"On Way"}>On Way</option>
+                          <option value={"Reached"}>Reached</option>
                         </select>
                       </div>
                     </div>

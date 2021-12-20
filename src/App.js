@@ -100,7 +100,7 @@ const App = () => {
         path="/LabortaryDetails"
         component={LabortaryDetails}
       />{" "}
-      <PrivateRoute exact path="/PaymentDetail" component={PaymentDetail} />{" "}
+      <PrivateRoute exact path="/PaymentDetail/:id" component={PaymentDetail} />{" "}
       <PrivateRoute exact path="/Profile" component={Profile} />{" "}
       <PrivateRoute exact path="/TestDetail" component={TestDetail} />{" "}
       <PrivateRoute exact path="/TestManagement" component={TestManagement} />{" "}
