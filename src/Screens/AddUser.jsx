@@ -24,10 +24,19 @@ const AddUser = ({ history }) => {
   const { adminInfo } = adminLogin;
 
   const addUserHandler = async () => {
-      let bloodtype= bloodtypee== 'A+' ? {type:'A',sign:'+'} : bloodtypee== 'AB-' ? {type:'AB',sign:'-'}: bloodtypee== '0+' ? {type:'0',sign:'+'}:bloodtypee== '0-' ?  {type:'0',sign:'-'}:null
-    
-     console.log('bloodtype',bloodtype);
-    
+    let bloodtype =
+      bloodtypee == "A+"
+        ? { type: "A", sign: "+" }
+        : bloodtypee == "AB-"
+        ? { type: "AB", sign: "-" }
+        : bloodtypee == "0+"
+        ? { type: "0", sign: "+" }
+        : bloodtypee == "0-"
+        ? { type: "0", sign: "-" }
+        : null;
+
+    console.log("bloodtype", bloodtype);
+
     try {
       const formData = new FormData();
       formData.append("user_image", image);
@@ -125,7 +134,6 @@ const AddUser = ({ history }) => {
                           selected={birthDate}
                           onChange={(birthDate) => setbirthDate(birthDate)}
                           className="sort-date customdate form-control"
-                          
                         />
                       </div>
                     </div>
@@ -207,9 +215,9 @@ const AddUser = ({ history }) => {
                       Phone*
                     </label>
                     <input
-                  
                       value={phoneNumber}
-                      type="tel" maxlength="11"
+                      type="tel"
+                      maxlength="11"
                       onChange={(e) => {
                         setphoneNumber(e.target.value);
                       }}

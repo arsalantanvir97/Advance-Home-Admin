@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 const Sidebar = (props) => {
+  const [openusersidebar, setopenusersidebar] = useState(false);
   console.log("props?.match?.path", props?.match?.path);
   return (
     <div
@@ -38,10 +39,15 @@ const Sidebar = (props) => {
               props?.match?.path == "/LabTechnician" ||
               props?.match?.path == "/Labortaries"
                 ? "nav-item has-sub active open"
-                : "nav-item "
+                : `nav-item has-sub ${openusersidebar && "open"}`
             }
           >
-            <Link to="#">
+            <Link
+              to="#"
+              onClick={() => {
+                setopenusersidebar(!openusersidebar);
+              }}
+            >
               <img src="images/user.png" className="mr-1" alt="" />
               <span className="menu-title" data-i18n>
                 User Management
