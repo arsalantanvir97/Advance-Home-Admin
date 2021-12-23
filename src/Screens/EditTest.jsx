@@ -232,6 +232,7 @@ const EditTest = ({ match, history }) => {
                   </div>
                   <div className="row">
                     <div className="col-12">
+                      <div style={{height:'30px'}}></div>
                       <Link
                         to="#"
                         className="general-btn mt-3 px-3"

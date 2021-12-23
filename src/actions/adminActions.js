@@ -77,7 +77,7 @@ export const adminverfyadnresetpasword =
       // const body = { email, password };
 
       const res = await axios.post(
-        `${baseURL}/auth/verifyAndREsetPassword`,
+        `${baseURL}/admin/verifyAndREsetPassword`,
         { existingpassword, newpassword, confirm_password, email },
         config
       );
@@ -158,7 +158,7 @@ export const updateAdminInfoAction = (body) => async (dispatch, getState) => {
     // dispatch({
     //   type: ADMIN_LOGIN_REQUEST,
     // })
-    console.log("updateAdminInfoAction");
+    console.log("updateAdminInfoActiondsdsfdsfdf",body);
     const {
       adminLogin: { adminInfo },
     } = getState();

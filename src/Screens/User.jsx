@@ -157,8 +157,8 @@ const User = () => {
                             setPage(1);
                           }}
                         >
-                          <option value={"Active"}>Active</option>
-                          <option value={"Inactive"}>Inactive</option>
+                          <option value={true}>Active</option>
+                          <option value={false}>Inactive</option>
                         </select>
                       </div>
                     </div>

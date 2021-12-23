@@ -452,8 +452,8 @@ const Doctor = () => {
                                   }}
                                 >
                                   <option value={"Pending"}>Pending</option>
-                                  <option value={"Verify"}>Verify</option>
-                                  <option value={"Reject"}>Reject</option>
+                                  <option value={"Accepted"}>Accepted</option>
+                                  <option value={"Rejected"}>Rejected</option>
                                 </select>
                               </div>
                             </div>

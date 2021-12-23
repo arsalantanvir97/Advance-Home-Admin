@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import axios from "axios";
 import { baseURL } from "../utils/api";
 import Swal from "sweetalert2";
+import DatePick from "../components/DatePick";
 
 const AddUser = ({ history }) => {
   const [username, setusername] = useState();
@@ -22,7 +23,9 @@ const AddUser = ({ history }) => {
 
   const adminLogin = useSelector((state) => state.adminLogin);
   const { adminInfo } = adminLogin;
-
+  useEffect(() => {
+    console.log(birthDate, "birthDate");
+  }, [birthDate]);
   const addUserHandler = async () => {
     let bloodtype =
       bloodtypee == "A+"
@@ -130,10 +133,12 @@ const AddUser = ({ history }) => {
                         role="wrapper"
                         className="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group"
                       >
-                        <DatePicker
-                          selected={birthDate}
-                          onChange={(birthDate) => setbirthDate(birthDate)}
-                          className="sort-date customdate form-control"
+                        <DatePick
+                          // selected={birthDate}
+
+                          // onChange={(birthDate) => setbirthDate(birthDate)}
+                          setbirthDate={setbirthDate}
+                          birthDate={birthDate}
                         />
                       </div>
                     </div>
@@ -216,7 +221,7 @@ const AddUser = ({ history }) => {
                     </label>
                     <input
                       value={phoneNumber}
-                      type="tel"
+                      type="number"
                       maxlength="11"
                       onChange={(e) => {
                         setphoneNumber(e.target.value);

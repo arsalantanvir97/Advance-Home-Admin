@@ -228,7 +228,7 @@ const EditDoctor = ({ match, history }) => {
                       </label>
                       {is_edit ? (
                         <input
-                          type="tel"
+                          type="number"
                           maxlength="11"
                           className="all-inputt w-100"
                           placeholder="Enter Phone"

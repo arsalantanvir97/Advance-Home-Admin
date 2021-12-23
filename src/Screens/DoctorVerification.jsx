@@ -74,10 +74,10 @@ const DoctorVerification = ({ match, history }) => {
                     </Link>
                   </div>
                   <div className="col-lg-6 text-right my-auto">
-                    <a href="#_" className="my-label d-inline-block">
+                    <Link to="#" className="my-label d-inline-block">
                       Status:{" "}
                       <span className="inactive-td">{doctor?.status}</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="row mt-2">
@@ -143,7 +143,7 @@ const DoctorVerification = ({ match, history }) => {
                               <Link
                                 to="#_"
                                 onClick={() => {
-                                  toggleStatusHandler("Verify");
+                                  toggleStatusHandler("Accepted");
                                 }}
                                 className="general-btn-2 d-inline-block px-3"
                                 data-toggle="modal"
@@ -154,7 +154,7 @@ const DoctorVerification = ({ match, history }) => {
                               <Link
                                 to="#_"
                                 onClick={() => {
-                                  toggleStatusHandler("Reject");
+                                  toggleStatusHandler("Rejected");
                                 }}
                                 className="general-btn d-inline-block px-3"
                                 data-toggle="modal"

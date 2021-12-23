@@ -107,7 +107,7 @@ const EditLabortary = ({ match, history }) => {
                     <h3 className="mr-no">Lab.Id: {match?.params?.id}</h3>
                   </div>
                 </div>
-                <form action="laboratories.php">
+                <form >
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
@@ -191,7 +191,7 @@ const EditLabortary = ({ match, history }) => {
                       </label>
                       {is_edit ? (
                         <input
-                          type="tel"
+                          type="number"
                           maxlength="11"
                           className="all-inputt w-100"
                           placeholder="Enter Phone"

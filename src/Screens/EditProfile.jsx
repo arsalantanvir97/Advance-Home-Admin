@@ -5,9 +5,9 @@ import ImageSelector from "../components/ImageSelector";
 import { updateAdminInfoAction } from "../actions/adminActions";
 
 const EditProfile = () => {
-  const [firstName, setfirstName] = useState('');
-  const [lastName, setlastName] = useState('');
-  const [image, setimage] = useState('');
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setlastName] = useState("");
+  const [image, setimage] = useState("");
   const [is_edit, setIsEdit] = useState(false);
   const dispatch = useDispatch();
 
@@ -28,11 +28,13 @@ const EditProfile = () => {
 
   const updateProfileData = async (e) => {
     const formData = new FormData();
+
     formData.append("user_image", image);
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
-    const body = formData;
-    await dispatch(updateAdminInfoAction(body));
+    formData.append("email", adminInfo?.email);
+
+    await dispatch(updateAdminInfoAction(formData));
     setIsEdit(false);
   };
 
@@ -57,19 +59,15 @@ const EditProfile = () => {
                 <div className="row mt-2">
                   <div className="col-12">
                     <div className="main-over-box">
-                      {/* <span className="position-relative">
-                            <img src="images/profile.png" alt="" className="user-proffile" />
-                            <label htmlFor="picture" className="d-block">
-                              <img src="images/uplod-profile-img.png" alt="" className="pro-upload" />
-                            </label>
-                          </span> */}
                       <ImageSelector
                         setImage={setimage}
                         image={image}
                         is_edit={is_edit}
                       />
                     </div>
-
+                    <Link to="/ChangePassword">
+                      <a href="#">Change Password</a>
+                    </Link>
                     <div className="row mt-3">
                       <div className="col-12">
                         <div className="row">

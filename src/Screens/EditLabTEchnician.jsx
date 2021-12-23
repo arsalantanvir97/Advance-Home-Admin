@@ -7,18 +7,18 @@ import ImageSelector from "../components/ImageSelector";
 import { baseURL } from "../utils/api";
 
 const EditLabTEchnician = ({ match, history }) => {
-  const [fullname, setfullname] = useState('');
-  const [qualification, setqualification] = useState('');
-  const [specialization, setspecialization] = useState('');
-  const [email, setemail] = useState('');
-  const [color, setcolor] = useState('');
-  const [vehicle, setvehicle] = useState('');
-  const [phoneNumber, setphoneNumber] = useState('');
-  const [password, setpassword] = useState('');
+  const [fullname, setfullname] = useState("");
+  const [qualification, setqualification] = useState("");
+  const [specialization, setspecialization] = useState("");
+  const [email, setemail] = useState("");
+  const [color, setcolor] = useState("");
+  const [vehicle, setvehicle] = useState("");
+  const [phoneNumber, setphoneNumber] = useState("");
+  const [password, setpassword] = useState("");
   const [labtechdata, setlabtechdata] = useState();
-  const [modal, setmodal] = useState('');
+  const [modal, setmodal] = useState("");
 
-  const [image, setimage] = useState('');
+  const [image, setimage] = useState("");
   const [is_edit, setIsEdit] = useState(false);
   const dispatch = useDispatch();
 
@@ -85,7 +85,7 @@ const EditLabTEchnician = ({ match, history }) => {
         body,
         config
       );
-      console.log('editres',res);
+      console.log("editres", res);
       if (res?.status == 201) {
         Swal.fire({
           icon: "success",
@@ -222,7 +222,7 @@ const EditLabTEchnician = ({ match, history }) => {
                       </label>
                       {is_edit ? (
                         <input
-                          type="tel"
+                          type="number"
                           maxlength="11"
                           className="all-inputt w-100"
                           placeholder="Enter Phone"
@@ -314,6 +314,7 @@ const EditLabTEchnician = ({ match, history }) => {
                   </div>
                   <div className="row">
                     <div className="col-12">
+                      <div style={{ height: "30px" }}></div>
                       <Link
                         to="#"
                         className="general-btn mt-3 px-3"

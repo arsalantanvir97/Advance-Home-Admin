@@ -161,12 +161,12 @@ const PaymentDetail = ({ match, history }) => {
                         </div>
                         <div className="row">
                           <div className="col-12 mt-2">
-                            <a
-                              href="#_"
+                            <Link
+                              to="#_"
                               className="general-btn d-inline-block px-5"
                             >
                               Track
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>

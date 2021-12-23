@@ -3,14 +3,19 @@ import { baseURL, imageURL } from "../utils/api";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+let pushinginarray = [];
 
 const ContentManagement = () => {
   const [contentHome, setcontentHome] = useState([]);
+  const [faqs, setfaqs] = useState([]);
+  const [showanswerindex, setshowanswerindex] = useState();
+  const [showanswer, setshowanswer] = useState(false);
 
   const adminLogin = useSelector((state) => state.adminLogin);
   const { adminInfo } = adminLogin;
   useEffect(() => {
     handleGetContentHome();
+    getfaqsHandler();
   }, []);
 
   const handleGetContentHome = async () => {
@@ -30,7 +35,35 @@ const ContentManagement = () => {
       console.log("err", err);
     }
   };
-
+  const getfaqsHandler = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${adminInfo.token}`,
+        },
+      };
+      const res = await axios.get(`${baseURL}/faqs/getallfaqs`, config);
+      setfaqs(res?.data?.faqs);
+      console.log("faqsres", res);
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
+  const setshowanswerindexhandler = async (index) => {
+    console.log("index", index);
+    if (showanswerindex?.includes(index)) {
+      console.log("includesblock", pushinginarray);
+      pushinginarray = pushinginarray?.filter((indexx) => indexx !== index);
+      console.log("includesblockpushinginarray", pushinginarray);
+      setshowanswerindex(pushinginarray);
+      // setdaysArray(daysArray?.filter((days) => days !== day))
+    } else {
+      pushinginarray = [...pushinginarray, index];
+      setshowanswerindex([...pushinginarray]);
+      // daysArray?.push(day + '');
+      console.log("showanswerindex", showanswerindex);
+    }
+  };
   return (
     <div className="app-content content dashboard">
       <div className="content-wrapper content-wrapper-2">
@@ -140,42 +173,34 @@ const ContentManagement = () => {
                         role="tabpanel"
                         aria-labelledby="pills-faqs-tab"
                       >
-                        <button className="accordion">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing?
-                        </button>
-                        <div className="panel">
-                          <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis
-                            nostrud exercitation ullamco laboris nisi ut aliquip
-                            ex ea commodo consequat.
-                          </p>
-                        </div>
-                        <button className="accordion">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing?
-                        </button>
-                        <div className="panel">
-                          <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis
-                            nostrud exercitation ullamco laboris nisi ut aliquip
-                            ex ea commodo consequat.
-                          </p>
-                        </div>
-                        <button className="accordion">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing?
-                        </button>
-                        <div className="panel">
-                          <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis
-                            nostrud exercitation ullamco laboris nisi ut aliquip
-                            ex ea commodo consequat.
-                          </p>
-                        </div>
+                        {faqs?.length > 0 &&
+                          faqs?.map((faq, index) => (
+                            <>
+                              <button
+                                className={
+                                  showanswerindex?.includes(index)
+                                    ? "accordion active"
+                                    : "accordion"
+                                }
+                                onClick={() => {
+                                  setshowanswer(!showanswer);
+                                  setshowanswerindexhandler(index);
+                                }}
+                              >
+                                {faq?.question}
+                              </button>
+                              <div
+                                className="panel"
+                                style={{
+                                  maxHeight: showanswerindex?.includes(index)
+                                    ? "60px"
+                                    : null,
+                                }}
+                              >
+                                <p>{faq?.answer}</p>
+                              </div>
+                            </>
+                          ))}
                       </div>
                     </div>
                   </div>
