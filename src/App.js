@@ -40,7 +40,7 @@ import PrivateRoute from "./components/PrivateRoute";
 
 const App = () => {
   return (
-    <Router>
+    <Router basename="/advancehomeadmin/admin">
       <Route path="/" component={Login} exact />
       <PrivateRoute exact path="/dashboard" component={Dashboard} />{" "}
       <PrivateRoute exact path="/Notification" component={Notification} />{" "}

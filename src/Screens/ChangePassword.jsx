@@ -29,9 +29,9 @@ const ChangePassword = ({history}) => {
                 <div className="col-12 white-div px-3">
                   <div className="row">
                     <div className="col-lg-6">
-                      <a href="profile.php">
+                      <Link to='/EditProfile'>
                         <h1 className="ml-1 main-heading"><i className="fas fa-chevron-left mr-1" />Change Password</h1>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="row mt-2">
