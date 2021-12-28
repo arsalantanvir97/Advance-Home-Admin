@@ -15,8 +15,10 @@ const DoctorRooster = ({ match }) => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [status, setStatus] = useState("");
-  const [test, settest] = useState("");
+  const [schedule, setschedule] = useState([]);
   const [rerender, setrerender] = useState(true);
+  const adminLogin = useSelector((state) => state.adminLogin);
+  const { adminInfo } = adminLogin;
 
   useEffect(() => {
     getDoctorTests();
@@ -27,7 +29,7 @@ const DoctorRooster = ({ match }) => {
     console.log(id, "id");
     try {
       const res = await axios({
-        url: `${baseURL}/test/doctortestlogs`,
+        url: `${baseURL}/schedule/schedulelogs`,
         method: "GET",
         params: {
           id,
@@ -38,10 +40,13 @@ const DoctorRooster = ({ match }) => {
           to,
           status,
         },
+        headers: {
+          Authorization: `Bearer ${adminInfo.token}`,
+        },
       });
 
       console.log("res", res);
-      settest(res.data?.test);
+      setschedule(res.data?.schedule);
     } catch (err) {
       console.log("err", err);
     }
@@ -50,8 +55,11 @@ const DoctorRooster = ({ match }) => {
   const deleteTestHandler = async (id) => {
     try {
       const res = await axios({
-        url: `${baseURL}/test/deleteTest/${id}`,
+        url: `${baseURL}/schedule/deleteSchedule/${id}`,
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${adminInfo.token}`,
+        },
       });
       Swal.fire({
         icon: "success",
@@ -180,18 +188,18 @@ const DoctorRooster = ({ match }) => {
                                 </tr>
                               </thead>
                               <tbody>
-                                {test?.docs?.length > 0 &&
-                                  test?.docs?.map((testt, index) => (
+                                {schedule?.docs?.length > 0 &&
+                                  schedule?.docs?.map((sch, index) => (
                                     <tr>
                                       <td>{index + 1}</td>
-                                      <td>{testt?.doctorid?.fullname}</td>
-                                      <td>{testt?.pdfname}</td>
+                                      <td>{sch?.doctorid?.fullname}</td>
+                                      <td>{sch?.pdfname}</td>
                                       <td>
                                         <Link
                                           to="#"
                                           onClick={() =>
                                             window.open(
-                                              `${baseURL}/download/${testt?.pdfdocs}`,
+                                              `${baseURL}/download/${sch?.pdfdocs}`,
                                               "_blank"
                                             )
                                           }
@@ -206,7 +214,7 @@ const DoctorRooster = ({ match }) => {
                                       </td>
                                       <td>
                                         {moment
-                                          .utc(testt?.createdAt)
+                                          .utc(sch?.createdAt)
                                           .format("LL")}
                                       </td>
                                       <td>
@@ -223,7 +231,7 @@ const DoctorRooster = ({ match }) => {
                                               className="dropdown-item"
                                               onClick={() =>
                                                 window.open(
-                                                  `${baseURL}/download/${testt?.pdfdocs}`,
+                                                  `${baseURL}/download/${sch?.pdfdocs}`,
                                                   "_blank"
                                                 )
                                               }
@@ -239,7 +247,7 @@ const DoctorRooster = ({ match }) => {
                                               data-target="#delete"
                                               data-toggle="modal"
                                               onClick={() => {
-                                                deleteTestHandler(testt?._id);
+                                                deleteTestHandler(sch?._id);
                                               }}
                                             >
                                               Delete
@@ -253,14 +261,14 @@ const DoctorRooster = ({ match }) => {
                             </table>
                           </div>
                         </div>
-                        {test?.docs?.length > 0 && (
+                        {schedule?.docs?.length > 0 && (
                           <Pagination
-                            totalDocs={test?.totalDocs}
-                            totalPages={test?.totalPages}
-                            currentPage={test?.page}
+                            totalDocs={schedule?.totalDocs}
+                            totalPages={schedule?.totalPages}
+                            currentPage={schedule?.page}
                             setPage={setPage}
-                            hasNextPage={test?.hasNextPage}
-                            hasPrevPage={test?.hasPrevPage}
+                            hasNextPage={schedule?.hasNextPage}
+                            hasPrevPage={schedule?.hasPrevPage}
                           />
                         )}
                       </div>

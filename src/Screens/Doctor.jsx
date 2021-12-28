@@ -537,7 +537,11 @@ const Doctor = () => {
                                                     .format("LL")}
                                                 </td>
                                                 <td>
-                                                  <span className="inactive-td">
+                                                  <span   className={
+                                                    doct?.status == "Accepted"
+                                                      ? "active-td"
+                                                      : "inactive-td"
+                                                  }>
                                                     {doct?.status}
                                                   </span>
                                                 </td>

@@ -90,7 +90,7 @@ const Sidebar = (props) => {
               </span>
             </Link>
           </li>
-          {/* <li
+          <li
             className={
               props?.match?.path == "/TestManagement"
                 ? "nav-item active "
@@ -129,7 +129,7 @@ const Sidebar = (props) => {
                 Feedbacks
               </span>
             </Link>
-          </li> */}
+          </li>
         </ul>
         <div
           className="ps-scrollbar-x-rail"

@@ -98,8 +98,20 @@ const Feedback = () => {
                       </div>
                       <div className="col-xl-6 text-right mt-2">
                         <label className>Filter by:</label>
-                        <select name id className="general-select w-50">
-                          <option value>Select</option>
+                        <select
+                          name
+                          id
+                          className="general-select w-50"
+                          value={status}
+                          onChange={(e) => {
+                            setStatus(e.target.value);
+                          }}
+                        >
+                          <option value={"User"}>User</option>
+                          <option value={"Doctor"}>Doctor</option>
+                          <option value={"Lab Technician"}>
+                            Lab Technician
+                          </option>
                         </select>
                       </div>
                     </div>
@@ -175,7 +187,7 @@ const Feedback = () => {
                                             .utc(feed?.createdAt)
                                             .format("LL")}
                                         </td>
-                                        <td>User</td>
+                                        <td>{feed?.type}</td>
                                         <td>
                                           <div className="btn-group ml-1">
                                             <button
