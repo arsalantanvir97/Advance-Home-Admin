@@ -142,7 +142,7 @@ const BookingDetail = ({ match, history }) => {
                         <span className="pending-td">{booking?.status}</span>
                       </a>
                       <h2 className="my-label my-1">Test.Id: {booking?._id}</h2>
-                      <Link 
+                      <Link
                         to={`/PaymentDetail/${booking?._id}`}
                         className="my-label d-inline-block"
                       >
@@ -999,6 +999,230 @@ const BookingDetail = ({ match, history }) => {
                           </div>
                         </div>
                       </div>
+                      <div className="row mt-2">
+                        <div className="col-12">
+                          <div className="row">
+                            <div className="col-12">
+                              <h1 className="ml-1 main-heading">
+                                Test Details
+                              </h1>
+                            </div>
+                            <div className="col-xl-6">
+                              <div className="row">
+                                <div className="col-lg-6">
+                                  <label htmlFor className="my-label">
+                                    Test Name:
+                                  </label>
+                                </div>
+                                <div className="col-lg-6">
+                                  <p className="label-value">
+                                    {" "}
+                                    {booking?.testTypeId?.title}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="row">
+                                <div className="col-lg-6">
+                                  <label htmlFor className="my-label">
+                                    Date:
+                                  </label>
+                                </div>
+                                <div className="col-lg-6">
+                                  <p className="label-value">
+                                    {moment.utc(booking?.date).format("LL")}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="row">
+                                <div className="col-lg-6">
+                                  <label htmlFor className="my-label">
+                                    Time:
+                                  </label>
+                                </div>
+                                <div className="col-lg-6">
+                                  <p className="label-value">{booking?.time}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="row mt-2">
+                        <div className="col-12">
+                          <div className="row">
+                            <div className="col-12">
+                              <h1 className="ml-1 main-heading">
+                                Laboratory Details
+                              </h1>
+                            </div>
+                            <div className="col-xl-6">
+                              <div className="row">
+                                <div className="col-lg-6">
+                                  <label htmlFor className="my-label">
+                                    Name:
+                                  </label>
+                                </div>
+                                <div className="col-lg-6">
+                                  <p className="label-value">
+                                    {" "}
+                                    {booking?.resultid?.performedBy}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="row mt-2">
+                        <div className="col-12">
+                          <div className="row">
+                            <div className="col-12">
+                              <h1 className="ml-1 main-heading">
+                                Courier Details
+                              </h1>
+                            </div>
+                            <div className="col-xl-6">
+                              <div className="row">
+                                <div className="col-lg-6">
+                                  <label htmlFor className="my-label">
+                                    Name:
+                                  </label>
+                                </div>
+                                <div className="col-lg-6">
+                                  <p className="label-value">
+                                    {booking?.courierDetails?.courierName}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="row">
+                                <div className="col-lg-6">
+                                  <label htmlFor className="my-label">
+                                    Tracking Id:
+                                  </label>
+                                </div>
+                                <div className="col-lg-6">
+                                  <p className="label-value">
+                                    {booking?.courierDetails?.trackingId}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  ) : booking?.status == "Recieved by Lab" ? (
+                    <>
+                      <div className="row mt-2">
+                        <div className="col-12">
+                          <div className="row">
+                            <div className="col-xl-6">
+                              <div className="row">
+                                <div className="col-lg-6">
+                                  <label htmlFor className="my-label">
+                                    Job ID:
+                                  </label>
+                                </div>
+                                <div className="col-lg-6">
+                                  <p className="label-value">
+                                    {booking?.jobid}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="row">
+                                <div className="col-lg-6">
+                                  <label htmlFor className="my-label">
+                                    Date Assigned:
+                                  </label>
+                                </div>
+                                <div className="col-lg-6">
+                                  <p className="label-value">
+                                    {" "}
+                                    {moment
+                                      .utc(booking?.dateassigned)
+                                      .format("LL")}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-12 mt-2">
+                              <h1 className="ml-1 main-heading">
+                                User Details
+                              </h1>
+                            </div>
+                            <div className="col-xl-6">
+                              <div className="row">
+                                <div className="col-lg-6">
+                                  <label htmlFor className="my-label">
+                                    Full Name:
+                                  </label>
+                                </div>
+                                <div className="col-lg-6">
+                                  <p className="label-value">
+                                    {" "}
+                                    {booking?.userid?.username}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="row">
+                                <div className="col-lg-6">
+                                  <label htmlFor className="my-label">
+                                    Birth Date:
+                                  </label>
+                                </div>
+                                <div className="col-lg-6">
+                                  <p className="label-value">
+                                    {" "}
+                                    {moment
+                                      .utc(booking?.userid?.birthDate)
+                                      .format("LL")}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="row">
+                                <div className="col-lg-6">
+                                  <label htmlFor className="my-label">
+                                    Gender:
+                                  </label>
+                                </div>
+                                <div className="col-lg-6">
+                                  <p className="label-value">
+                                    {" "}
+                                    {booking?.userid?.gender}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="row">
+                                <div className="col-lg-6">
+                                  <label htmlFor className="my-label">
+                                    Phone No
+                                  </label>
+                                </div>
+                                <div className="col-lg-6">
+                                  <p className="label-value">
+                                    {" "}
+                                    {booking?.userid?.phoneNumber}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="row">
+                                <div className="col-lg-6">
+                                  <label htmlFor className="my-label">
+                                    Home Address:
+                                  </label>
+                                </div>
+                                <div className="col-lg-6">
+                                  <p className="label-value">
+                                    {" "}
+                                    {booking?.userid?.address}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
                       <div className="row mt-2">
                         <div className="col-12">
                           <div className="row">

@@ -133,16 +133,6 @@ export const adminResetPasswordAction =
         localStorage.setItem("adminInfo", JSON.stringify(res?.data));
         document.location.href = "/dashboard";
       }
-      // else if(res?.status==201){
-      //   Toasty('error',`Invalid Email or Password`);
-      //   dispatch({
-      //     type: ADMIN_LOGIN_FAIL,
-      //     payload:
-      //     res?.data?.message
-      //   })
-      //   document.location.href = '/'
-
-      // }
     } catch (error) {
       console.log("reseterror", error?.response?.data?.message);
       Toasty("error", error?.response?.data?.message);
@@ -158,7 +148,7 @@ export const updateAdminInfoAction = (body) => async (dispatch, getState) => {
     // dispatch({
     //   type: ADMIN_LOGIN_REQUEST,
     // })
-    console.log("updateAdminInfoActiondsdsfdsfdf",body);
+    console.log("updateAdminInfoActiondsdsfdsfdf", body);
     const {
       adminLogin: { adminInfo },
     } = getState();
@@ -178,17 +168,14 @@ export const updateAdminInfoAction = (body) => async (dispatch, getState) => {
       });
 
       localStorage.setItem("adminInfo", JSON.stringify(res?.data));
+      Swal.fire({
+        icon: "success",
+        title: "",
+        text: "Profile updated successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
-    // else if(res?.status==201){
-    //   Toasty('error',`Invalid Email or Password`);
-    //   dispatch({
-    //     type: ADMIN_LOGIN_FAIL,
-    //     payload:
-    //     res?.data?.message
-    //   })
-    //   document.location.href = '/'
-
-    // }
   } catch (error) {
     console.log("error", error);
     dispatch({
@@ -198,83 +185,9 @@ export const updateAdminInfoAction = (body) => async (dispatch, getState) => {
   }
 };
 
-// export const gettingallNotif =
-// () => async (dispatch) => {
-//   try {
-//     // dispatch({
-//     //   type: ADMIN_LOGIN_REQUEST,
-//     // })
-//     console.log("getallNotification");
-
-//     const res = await axios({
-//           url: `${baseURL}/notification/getallNotification`,
-//           method: "GET",
-//         });
-//     console.log("res", res);
-//     if (res?.status == 201) {
-//       dispatch({
-//         type: NOTIFICATION_SUCCESS,
-//         payload: res?.data?.getAllNotification,
-//       });
-
-//       // localStorage.setItem("", JSON.stringify(res?.data));
-//     }
-//     // else if(res?.status==201){
-//     //   Toasty('error',`Invalid Email or Password`);
-//     //   dispatch({
-//     //     type: ADMIN_LOGIN_FAIL,
-//     //     payload:
-//     //     res?.data?.message
-//     //   })
-//     //   document.location.href = '/'
-
-//     // }
-//   } catch (error) {
-//     dispatch({
-//       type: ADMIN_LOGIN_FAIL,
-//       payload: error,
-//     });
-//   }
-// };
-
 export const logout = () => (dispatch) => {
   localStorage.removeItem("adminInfo");
   dispatch({ type: ADMIN_LOGOUT });
 
   window.location.reload();
 };
-
-//   export const adminFogotPasswordAction = (email) => async (dispatch) => {
-//     try {
-//       // dispatch({
-//       //   type: ADMIN_LOGIN_REQUEST,
-//       // })
-//   console.log('adminFogotPasswordAction')
-
-//       const body = { email };
-
-//       const res = await api.post("/Password", body);
-
-// console.log('res',res)
-// if(res?.status==200){
-//       dispatch({
-//         type: ADMIN_LOGIN_SUCCESS,
-//         payload: res?.data,
-//       })
-
-//       localStorage.setItem('adminInfo', JSON.stringify(res?.data))}
-//       else{
-//         dispatch({
-//           type: ADMIN_LOGIN_FAIL,
-//           payload:
-//           res?.data?.message
-//         })
-//       }
-//     } catch (error) {
-//       dispatch({
-//         type: ADMIN_LOGIN_FAIL,
-//         payload:
-//           error
-//       })
-//     }
-//   }
