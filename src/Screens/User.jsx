@@ -227,7 +227,9 @@ const User = () => {
                                   users?.docs?.map((user, index) => (
                                     <tr>
                                       <td>{index + 1}</td>
-                                      <td>{user?.username}</td>
+                                      <td>{user?.firstname + ' ' + user?.lastname}</td>
+                                      {/* <td>{user?.lastame}</td> */}
+
                                       <td>{user?._id}</td>
                                       <td>{user?.email}</td>
                                       <td>

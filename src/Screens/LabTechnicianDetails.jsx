@@ -18,8 +18,8 @@ const LabTechnicianDetails = ({ match, history }) => {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       };
       const res = await axios.post(
         `${baseURL}/LabTechnicianRoutes/trackingLabTechnician`,
@@ -106,7 +106,9 @@ const LabTechnicianDetails = ({ match, history }) => {
                           </div>
                           <div className="col-lg-6">
                             <p className="label-value">
-                              {labtechnician?.fullname}
+                              {labtechnician?.firstName +
+                                " " +
+                                labtechnician?.lastName}
                             </p>
                           </div>
                         </div>
@@ -116,10 +118,52 @@ const LabTechnicianDetails = ({ match, history }) => {
                               Email
                             </label>
                           </div>
+
                           <div className="col-lg-6">
                             <p className="label-value">
                               {labtechnician?.email}
                             </p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Specialization
+                            </label>
+                          </div>
+
+                          <div className="col-lg-6">
+                            <p className="label-value">
+                              {labtechnician?.specialization}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Qualification
+                            </label>
+                          </div>
+
+                          <div className="col-lg-6">
+                            {labtechnician?.qualification?.length > 0 &&
+                              labtechnician?.qualification?.map((qual) => (
+                                <p className="label-value">{qual}</p>
+                              ))}
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Qualified
+                            </label>
+                          </div>
+
+                          <div className="col-lg-6">
+                            {labtechnician?.qualified?.length > 0 &&
+                              labtechnician?.qualified?.map((qual) => (
+                                <p className="label-value">{qual?.value}</p>
+                              ))}
                           </div>
                         </div>
                         <div className="row">

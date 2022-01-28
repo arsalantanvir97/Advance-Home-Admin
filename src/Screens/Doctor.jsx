@@ -308,7 +308,7 @@ const Doctor = () => {
                                           doctor?.docs?.map((doct, index) => (
                                             <tr>
                                               <td>{index + 1}</td>
-                                              <td>{doct?.fullname}</td>
+                                              <td>{doct?.firstName + " " + doct?.lastName}</td>
                                               <td>{doct?._id}</td>
                                               <td>{doct?.email}</td>
                                               <td>
@@ -528,7 +528,7 @@ const Doctor = () => {
                                             (doct, index) => (
                                               <tr>
                                                 <td>{index + 1}</td>
-                                                <td>{doct?.fullname}</td>
+                                                <td>{doct?.firstName + " " + doct?.lastName}</td>
                                                 <td>{doct?.email}</td>
                                                 <td>
                                                   {" "}

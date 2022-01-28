@@ -4,14 +4,17 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../utils/api";
 import Swal from "sweetalert2";
+import Toasty from "../utils/toast";
 
 const AddLabortary = ({ history }) => {
-  const [fullname, setfullname] = useState();
-  const [labspecialization, setlabspecialization] = useState();
-  const [address, setaddress] = useState();
-  const [phone, setphone] = useState();
-  const [password, setpassword] = useState();
-  const [email, setemail] = useState();
+  const [fullname, setfullname] = useState("");
+  const [labspecialization, setlabspecialization] = useState("");
+  const [address, setaddress] = useState("");
+  const [phone, setphone] = useState("");
+  const [password, setpassword] = useState("");
+  const [email, setemail] = useState("");
+  const [fax, setfax] = useState("");
+  const [labmanagercontact, setlabmanagercontact] = useState("");
 
   const dispatch = useDispatch();
 
@@ -21,8 +24,8 @@ const AddLabortary = ({ history }) => {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       };
       console.log("beforehit");
       const res = await axios.post(
@@ -33,8 +36,10 @@ const AddLabortary = ({ history }) => {
           address,
           phone,
           password,
+          fax,
           email,
-          type: "Admin",
+          labmanagercontact,
+          type: "Admin"
         },
         config
       );
@@ -45,7 +50,7 @@ const AddLabortary = ({ history }) => {
           title: "",
           text: "Labortary added Successfully",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1500
         });
         history.replace("/Labortaries");
       }
@@ -55,7 +60,7 @@ const AddLabortary = ({ history }) => {
         title: "ERROR",
         text: "Internal Server Error",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1500
       });
     }
   };
@@ -147,6 +152,19 @@ const AddLabortary = ({ history }) => {
                         onChange={(e) => setphone(e.target.value)}
                       />
                     </div>
+                    <div className="col-lg-4 mt-2">
+                      <label htmlFor className="site-labell">
+                        Lab Manager Contact*
+                      </label>
+                      <input
+                        type="number"
+                        maxlength="11"
+                        className="all-inputt w-100"
+                        placeholder="Enter Lab Manager Contact"
+                        value={labmanagercontact}
+                        onChange={(e) => setlabmanagercontact(e.target.value)}
+                      />
+                    </div>
                   </div>
                   <div className="row">
                     <div className="col-lg-4 mt-2">
@@ -161,12 +179,40 @@ const AddLabortary = ({ history }) => {
                         onChange={(e) => setaddress(e.target.value)}
                       />
                     </div>
+                    <div className="col-lg-4 mt-2">
+                      <label htmlFor className="site-labell">
+                        Fax No*
+                      </label>
+                      <input
+                        type="number"
+                        maxlength="11"
+                        className="all-inputt w-100"
+                        placeholder="Enter Fax No"
+                        value={fax}
+                        onChange={(e) => setfax(e.target.value)}
+                      />
+                    </div>
                   </div>
                   <div className="row">
                     <div className="col-12">
                       <button
                         type="button"
-                        onClick={addLabortaryHandler}
+                        onClick={() => {
+                          fullname?.length > 0 &&
+                          labspecialization?.length > 0 &&
+                          address?.length > 0 &&
+                          phone?.length > 0 &&
+                          password?.length > 0 &&
+                          password?.length > 0 &&
+                          email?.length > 0 &&
+                          fax?.length > 0 &&
+                          labmanagercontact?.length > 0
+                            ? addLabortaryHandler()
+                            : Toasty(
+                                "error",
+                                `Please fill out all the required fields`
+                              );
+                        }}
                         data-toggle="modal"
                         data-target="#useractivated"
                         className="general-btn mt-3 px-3"

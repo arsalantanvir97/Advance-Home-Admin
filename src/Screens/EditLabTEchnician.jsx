@@ -1,13 +1,18 @@
 import axios from "axios";
 import React, { useState, useRef, useEffect } from "react";
+import { MultiSelect } from "react-multi-select-component";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import TagsInput from "react-tagsinput";
 import Swal from "sweetalert2";
 import ImageSelector from "../components/ImageSelector";
 import { baseURL } from "../utils/api";
 
 const EditLabTEchnician = ({ match, history }) => {
-  const [fullname, setfullname] = useState("");
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setlastName] = useState("");
+  const [qualified, setqualified] = useState("");
+
   const [qualification, setqualification] = useState("");
   const [specialization, setspecialization] = useState("");
   const [email, setemail] = useState("");
@@ -28,13 +33,24 @@ const EditLabTEchnician = ({ match, history }) => {
   useEffect(() => {
     getLabTechnician();
   }, []);
+  const handleChange = (value) => {
+    setqualification(value);
+  };
+  const options = [
+    { label: "X-ray", value: "X-ray" },
+    { label: "Ultrasound", value: "Ultrasound" },
+    { label: "EKG", value: "EKG" },
+    { label: "Drug Collector", value: "Drug Collector" },
+    { label: "Breath Alcohol", value: "Breath Alcohol" },
+    { label: "Phlebotomy", value: "Phlebotomy" }
+  ];
 
   const getLabTechnician = async () => {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       };
       const res = await axios.post(
         `${baseURL}/LabTechnicianRoutes/trackingLabTechnician`,
@@ -42,7 +58,10 @@ const EditLabTEchnician = ({ match, history }) => {
         config
       );
       console.log("res", res);
-      setfullname(res?.data?.labTechnicians?.fullname);
+      setfirstName(res?.data?.labTechnicians?.firstName);
+      setlastName(res?.data?.labTechnicians?.lastName);
+      setqualified(res?.data?.labTechnicians?.qualified);
+
       setqualification(res?.data?.labTechnicians?.qualification);
       setspecialization(res?.data?.labTechnicians?.specialization);
       setemail(res?.data?.labTechnicians?.email);
@@ -61,24 +80,27 @@ const EditLabTEchnician = ({ match, history }) => {
     try {
       const formData = new FormData();
 
-      formData.append("user_image", image);
-      formData.append("fullname", fullname);
-      formData.append("qualification", qualification);
       formData.append("id", match?.params?.id);
+      formData.append("user_image", image);
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+
+      formData.append("qualification", JSON.stringify(qualification));
+      formData.append("qualified", JSON.stringify(qualified));
+
       formData.append("specialization", specialization);
       formData.append("color", color);
-      formData.append("email", email);
       formData.append("password", password);
-      formData.append("modal", modal);
-
+      formData.append("email", email);
       formData.append("vehicle", vehicle);
       formData.append("phoneNumber", phoneNumber);
+      formData.append("modal", modal);
 
       const body = formData;
       const config = {
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       };
       const res = await axios.post(
         `${baseURL}/LabTechnicianRoutes/editProfile`,
@@ -92,7 +114,7 @@ const EditLabTEchnician = ({ match, history }) => {
           title: "",
           text: "LabTechnician Updated Successfully",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1500
         });
         history.replace("/LabTechnician");
       }
@@ -102,7 +124,7 @@ const EditLabTEchnician = ({ match, history }) => {
         title: "ERROR",
         text: "Internal Server Error",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1500
       });
     }
 
@@ -142,38 +164,38 @@ const EditLabTEchnician = ({ match, history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Full Name*
+                        First Name*
                       </label>
                       {is_edit ? (
                         <input
                           type="text"
                           className="all-inputt w-100"
-                          placeholder="Enter Full Name"
-                          value={fullname}
+                          placeholder="Enter First Name"
+                          value={firstName}
                           onChange={(e) => {
-                            setfullname(e.target.value);
+                            setfirstName(e.target.value);
                           }}
                         />
                       ) : (
-                        <p>{fullname}</p>
+                        <p>{firstName}</p>
                       )}
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Color*
+                        Last Name*
                       </label>
                       {is_edit ? (
                         <input
                           type="text"
                           className="all-inputt w-100"
-                          placeholder="Enter Color"
-                          value={color}
+                          placeholder="Enter Last Name"
+                          value={lastName}
                           onChange={(e) => {
-                            setcolor(e.target.value);
+                            setlastName(e.target.value);
                           }}
                         />
                       ) : (
-                        <p>{color}</p>
+                        <p>{firstName}</p>
                       )}
                     </div>
                   </div>
@@ -201,14 +223,11 @@ const EditLabTEchnician = ({ match, history }) => {
                         Qualification*
                       </label>
                       {is_edit ? (
-                        <input
-                          type="email"
-                          className="all-inputt w-100"
-                          placeholder="Enter Qualification"
+                        <TagsInput
+                          inputProps={{ placeholder: "Qualification" }}
+                          style={{ color: "black", width: "100%" }}
                           value={qualification}
-                          onChange={(e) => {
-                            setqualification(e.target.value);
-                          }}
+                          onChange={handleChange}
                         />
                       ) : (
                         <p>{qualification}</p>
@@ -311,7 +330,46 @@ const EditLabTEchnician = ({ match, history }) => {
                         <p>{modal}</p>
                       )}
                     </div>
+                    <div className="col-lg-4 mt-2">
+                      <label htmlFor className="site-labell">
+                        Color*
+                      </label>
+                      {is_edit ? (
+                        <input
+                          type="text"
+                          className="all-inputt w-100"
+                          placeholder="Enter Color"
+                          value={color}
+                          onChange={(e) => {
+                            setcolor(e.target.value);
+                          }}
+                        />
+                      ) : (
+                        <p>{color}</p>
+                      )}
+                    </div>
                   </div>
+                  <div className="row">
+                    <div className="col-lg-4 mt-2">
+                      <label htmlFor className="site-labell">
+                        Qualified*
+                      </label>
+                      {is_edit ? (
+                        <MultiSelect
+                          options={options}
+                          value={qualified}
+                          onChange={setqualified}
+                          labelledBy="Qualified"
+                        />
+                      ) : (
+                        <>
+                          {qualified?.length > 0 &&
+                            qualified?.map((qual) => <p>{qual?.value}</p>)}{" "}
+                        </>
+                      )}
+                    </div>
+                  </div>
+
                   <div className="row">
                     <div className="col-12">
                       <div style={{ height: "30px" }}></div>

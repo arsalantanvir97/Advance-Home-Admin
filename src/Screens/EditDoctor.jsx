@@ -7,7 +7,14 @@ import ImageSelector from "../components/ImageSelector";
 import { baseURL } from "../utils/api";
 
 const EditDoctor = ({ match, history }) => {
-  const [fullname, setfullname] = useState('');
+  const [firstName, setfirstName] = useState('');
+  const [lastName, setlastName] = useState('');
+  const [companyname, setcompanyname] = useState('');
+  const [fax, setfax] = useState('');
+  const [hipa, sethipa] = useState('');
+  const [npi, setnpi] = useState('');
+  const [insurance, setinsurance] = useState('');
+
   const [qualification, setqualification] = useState('');
   const [specialization, setspecialization] = useState('');
   const [email, setemail] = useState('');
@@ -37,7 +44,13 @@ const EditDoctor = ({ match, history }) => {
         },
       });
       console.log("res", res);
-      setfullname(res?.data?.doctor?.fullname);
+      setfirstName(res?.data?.doctor?.firstName);
+      setlastName(res?.data?.doctor?.lastName);
+      setcompanyname(res?.data?.doctor?.companyname);
+      setfax(res?.data?.doctor?.fax);
+      sethipa(res?.data?.doctor?.hipa);
+      setnpi(res?.data?.doctor?.npi);
+      setinsurance(res?.data?.doctor?.insurance);
       setqualification(res?.data?.doctor?.qualification);
       setspecialization(res?.data?.doctor?.specialization);
       setemail(res?.data?.doctor?.email);
@@ -59,14 +72,21 @@ const EditDoctor = ({ match, history }) => {
     try {
       const formData = new FormData();
 
-      formData.append("user_image", image);
-      formData.append("fullname", fullname);
-      formData.append("qualification", qualification);
+   
       formData.append("id", match?.params?.id);
+      formData.append("user_image", image);
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+      formData.append("companyname", companyname);
+      formData.append("fax", fax);
+      formData.append("npi", npi);
+      formData.append("hipa", hipa);
+      formData.append("insurance", insurance);
+      formData.append("qualification", qualification);
       formData.append("specialization", specialization);
       formData.append("address", address);
-      formData.append("email", email);
       formData.append("password", password);
+      formData.append("email", email);
       formData.append("experience", experience);
       formData.append("phoneNumber", phoneNumber);
 
@@ -148,38 +168,76 @@ const EditDoctor = ({ match, history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Full Name*
+                        First Name*
                       </label>
                       {is_edit ? (
                         <input
                           type="text"
                           className="all-inputt w-100"
-                          placeholder="Enter Full Name"
-                          value={fullname}
+                          placeholder="Enter First Name"
+                          value={firstName}
                           onChange={(e) => {
-                            setfullname(e.target.value);
+                            setfirstName(e.target.value);
                           }}
                         />
                       ) : (
-                        <p>{fullname}</p>
+                        <p>{firstName}</p>
                       )}
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Qualification*
+                        Last Name*
                       </label>
                       {is_edit ? (
                         <input
                           type="text"
                           className="all-inputt w-100"
-                          placeholder="Enter Qualification"
-                          value={qualification}
+                          placeholder="Enter Last Name"
+                          value={lastName}
                           onChange={(e) => {
-                            setqualification(e.target.value);
+                            setlastName(e.target.value);
                           }}
                         />
                       ) : (
-                        <p>{qualification}</p>
+                        <p>{lastName}</p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-lg-4 mt-2">
+                      <label htmlFor className="site-labell">
+                        Company Name*
+                      </label>
+                      {is_edit ? (
+                        <input
+                          type="text"
+                          className="all-inputt w-100"
+                          placeholder="Enter Company Name"
+                          value={companyname}
+                          onChange={(e) => {
+                            setcompanyname(e.target.value);
+                          }}
+                        />
+                      ) : (
+                        <p>{companyname}</p>
+                      )}
+                    </div>
+                    <div className="col-lg-4 mt-2">
+                      <label htmlFor className="site-labell">
+                        Fax No*
+                      </label>
+                      {is_edit ? (
+                        <input
+                          type="text"
+                          className="all-inputt w-100"
+                          placeholder="Enter Fax NO"
+                          value={fax}
+                          onChange={(e) => {
+                            setfax(e.target.value);
+                          }}
+                        />
+                      ) : (
+                        <p>{fax}</p>
                       )}
                     </div>
                   </div>
@@ -219,6 +277,68 @@ const EditDoctor = ({ match, history }) => {
                       ) : (
                         <p>{specialization}</p>
                       )}
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-lg-4 mt-2">
+                      <label htmlFor className="site-labell">
+                        Select insurance*
+                      </label>
+                      <p className="d-inline-block mr-1">
+                        <input
+                          value={insurance}
+                          onChange={() => {
+                            setinsurance(true);
+                          }}
+                          type="radio"
+                          id="test1"
+                          name="radio-group"
+                          defaultChecked
+                        />
+                        <label htmlFor="test1">Yes</label>
+                      </p>
+                      <p className="d-inline-block mr-1">
+                        <input
+                          type="radio"
+                          id="test2"
+                          name="radio-group"
+                          value={insurance}
+                          onChange={() => {
+                            setinsurance(false);
+                          }}
+                        />
+                        <label htmlFor="test2">No</label>
+                      </p>
+                    </div>
+                    <div className="col-lg-4 mt-2">
+                      <label htmlFor className="site-labell">
+                        Select HIPAA*
+                      </label>
+                      <p className="d-inline-block mr-1">
+                        <input
+                          value={hipa}
+                          onChange={() => {
+                            sethipa(true);
+                          }}
+                          type="radio"
+                          id="test6"
+                          name="radio-groups"
+                          defaultChecked
+                        />
+                        <label htmlFor="test6">Yes</label>
+                      </p>
+                      <p className="d-inline-block mr-1">
+                        <input
+                          type="radio"
+                          id="test7"
+                          name="radio-groups"
+                          value={hipa}
+                          onChange={() => {
+                            sethipa(false);
+                          }}
+                        />
+                        <label htmlFor="test7">No</label>
+                      </p>
                     </div>
                   </div>
                   <div className="row">
@@ -297,7 +417,28 @@ const EditDoctor = ({ match, history }) => {
                         <p>{"*******"}</p>
                       )}
                     </div>
+                    
                   </div>
+                  <div className="row">
+                  <div className="col-lg-4 mt-2">
+                      <label htmlFor className="site-labell">
+                        Qualification*
+                      </label>
+                      {is_edit ? (
+                        <input
+                          type="text"
+                          className="all-inputt w-100"
+                          placeholder="Enter Qualification"
+                          value={qualification}
+                          onChange={(e) => {
+                            setqualification(e.target.value);
+                          }}
+                        />
+                      ) : (
+                        <p>{qualification}</p>
+                      )}
+                    </div>
+                    </div>
                   <div className="row">
                     <div className="col-12">
                       <div style={{ height: 25 }}></div>

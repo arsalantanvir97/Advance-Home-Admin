@@ -214,7 +214,7 @@ const LabTechnician = () => {
                                   labtechnician?.docs?.map((labt, index) => (
                                     <tr>
                                       <td>{index + 1}</td>
-                                      <td>{labt?.fullname}</td>
+                                      <td>{labt?.firstName + ' '+labt?.lastName}</td>
                                       <td>{labt?._id}</td>
                                       <td>{labt?.email}</td>
                                       <td>

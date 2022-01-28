@@ -86,7 +86,7 @@ const ViewUser = ({ match }) => {
                             </label>
                           </div>
                           <div className="col-lg-6">
-                            <p className="label-value">{user?.username}</p>
+                            <p className="label-value">{user?.firstname+ ' ' +user?.lastname}</p>
                           </div>
                         </div>
                         <div className="row">
@@ -109,6 +109,86 @@ const ViewUser = ({ match }) => {
                           </div>
                           <div className="col-lg-6">
                             <p className="label-value">{user?.gender}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Insurance1
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.insurance1}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Insurance2
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.insurance2}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Insured
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.insured==true ?'Yes' : 'No'}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Policy NO
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.policyno}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Fax
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.fax}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Doctor Name
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.doctorname}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Company Name
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.companyname}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Address
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.address}</p>
                           </div>
                         </div>
                         <div className="row">

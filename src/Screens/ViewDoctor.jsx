@@ -102,7 +102,7 @@ const ViewDoctor = ({ match, history }) => {
                             </label>
                           </div>
                           <div className="col-lg-6">
-                            <p className="label-value">{doctor?.fullname}</p>
+                            <p className="label-value">{doctor?.firstName + " " + doctor?.lastName}</p>
                           </div>
                         </div>
                         <div className="row">
@@ -123,6 +123,86 @@ const ViewDoctor = ({ match, history }) => {
                           </div>
                           <div className="col-lg-6">
                             <p className="label-value">{doctor?.phoneNumber}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Company Name
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{doctor?.companyname}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              NPI
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{doctor?.npi}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Qualification
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{doctor?.qualification}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                            Specialization
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{doctor?.specialization}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Experience
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{doctor?.experience}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              HIPAA
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{doctor?.hipa==true? 'Yes': 'No'}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Insured
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{doctor?.insurance==true? 'Yes': 'No'}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Fax
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{doctor?.fax}</p>
                           </div>
                         </div>
                         <div className="row">

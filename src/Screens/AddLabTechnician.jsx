@@ -6,18 +6,25 @@ import DatePicker from "react-datepicker";
 import axios from "axios";
 import { baseURL } from "../utils/api";
 import Swal from "sweetalert2";
+import TagsInput from "react-tagsinput";
+import { MultiSelect } from "react-multi-select-component";
+import Toasty from "../utils/toast";
 
 const AddLabTechnician = ({ history }) => {
-  const [fullname, setfullname] = useState();
-  const [qualification, setqualification] = useState();
-  const [specialization, setspecialization] = useState();
-  const [email, setemail] = useState();
-  const [color, setcolor] = useState();
-  const [vehicle, setvehicle] = useState();
-  const [modal, setmodal] = useState();
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setlastName] = useState("");
 
-  const [phoneNumber, setphoneNumber] = useState();
-  const [password, setpassword] = useState();
+  const [qualification, setqualification] = useState([]);
+  const [qualified, setqualified] = useState([]);
+
+  const [specialization, setspecialization] = useState("");
+  const [email, setemail] = useState("");
+  const [color, setcolor] = useState("");
+  const [vehicle, setvehicle] = useState("");
+  const [modal, setmodal] = useState("");
+
+  const [phoneNumber, setphoneNumber] = useState("");
+  const [password, setpassword] = useState("");
 
   const [image, setimage] = useState();
   const [is_edit, setIsEdit] = useState(true);
@@ -26,12 +33,20 @@ const AddLabTechnician = ({ history }) => {
   const adminLogin = useSelector((state) => state.adminLogin);
   const { adminInfo } = adminLogin;
 
+  const handleChange = (value) => {
+    setqualification(value);
+  };
+
   const AddLabTechnicianHandler = async () => {
     try {
       const formData = new FormData();
       formData.append("user_image", image);
-      formData.append("fullname", fullname);
-      formData.append("qualification", qualification);
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+
+      formData.append("qualification", JSON.stringify(qualification));
+      formData.append("qualified", JSON.stringify(qualified));
+
       formData.append("specialization", specialization);
       formData.append("color", color);
       formData.append("password", password);
@@ -44,8 +59,8 @@ const AddLabTechnician = ({ history }) => {
       const body = formData;
       const config = {
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       };
       const res = await axios.post(
         `${baseURL}/LabTechnicianRoutes/register`,
@@ -58,7 +73,7 @@ const AddLabTechnician = ({ history }) => {
           title: "",
           text: "Lab Technician Created Successfully",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1500
         });
         history.replace("/LabTechnician");
       }
@@ -68,10 +83,24 @@ const AddLabTechnician = ({ history }) => {
         title: "ERROR",
         text: "Internal Server Error",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1500
       });
     }
   };
+
+  const options = [
+    { label: "X-ray", value: "X-ray" },
+    { label: "Ultrasound", value: "Ultrasound" },
+    { label: "EKG", value: "EKG" },
+    { label: "Drug Collector", value: "Drug Collector" },
+    { label: "Breath Alcohol", value: "Breath Alcohol" },
+    { label: "Phlebotomy", value: "Phlebotomy" }
+  ];
+
+  useEffect(() => {
+    console.log("qualified", qualified);
+  }, [qualified]);
+
   return (
     <div className="app-content content dashboard">
       <div className="content-wrapper content-wrapper-2">
@@ -82,7 +111,7 @@ const AddLabTechnician = ({ history }) => {
               <div className="col-12 mb-5">
                 <div className="row">
                   <div className="col-lg-6">
-                    <Link to='/LabTechnician'>
+                    <Link to="/LabTechnician">
                       <h1 className="ml-1 main-heading">
                         <i className="fas fa-angle-left mr-1" />
                         Lab Technician Add
@@ -122,26 +151,26 @@ const AddLabTechnician = ({ history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Full Name*
+                        First Name*
                       </label>
                       <input
                         type="text"
                         className="all-inputt w-100"
-                        placeholder="Enter Full Name"
-                        value={fullname}
-                        onChange={(e) => setfullname(e.target.value)}
+                        placeholder="Enter First Name"
+                        value={firstName}
+                        onChange={(e) => setfirstName(e.target.value)}
                       />
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Color*
+                        Last Name*
                       </label>
                       <input
                         type="text"
                         className="all-inputt w-100"
-                        placeholder="Blue"
-                        value={color}
-                        onChange={(e) => setcolor(e.target.value)}
+                        placeholder="Enter Last Name"
+                        value={lastName}
+                        onChange={(e) => setlastName(e.target.value)}
                       />
                     </div>
                   </div>
@@ -162,12 +191,11 @@ const AddLabTechnician = ({ history }) => {
                       <label htmlFor className="site-labell">
                         Qualification*
                       </label>
-                      <input
-                        type="text"
-                        className="all-inputt w-100"
-                        placeholder="Enter Qualification"
+                      <TagsInput
+                        inputProps={{ placeholder: "Qualification" }}
+                        style={{ color: "black", width: "100%" }}
                         value={qualification}
-                        onChange={(e) => setqualification(e.target.value)}
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
@@ -237,6 +265,32 @@ const AddLabTechnician = ({ history }) => {
                         onChange={(e) => setmodal(e.target.value)}
                       />
                     </div>
+
+                    <div className="col-lg-4 mt-1">
+                      <label htmlFor className="site-labell">
+                        Qualified
+                      </label>
+                      <MultiSelect
+                        options={options}
+                        value={qualified}
+                        onChange={setqualified}
+                        labelledBy="Qualified"
+                      />
+                    </div>
+                  </div>{" "}
+                  <div className="row">
+                    <div className="col-lg-4 mt-2">
+                      <label htmlFor className="site-labell">
+                        Color*
+                      </label>
+                      <input
+                        type="text"
+                        className="all-inputt w-100"
+                        placeholder="Blue"
+                        value={color}
+                        onChange={(e) => setcolor(e.target.value)}
+                      />
+                    </div>
                   </div>
                   <div className="row">
                     <div className="col-12">
@@ -245,7 +299,25 @@ const AddLabTechnician = ({ history }) => {
                         data-toggle="modal"
                         data-target="#useractivated"
                         className="general-btn mt-3 px-3"
-                        onClick={AddLabTechnicianHandler}
+                        onClick={() => {
+                          image?.name?.length > 0 &&
+                          firstName?.length > 0 &&
+                          lastName?.length > 0 &&
+                          qualification?.length > 0 &&
+                          qualified?.length > 0 &&
+                          specialization?.length > 0 &&
+                          color?.length > 0 &&
+                          password?.length > 0 &&
+                          email?.length > 0 &&
+                          vehicle?.length > 0 &&
+                          phoneNumber?.length > 0 &&
+                          modal?.length > 0
+                            ? AddLabTechnicianHandler()
+                            : Toasty(
+                                "error",
+                                `Please fill out all the required fields`
+                              );
+                        }}
                       >
                         Add
                       </button>

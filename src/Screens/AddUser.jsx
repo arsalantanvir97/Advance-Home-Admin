@@ -7,17 +7,26 @@ import axios from "axios";
 import { baseURL } from "../utils/api";
 import Swal from "sweetalert2";
 import DatePick from "../components/DatePick";
+import Toasty from "../utils/toast";
 
 const AddUser = ({ history }) => {
-  const [username, setusername] = useState();
-  const [gender, setgender] = useState();
-  const [address, setaddress] = useState();
-  const [email, setemail] = useState();
-  const [insuranceNumber, setinsuranceNumber] = useState();
-  const [bloodtypee, setbloodtypee] = useState();
-  const [phoneNumber, setphoneNumber] = useState();
-  const [birthDate, setbirthDate] = useState();
-  const [image, setimage] = useState();
+  const [firstname, setfirstname] = useState("");
+  const [lastname, setlastname] = useState("");
+  const [doctorname, setdoctorname] = useState("");
+  const [insurance1, setinsurance1] = useState("");
+  const [insurance2, setinsurance2] = useState("");
+  const [companyname, setcompanyname] = useState("");
+  const [policyno, setpolicyno] = useState("");
+  const [insured, setinsured] = useState(true);
+  const [fax, setfax] = useState("");
+  const [password, setpassword] = useState("");
+  const [gender, setgender] = useState("");
+  const [address, setaddress] = useState("");
+  const [email, setemail] = useState("");
+  const [bloodtypee, setbloodtypee] = useState("");
+  const [phoneNumber, setphoneNumber] = useState("");
+  const [birthDate, setbirthDate] = useState("");
+  const [image, setimage] = useState("");
   const [is_edit, setIsEdit] = useState(true);
   const dispatch = useDispatch();
 
@@ -43,11 +52,20 @@ const AddUser = ({ history }) => {
     try {
       const formData = new FormData();
       formData.append("user_image", image);
-      formData.append("username", username);
+      formData.append("firstname", firstname);
+      formData.append("lastname", lastname);
+      formData.append("doctorname", doctorname);
+      formData.append("insurance1", insurance1);
+      formData.append("insurance2", insurance2);
+      formData.append("companyname", companyname);
+      formData.append("policyno", policyno);
+      formData.append("insured", insured);
+      formData.append("fax", fax);
+      formData.append("password", password);
+
       formData.append("gender", gender);
       formData.append("address", address);
       formData.append("email", email);
-      formData.append("insuranceNumber", insuranceNumber);
       formData.append("bloodtype", JSON.stringify(bloodtype));
       formData.append("phoneNumber", phoneNumber);
       formData.append("birthDate", birthDate);
@@ -56,8 +74,8 @@ const AddUser = ({ history }) => {
       const body = formData;
       const config = {
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       };
       const res = await axios.post(`${baseURL}/user/createUser`, body, config);
       if (res?.status == 201) {
@@ -66,7 +84,7 @@ const AddUser = ({ history }) => {
           title: "",
           text: "User Created Successfully",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1500
         });
         history.replace("/User");
       }
@@ -76,7 +94,7 @@ const AddUser = ({ history }) => {
         title: "ERROR",
         text: "Internal Server Error",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1500
       });
     }
   };
@@ -112,14 +130,28 @@ const AddUser = ({ history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Full Name*
+                        First Name*
                       </label>
                       <input
                         type="text"
                         className="all-inputt w-100"
-                        placeholder="Enter Full Name"
-                        value={username}
-                        onChange={(e) => setusername(e.target.value)}
+                        placeholder="Enter First Name"
+                        value={firstname}
+                        onChange={(e) => setfirstname(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-lg-4 mt-2">
+                      <label htmlFor className="site-labell">
+                        Last Name*
+                      </label>
+                      <input
+                        type="text"
+                        className="all-inputt w-100"
+                        placeholder="Enter Last Name"
+                        value={lastname}
+                        onChange={(e) => setlastname(e.target.value)}
                       />
                     </div>
                   </div>
@@ -175,6 +207,39 @@ const AddUser = ({ history }) => {
                       </p>
                     </div>
                   </div>
+
+                  <div className="row">
+                    <div className="col-lg-4 mt-2">
+                      <label htmlFor className="site-labell">
+                        Select Insurance*
+                      </label>
+                      <p className="d-inline-block mr-1">
+                        <input
+                          value={insured}
+                          onChange={() => {
+                            setinsured(true);
+                          }}
+                          type="radio"
+                          id="test6"
+                          name="radio-groups"
+                          defaultChecked
+                        />
+                        <label htmlFor="test6">Yes</label>
+                      </p>
+                      <p className="d-inline-block mr-1">
+                        <input
+                          type="radio"
+                          id="test7"
+                          name="radio-groups"
+                          value={insured}
+                          onChange={() => {
+                            setinsured(false);
+                          }}
+                        />
+                        <label htmlFor="test7">No</label>
+                      </p>
+                    </div>
+                  </div>
                 </form>
                 <div className="row">
                   <div className="col-lg-4 mt-1">
@@ -200,16 +265,50 @@ const AddUser = ({ history }) => {
                 <div className="row">
                   <div className="col-lg-4 mt-2">
                     <label htmlFor className="site-labell">
-                      Insurance No*
+                      Insurance No1*
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       maxlength="9"
                       className="all-inputt w-100"
-                      placeholder="Enter Insurance No"
-                      value={insuranceNumber}
+                      placeholder="Enter Insurance No1"
+                      value={insurance1}
                       onChange={(e) => {
-                        setinsuranceNumber(e.target.value);
+                        setinsurance1(e.target.value);
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Insurance No2*
+                    </label>
+                    <input
+                      type="number"
+                      maxlength="9"
+                      className="all-inputt w-100"
+                      placeholder="Enter Insurance No2"
+                      value={insurance2}
+                      onChange={(e) => {
+                        setinsurance2(e.target.value);
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Policy No*
+                    </label>
+                    <input
+                      type="number"
+                      maxlength="9"
+                      className="all-inputt w-100"
+                      placeholder="Enter Policy No"
+                      value={policyno}
+                      onChange={(e) => {
+                        setpolicyno(e.target.value);
                       }}
                     />
                   </div>
@@ -228,6 +327,53 @@ const AddUser = ({ history }) => {
                       }}
                       className="all-inputt w-100"
                       placeholder="Enter Phone Number"
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Fax No*
+                    </label>
+                    <input
+                      type="number"
+                      maxlength="9"
+                      className="all-inputt w-100"
+                      placeholder="Enter Fax No"
+                      value={fax}
+                      onChange={(e) => {
+                        setfax(e.target.value);
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Doctor Name*
+                    </label>
+                    <input
+                      type="text"
+                      className="all-inputt w-100"
+                      placeholder="Enter Doctor Name"
+                      value={doctorname}
+                      onChange={(e) => setdoctorname(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Company Name*
+                    </label>
+                    <input
+                      type="text"
+                      className="all-inputt w-100"
+                      placeholder="Enter Company Name"
+                      value={companyname}
+                      onChange={(e) => setcompanyname(e.target.value)}
                     />
                   </div>
                 </div>
@@ -264,13 +410,50 @@ const AddUser = ({ history }) => {
                   </div>
                 </div>
                 <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Password*
+                    </label>
+                    <input
+                      value={password}
+                      onChange={(e) => {
+                        setpassword(e.target.value);
+                      }}
+                      type="password"
+                      className="all-inputt w-100"
+                      placeholder="Enter Email"
+                    />
+                  </div>
+                </div>
+                <div className="row">
                   <div className="col-12">
                     <button
                       type="submit"
                       className="general-btn mt-3 px-3"
                       data-toggle="modal"
                       data-target="#user-added"
-                      onClick={addUserHandler}
+                      onClick={() => {
+                        image?.name?.length > 0 &&
+                        firstname?.length > 0 &&
+                        lastname?.length > 0 &&
+                        doctorname?.length > 0 &&
+                        insurance1?.length > 0 &&
+                        insurance2?.length > 0 &&
+                        companyname?.length > 0 &&
+                        policyno?.length > 0 &&
+                        fax?.length > 0 &&
+                        password?.length > 0 &&
+                        gender?.length > 0 &&
+                        address?.length > 0 &&
+                        email?.length > 0 &&
+                        bloodtypee?.length > 0 &&
+                        phoneNumber?.length > 0
+                          ? addUserHandler()
+                          : Toasty(
+                              "error",
+                              `Please fill out all the required fields`
+                            );
+                      }}
                     >
                       Add
                     </button>
