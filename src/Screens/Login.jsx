@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   adminLoginAction,
-  adminResetPasswordAction,
+  adminResetPasswordAction
 } from "../actions/adminActions";
 import Swal from "sweetalert2";
 import api from "../utils/api";
@@ -20,6 +20,7 @@ const Login = ({ history }) => {
   const [code, setcode] = useState();
   const [confirm_password, setconfirm_password] = useState();
   const [new_password, setnew_password] = useState();
+  const [showicon, setshowicon] = useState(true);
 
   const [forgotpasswordModal, setforgotpasswordModal] = useState(0);
 
@@ -32,9 +33,10 @@ const Login = ({ history }) => {
     console.log("emmmm", emailvalidation);
     console.log("addEmployeeHandler");
     if (emailvalidation == true) {
-    await dispatch(adminLoginAction(email, password, history));
-    setemail("");
-    setpassword("");}else {
+      await dispatch(adminLoginAction(email, password, history));
+      setemail("");
+      setpassword("");
+    } else {
       Toasty("error", `Please enter a valid email`);
     }
   };
@@ -163,7 +165,7 @@ const Login = ({ history }) => {
                     <div className="form-group position-relative">
                       <label htmlFor>Password</label>
                       <input
-                        type="password"
+                        type={showicon ? "password" : "text"}
                         className="w-100 pass-field enter-input"
                         id="exampleInputPassword1"
                         placeholder="Enter Password"
@@ -173,7 +175,12 @@ const Login = ({ history }) => {
                         }}
                       />
                       <i
-                        className="far fa-eye-slash enter-icon right-icon"
+                        onClick={() => setshowicon(!showicon)}
+                        className={
+                          showicon
+                            ? "fa enter-icon-3 right-icon fa-eye-slash right-icon-90"
+                            : "fa enter-icon-3 right-icon fa-eye right-icon-90"
+                        }
                         aria-hidden="true"
                       />
                     </div>
@@ -239,9 +246,6 @@ const Login = ({ history }) => {
                     : forgotpasswordModal == 1
                     ? "Verification Code*"
                     : null}
-              
-                  
-
                 </label>
                 {forgotpasswordModal == 0 ? (
                   <input
@@ -265,30 +269,32 @@ const Login = ({ history }) => {
                     placeholder="Verification Code"
                     value={code}
                     onChange={(e) => {
-                      handleChange(e, setcode) 
+                      handleChange(e, setcode);
                     }}
                   />
                 ) : forgotpasswordModal == 2 ? (
                   <>
-                    
                     <label htmlFor className="all-label">
                       Password*
-                    </label>
-            
-                    {" "}
-                    <input type="password" className="w-100 all-input pass-field enter-input" id="exampleInputPassword1" placeholder="Enter Password"   value={new_password}
+                    </label>{" "}
+                    <input
+                      type="password"
+                      className="w-100 all-input pass-field enter-input"
+                      id="exampleInputPassword1"
+                      placeholder="Enter Password"
+                      value={new_password}
                       onChange={(e) => {
                         setnew_password(e.target.value);
-                      }}/>
-                         <div
-                          style={{
-                            height: 23,
-                          }}
-                        ></div>
-                      <label htmlFor className="all-label">
+                      }}
+                    />
+                    <div
+                      style={{
+                        height: 23
+                      }}
+                    ></div>
+                    <label htmlFor className="all-label">
                       Confirm Password*
                     </label>
-                  
                     <input
                       type="password"
                       className="w-100 all-input pass-field enter-input-2"
@@ -326,7 +332,6 @@ const Login = ({ history }) => {
                       ? resetPasswordHandler
                       : null
                   }
-                
                   className="general-btn mt-2 mb-5 w-100 d-inline-block"
                 >
                   {forgotpasswordModal == 0
