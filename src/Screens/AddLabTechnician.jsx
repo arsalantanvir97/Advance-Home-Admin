@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import TagsInput from "react-tagsinput";
 import { MultiSelect } from "react-multi-select-component";
 import Toasty from "../utils/toast";
+import { validateEmail } from "../utils/ValidateEmail";
 
 const AddLabTechnician = ({ history }) => {
   const [firstName, setfirstName] = useState("");
@@ -39,43 +40,50 @@ const AddLabTechnician = ({ history }) => {
 
   const AddLabTechnicianHandler = async () => {
     try {
-      const formData = new FormData();
-      formData.append("user_image", image);
-      formData.append("firstName", firstName);
-      formData.append("lastName", lastName);
+      const emailvalidation = validateEmail(email);
+      console.log("emmmm", emailvalidation);
+      console.log("addEmployeeHandler");
+      if (emailvalidation == true) {
+        const formData = new FormData();
+        formData.append("user_image", image);
+        formData.append("firstName", firstName);
+        formData.append("lastName", lastName);
 
-      formData.append("qualification", JSON.stringify(qualification));
-      formData.append("qualified", JSON.stringify(qualified));
+        formData.append("qualification", JSON.stringify(qualification));
+        formData.append("qualified", JSON.stringify(qualified));
 
-      formData.append("specialization", specialization);
-      formData.append("color", color);
-      formData.append("password", password);
-      formData.append("email", email);
-      formData.append("vehicle", vehicle);
-      formData.append("phoneNumber", phoneNumber);
-      formData.append("modal", modal);
-      formData.append("type", "Admin");
+        formData.append("specialization", specialization);
+        formData.append("color", color);
+        formData.append("password", password);
+        formData.append("email", email);
+        formData.append("vehicle", vehicle);
+        formData.append("phoneNumber", phoneNumber);
+        formData.append("modal", modal);
+        formData.append("type", "Admin");
 
-      const body = formData;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${adminInfo.token}`
+        const body = formData;
+        const config = {
+          headers: {
+            Authorization: `Bearer ${adminInfo.token}`
+          }
+        };
+        const res = await axios.post(
+          `${baseURL}/LabTechnicianRoutes/register`,
+          body,
+          config
+        );
+        if (res?.status == 201) {
+          Swal.fire({
+            icon: "success",
+            title: "",
+            text: "Lab Technician Created Successfully",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          history.replace("/LabTechnician");
         }
-      };
-      const res = await axios.post(
-        `${baseURL}/LabTechnicianRoutes/register`,
-        body,
-        config
-      );
-      if (res?.status == 201) {
-        Swal.fire({
-          icon: "success",
-          title: "",
-          text: "Lab Technician Created Successfully",
-          showConfirmButton: false,
-          timer: 1500
-        });
-        history.replace("/LabTechnician");
+      } else {
+        Toasty("error", `Please enter a valid email`);
       }
     } catch (error) {
       Swal.fire({
@@ -206,11 +214,12 @@ const AddLabTechnician = ({ history }) => {
                       </label>
                       <input
                         type="number"
+                        min={0}
                         maxlength="11"
                         className="all-inputt w-100"
                         placeholder="Enter Phone"
                         value={phoneNumber}
-                        onChange={(e) => setphoneNumber(e.target.value)}
+                        onChange={(e) => handleChange(e, setphoneNumber)}
                       />
                     </div>
                     <div className="col-lg-4 mt-2">
@@ -262,7 +271,8 @@ const AddLabTechnician = ({ history }) => {
                         className="all-inputt w-100"
                         placeholder={2002}
                         value={modal}
-                        onChange={(e) => setmodal(e.target.value)}
+                        min={0}
+                        onChange={(e) => handleChange(e, setmodal)}
                       />
                     </div>
 

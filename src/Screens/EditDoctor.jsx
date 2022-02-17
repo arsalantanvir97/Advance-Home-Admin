@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import ImageSelector from "../components/ImageSelector";
 import { baseURL } from "../utils/api";
+import Toasty from "../utils/toast";
+import { validateEmail } from "../utils/ValidateEmail";
 
 const EditDoctor = ({ match, history }) => {
   const [firstName, setfirstName] = useState('');
@@ -13,13 +15,13 @@ const EditDoctor = ({ match, history }) => {
   const [fax, setfax] = useState('');
   const [hipa, sethipa] = useState('');
   const [npi, setnpi] = useState('');
-  const [insurance, setinsurance] = useState('');
+  // const [insurance, setinsurance] = useState('');
 
   const [qualification, setqualification] = useState('');
   const [specialization, setspecialization] = useState('');
   const [email, setemail] = useState('');
   const [address, setaddress] = useState('');
-  const [experience, setexperience] = useState('');
+  const [directphone, setdirectphone] = useState('');
   const [phoneNumber, setphoneNumber] = useState('');
   const [password, setpassword] = useState('');
 
@@ -50,13 +52,13 @@ const EditDoctor = ({ match, history }) => {
       setfax(res?.data?.doctor?.fax);
       sethipa(res?.data?.doctor?.hipa);
       setnpi(res?.data?.doctor?.npi);
-      setinsurance(res?.data?.doctor?.insurance);
+      // setinsurance(res?.data?.doctor?.insurance);
       setqualification(res?.data?.doctor?.qualification);
       setspecialization(res?.data?.doctor?.specialization);
       setemail(res?.data?.doctor?.email);
 
       setaddress(res?.data?.doctor?.address);
-      setexperience(res?.data?.doctor?.experience);
+      setdirectphone(res?.data?.doctor?.directphone);
       setphoneNumber(res?.data?.doctor?.phoneNumber);
       setimage(res?.data?.doctor?.userImage);
     } catch (err) {
@@ -70,6 +72,11 @@ const EditDoctor = ({ match, history }) => {
 
   const updateProfileData = async (e) => {
     try {
+      
+      const emailvalidation = validateEmail(email);
+      console.log("emmmm", emailvalidation);
+      console.log("addEmployeeHandler");
+      if (emailvalidation == true) {
       const formData = new FormData();
 
    
@@ -81,13 +88,13 @@ const EditDoctor = ({ match, history }) => {
       formData.append("fax", fax);
       formData.append("npi", npi);
       formData.append("hipa", hipa);
-      formData.append("insurance", insurance);
+      // formData.append("insurance", insurance);
       formData.append("qualification", qualification);
       formData.append("specialization", specialization);
       formData.append("address", address);
       formData.append("password", password);
       formData.append("email", email);
-      formData.append("experience", experience);
+      formData.append("directphone", directphone);
       formData.append("phoneNumber", phoneNumber);
 
       const body = formData;
@@ -110,6 +117,8 @@ const EditDoctor = ({ match, history }) => {
           timer: 1500,
         });
         history.replace("/Doctor");
+      }}else {
+        Toasty("error", `Please enter a valid email`);
       }
     } catch (error) {
       Swal.fire({
@@ -279,79 +288,18 @@ const EditDoctor = ({ match, history }) => {
                       )}
                     </div>
                   </div>
+                  
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Select insurance*
-                      </label>
-                      <p className="d-inline-block mr-1">
-                        <input
-                          value={insurance}
-                          onChange={() => {
-                            setinsurance(true);
-                          }}
-                          type="radio"
-                          id="test1"
-                          name="radio-group"
-                          defaultChecked
-                        />
-                        <label htmlFor="test1">Yes</label>
-                      </p>
-                      <p className="d-inline-block mr-1">
-                        <input
-                          type="radio"
-                          id="test2"
-                          name="radio-group"
-                          value={insurance}
-                          onChange={() => {
-                            setinsurance(false);
-                          }}
-                        />
-                        <label htmlFor="test2">No</label>
-                      </p>
-                    </div>
-                    <div className="col-lg-4 mt-2">
-                      <label htmlFor className="site-labell">
-                        Select HIPAA*
-                      </label>
-                      <p className="d-inline-block mr-1">
-                        <input
-                          value={hipa}
-                          onChange={() => {
-                            sethipa(true);
-                          }}
-                          type="radio"
-                          id="test6"
-                          name="radio-groups"
-                          defaultChecked
-                        />
-                        <label htmlFor="test6">Yes</label>
-                      </p>
-                      <p className="d-inline-block mr-1">
-                        <input
-                          type="radio"
-                          id="test7"
-                          name="radio-groups"
-                          value={hipa}
-                          onChange={() => {
-                            sethipa(false);
-                          }}
-                        />
-                        <label htmlFor="test7">No</label>
-                      </p>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-4 mt-2">
-                      <label htmlFor className="site-labell">
-                        Phone*
+                      Office Phone*
                       </label>
                       {is_edit ? (
                         <input
                           type="number"
                           maxlength="11"
                           className="all-inputt w-100"
-                          placeholder="Enter Phone"
+                          placeholder="Enter Office Phone"
                           value={phoneNumber}
                           onChange={(e) => {
                             setphoneNumber(e.target.value);
@@ -363,33 +311,33 @@ const EditDoctor = ({ match, history }) => {
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Experience*
+                      Direct Phone*
                       </label>
                       {is_edit ? (
                         <input
                           type="text"
                           className="all-inputt w-100"
-                          placeholder="Enter Experience"
-                          value={experience}
+                          placeholder="Enter ExperiDirect Phoneence"
+                          value={directphone}
                           onChange={(e) => {
-                            setexperience(e.target.value);
+                            setdirectphone(e.target.value);
                           }}
                         />
                       ) : (
-                        <p>{experience}</p>
+                        <p>{directphone}</p>
                       )}
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Home Address*
+                        Address*
                       </label>
                       {is_edit ? (
                         <input
                           type="text"
                           className="all-inputt w-100"
-                          placeholder="Enter Home Address"
+                          placeholder="Enter Address"
                           value={address}
                           onChange={(e) => {
                             setaddress(e.target.value);

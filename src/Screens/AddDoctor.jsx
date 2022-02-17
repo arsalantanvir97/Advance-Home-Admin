@@ -6,6 +6,8 @@ import axios from "axios";
 import { baseURL } from "../utils/api";
 import Swal from "sweetalert2";
 import Toasty from "../utils/toast";
+import { handleChange } from "../utils/InputNumberValidation";
+import { validateEmail } from "../utils/ValidateEmail";
 
 const AddDoctor = ({ history }) => {
   const [firstName, setfirstName] = useState("");
@@ -14,13 +16,13 @@ const AddDoctor = ({ history }) => {
   const [fax, setfax] = useState("");
   const [npi, setnpi] = useState("");
   const [hipa, sethipa] = useState(true);
-  const [insurance, setinsurance] = useState(true);
+  // const [insurance, setinsurance] = useState(true);
 
   const [qualification, setqualification] = useState("");
   const [specialization, setspecialization] = useState("");
   const [email, setemail] = useState("");
   const [address, setaddress] = useState("");
-  const [experience, setexperience] = useState("");
+  const [directphone, setdirectphone] = useState("");
   const [phoneNumber, setphoneNumber] = useState("");
   const [password, setpassword] = useState("");
 
@@ -33,45 +35,52 @@ const AddDoctor = ({ history }) => {
 
   const addDoctorHandler = async () => {
     try {
-      const formData = new FormData();
+      const emailvalidation = validateEmail(email);
+      console.log("emmmm", emailvalidation);
+      console.log("addEmployeeHandler");
+      if (emailvalidation == true) {
+        const formData = new FormData();
 
-      formData.append("user_image", image);
-      formData.append("firstName", firstName);
-      formData.append("lastName", lastName);
-      formData.append("companyname", companyname);
-      formData.append("fax", fax);
-      formData.append("npi", npi);
-      formData.append("hipa", hipa);
-      formData.append("insurance", insurance);
-      formData.append("qualification", qualification);
-      formData.append("specialization", specialization);
-      formData.append("address", address);
-      formData.append("password", password);
-      formData.append("email", email);
-      formData.append("experience", experience);
-      formData.append("phoneNumber", phoneNumber);
-      formData.append("type", "Admin");
+        formData.append("user_image", image);
+        formData.append("firstName", firstName);
+        formData.append("lastName", lastName);
+        formData.append("companyname", companyname);
+        formData.append("fax", fax);
+        formData.append("npi", npi);
+        formData.append("hipa", hipa);
+        // formData.append("insurance", insurance);
+        formData.append("qualification", qualification);
+        formData.append("specialization", specialization);
+        formData.append("address", address);
+        formData.append("password", password);
+        formData.append("email", email);
+        formData.append("directphone", directphone);
+        formData.append("phoneNumber", phoneNumber);
+        formData.append("type", "Admin");
 
-      const body = formData;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${adminInfo.token}`
+        const body = formData;
+        const config = {
+          headers: {
+            Authorization: `Bearer ${adminInfo.token}`
+          }
+        };
+        const res = await axios.post(
+          `${baseURL}/doctor/createDoctor`,
+          body,
+          config
+        );
+        if (res?.status == 201) {
+          Swal.fire({
+            icon: "success",
+            title: "",
+            text: "Doctor Created Successfully",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          history.replace("/Doctor");
         }
-      };
-      const res = await axios.post(
-        `${baseURL}/doctor/createDoctor`,
-        body,
-        config
-      );
-      if (res?.status == 201) {
-        Swal.fire({
-          icon: "success",
-          title: "",
-          text: "Doctor Created Successfully",
-          showConfirmButton: false,
-          timer: 1500
-        });
-        history.replace("/Doctor");
+      } else {
+        Toasty("error", `Please enter a valid email`);
       }
     } catch (error) {
       Swal.fire({
@@ -100,9 +109,9 @@ const AddDoctor = ({ history }) => {
                       </h1>
                     </Link>
                   </div>
-                  <div className="col-lg-6 text-right mt-lg-0 mt-2">
+                  {/* <div className="col-lg-6 text-right mt-lg-0 mt-2">
                     <h3 className="mr-no">Doc-Id: 1246</h3>
-                  </div>
+                  </div> */}
                 </div>
                 <form>
                   <div className="row">
@@ -178,8 +187,9 @@ const AddDoctor = ({ history }) => {
                         type="number"
                         className="all-inputt w-100"
                         placeholder="Enter Fax No"
+                        min={0}
                         value={fax}
-                        onChange={(e) => setfax(e.target.value)}
+                        onChange={(e) => handleChange(e, setfax)}
                       />
                     </div>
                     <div className="col-lg-4 mt-2">
@@ -188,44 +198,34 @@ const AddDoctor = ({ history }) => {
                       </label>
                       <input
                         type="number"
+                        min={0}
                         className="all-inputt w-100"
                         placeholder="Enter NPI"
                         value={npi}
-                        onChange={(e) => setnpi(e.target.value)}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="row">
-                
-                    <div className="col-lg-4 mt-2">
-                      <label htmlFor className="site-labell">
-                        Email*
-                      </label>
-                      <input
-                        type="email"
-                        className="all-inputt w-100"
-                        placeholder="Enter Email"
-                        value={email}
-                        onChange={(e) => setemail(e.target.value)}
-                      />
-                    </div>
-                    <div className="col-lg-4 mt-2">
-                      <label htmlFor className="site-labell">
-                        Password*
-                      </label>
-                      <input
-                        type="password"
-                        className="all-inputt w-100"
-                        placeholder="*******"
-                        value={password}
-                        onChange={(e) => setpassword(e.target.value)}
+                        onChange={(e) => handleChange(e, setnpi)}
                       />
                     </div>
                   </div>
 
                   <div className="row">
                     <div className="col-lg-4 mt-2">
+                      <label htmlFor className="site-labell">
+                        Office Phone*
+                      </label>
+                      <input
+                        type="number"
+                        maxlength="11"
+                        className="all-inputt w-100"
+                        placeholder="Enter Office Phone"
+                        value={phoneNumber}
+                        min={0}
+                        onChange={(e) => handleChange(e, setphoneNumber)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    {/* <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
                         Select insurance*
                       </label>
@@ -254,7 +254,7 @@ const AddDoctor = ({ history }) => {
                         />
                         <label htmlFor="test2">No</label>
                       </p>
-                    </div>
+                    </div> */}
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
                         Select HIPAA*
@@ -285,44 +285,57 @@ const AddDoctor = ({ history }) => {
                         <label htmlFor="test7">No</label>
                       </p>
                     </div>
+                    <div className="col-lg-4 mt-2">
+                      <label htmlFor className="site-labell">
+                        Email*
+                      </label>
+                      <input
+                        type="email"
+                        className="all-inputt w-100"
+                        placeholder="Enter Email"
+                        value={email}
+                        onChange={(e) => setemail(e.target.value)}
+                      />
+                    </div>
                   </div>
 
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Phone*
+                        Password*
+                      </label>
+                      <input
+                        type="password"
+                        className="all-inputt w-100"
+                        placeholder="*******"
+                        value={password}
+                        onChange={(e) => setpassword(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="col-lg-4 mt-2">
+                      <label htmlFor className="site-labell">
+                        Direct Phone*
                       </label>
                       <input
                         type="number"
-                        maxlength="11"
                         className="all-inputt w-100"
-                        placeholder="Enter Phone"
-                        value={phoneNumber}
-                        onChange={(e) => setphoneNumber(e.target.value)}
-                      />
-                    </div>
-                    <div className="col-lg-4 mt-2">
-                      <label htmlFor className="site-labell">
-                        Experience*
-                      </label>
-                      <input
-                        type="text"
-                        className="all-inputt w-100"
-                        placeholder="Enter Experience"
-                        value={experience}
-                        onChange={(e) => setexperience(e.target.value)}
+                        min={0}
+                        placeholder="Enter Direct Phone"
+                        value={directphone}
+                        onChange={(e) => setdirectphone(e.target.value)}
                       />
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Home Address*
+                        Address*
                       </label>
                       <input
                         type="text"
                         className="all-inputt w-100"
-                        placeholder="Enter Home Address"
+                        placeholder="Enter Address"
                         value={address}
                         onChange={(e) => setaddress(e.target.value)}
                       />
@@ -352,15 +365,15 @@ const AddDoctor = ({ history }) => {
                           firstName?.length > 0 &&
                           lastName?.length > 0 &&
                           companyname?.length > 0 &&
-                          fax?.length > 0 &&
-                          npi?.length > 0 &&
+                          fax > 0 &&
+                          npi > 0 &&
                           qualification?.length > 0 &&
                           specialization?.length > 0 &&
-                          experience?.length > 0 &&
+                          directphone > 0 &&
                           password?.length > 0 &&
                           address?.length > 0 &&
                           email?.length > 0 &&
-                          phoneNumber?.length > 0
+                          phoneNumber > 0
                             ? addDoctorHandler()
                             : Toasty(
                                 "error",

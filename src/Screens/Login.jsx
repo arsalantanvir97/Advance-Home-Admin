@@ -10,6 +10,8 @@ import api from "../utils/api";
 import Toasty from "../utils/toast";
 
 import "react-toastify/dist/ReactToastify.css";
+import { handleChange } from "../utils/InputNumberValidation";
+import { validateEmail } from "../utils/ValidateEmail";
 
 const Login = ({ history }) => {
   const dispatch = useDispatch();
@@ -26,9 +28,15 @@ const Login = ({ history }) => {
   const submitHandler = async (e) => {
     console.log("submitHandler");
     e.preventDefault();
+    const emailvalidation = validateEmail(email);
+    console.log("emmmm", emailvalidation);
+    console.log("addEmployeeHandler");
+    if (emailvalidation == true) {
     await dispatch(adminLoginAction(email, password, history));
     setemail("");
-    setpassword("");
+    setpassword("");}else {
+      Toasty("error", `Please enter a valid email`);
+    }
   };
 
   useEffect(() => {
@@ -250,13 +258,14 @@ const Login = ({ history }) => {
                 ) : forgotpasswordModal == 1 ? (
                   <input
                     type="number"
+                    min={0}
                     className="w-100 all-input"
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
                     placeholder="Verification Code"
                     value={code}
                     onChange={(e) => {
-                      setcode(e.target.value);
+                      handleChange(e, setcode) 
                     }}
                   />
                 ) : forgotpasswordModal == 2 ? (

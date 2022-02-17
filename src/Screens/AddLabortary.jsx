@@ -5,6 +5,8 @@ import axios from "axios";
 import { baseURL } from "../utils/api";
 import Swal from "sweetalert2";
 import Toasty from "../utils/toast";
+import { handleChange } from "../utils/InputNumberValidation";
+import { validateEmail } from "../utils/ValidateEmail";
 
 const AddLabortary = ({ history }) => {
   const [fullname, setfullname] = useState("");
@@ -22,37 +24,44 @@ const AddLabortary = ({ history }) => {
   const { adminInfo } = adminLogin;
   const addLabortaryHandler = async () => {
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${adminInfo.token}`
+      const emailvalidation = validateEmail(email);
+      console.log("emmmm", emailvalidation);
+      console.log("addEmployeeHandler");
+      if (emailvalidation == true) {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${adminInfo.token}`
+          }
+        };
+        console.log("beforehit");
+        const res = await axios.post(
+          `${baseURL}/labortary/createLabortary`,
+          {
+            fullname,
+            labspecialization,
+            address,
+            phone,
+            password,
+            fax,
+            email,
+            labmanagercontact,
+            type: "Admin"
+          },
+          config
+        );
+        console.log("res", res);
+        if (res?.status == 201) {
+          Swal.fire({
+            icon: "success",
+            title: "",
+            text: "Labortary added Successfully",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          history.replace("/Labortaries");
         }
-      };
-      console.log("beforehit");
-      const res = await axios.post(
-        `${baseURL}/labortary/createLabortary`,
-        {
-          fullname,
-          labspecialization,
-          address,
-          phone,
-          password,
-          fax,
-          email,
-          labmanagercontact,
-          type: "Admin"
-        },
-        config
-      );
-      console.log("res", res);
-      if (res?.status == 201) {
-        Swal.fire({
-          icon: "success",
-          title: "",
-          text: "Labortary added Successfully",
-          showConfirmButton: false,
-          timer: 1500
-        });
-        history.replace("/Labortaries");
+      } else {
+        Toasty("error", `Please enter a valid email`);
       }
     } catch (error) {
       Swal.fire({
@@ -145,11 +154,12 @@ const AddLabortary = ({ history }) => {
                       </label>
                       <input
                         type="number"
+                        min={0}
                         maxlength="11"
                         className="all-inputt w-100"
                         placeholder="Enter Phone"
                         value={phone}
-                        onChange={(e) => setphone(e.target.value)}
+                        onChange={(e) => handleChange(e, setphone)}
                       />
                     </div>
                     <div className="col-lg-4 mt-2">
@@ -159,10 +169,11 @@ const AddLabortary = ({ history }) => {
                       <input
                         type="number"
                         maxlength="11"
+                        min={0}
                         className="all-inputt w-100"
                         placeholder="Enter Lab Manager Contact"
                         value={labmanagercontact}
-                        onChange={(e) => setlabmanagercontact(e.target.value)}
+                        onChange={(e) => handleChange(e, setlabmanagercontact)}
                       />
                     </div>
                   </div>
@@ -185,11 +196,12 @@ const AddLabortary = ({ history }) => {
                       </label>
                       <input
                         type="number"
+                        min={0}
                         maxlength="11"
                         className="all-inputt w-100"
                         placeholder="Enter Fax No"
                         value={fax}
-                        onChange={(e) => setfax(e.target.value)}
+                        onChange={(e) => handleChange(e, setfax)}
                       />
                     </div>
                   </div>

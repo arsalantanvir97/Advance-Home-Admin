@@ -4,6 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { baseURL } from "../utils/api";
+import { handleChange } from "../utils/InputNumberValidation";
+import Toasty from "../utils/toast";
+import { validateEmail } from "../utils/ValidateEmail";
 const EditLabortary = ({ match, history }) => {
   const [fullname, setfullname] = useState("");
   const [labspecialization, setlabspecialization] = useState("");
@@ -46,6 +49,10 @@ const EditLabortary = ({ match, history }) => {
   }, [labortarystatus]);
   const updateLabortaryData = async () => {
     try {
+      const emailvalidation = validateEmail(email);
+      console.log("emmmm", emailvalidation);
+      console.log("addEmployeeHandler");
+      if (emailvalidation == true) {
       const config = {
         headers: {
           Authorization: `Bearer ${adminInfo.token}`,
@@ -75,6 +82,8 @@ const EditLabortary = ({ match, history }) => {
           timer: 1500,
         });
         history.replace("/Labortaries");
+      }}else {
+        Toasty("error", `Please enter a valid email`);
       }
     } catch (error) {
       Swal.fire({
@@ -192,12 +201,13 @@ const EditLabortary = ({ match, history }) => {
                       {is_edit ? (
                         <input
                           type="number"
+                          min={0}
                           maxlength="11"
                           className="all-inputt w-100"
                           placeholder="Enter Phone"
                           value={phone}
                           onChange={(e) => {
-                            setphone(e.target.value);
+                            handleChange(e, setphone) 
                           }}
                         />
                       ) : (

@@ -20,8 +20,8 @@ const ViewDoctor = ({ match, history }) => {
         url: `${baseURL}/doctor/getProfile/${match?.params?.id}`,
         method: "GET",
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       });
       console.log("res", res);
       setdoctor(res?.data?.doctor);
@@ -102,13 +102,15 @@ const ViewDoctor = ({ match, history }) => {
                             </label>
                           </div>
                           <div className="col-lg-6">
-                            <p className="label-value">{doctor?.firstName + " " + doctor?.lastName}</p>
+                            <p className="label-value">
+                              {doctor?.firstName + " " + doctor?.lastName}
+                            </p>
                           </div>
                         </div>
                         <div className="row">
                           <div className="col-lg-6">
                             <label htmlFor className="my-label">
-                              Home Address
+                              Address
                             </label>
                           </div>
                           <div className="col-lg-6">
@@ -118,7 +120,7 @@ const ViewDoctor = ({ match, history }) => {
                         <div className="row">
                           <div className="col-lg-6">
                             <label htmlFor className="my-label">
-                              Phone No
+                              Office Phone
                             </label>
                           </div>
                           <div className="col-lg-6">
@@ -152,27 +154,31 @@ const ViewDoctor = ({ match, history }) => {
                             </label>
                           </div>
                           <div className="col-lg-6">
-                            <p className="label-value">{doctor?.qualification}</p>
+                            <p className="label-value">
+                              {doctor?.qualification}
+                            </p>
                           </div>
                         </div>
                         <div className="row">
                           <div className="col-lg-6">
                             <label htmlFor className="my-label">
-                            Specialization
+                              Specialization
                             </label>
                           </div>
                           <div className="col-lg-6">
-                            <p className="label-value">{doctor?.specialization}</p>
+                            <p className="label-value">
+                              {doctor?.specialization}
+                            </p>
                           </div>
                         </div>
                         <div className="row">
                           <div className="col-lg-6">
                             <label htmlFor className="my-label">
-                              Experience
+                              Direct Phone
                             </label>
                           </div>
                           <div className="col-lg-6">
-                            <p className="label-value">{doctor?.experience}</p>
+                            <p className="label-value">{doctor?.directphone}</p>
                           </div>
                         </div>
                         <div className="row">
@@ -182,10 +188,12 @@ const ViewDoctor = ({ match, history }) => {
                             </label>
                           </div>
                           <div className="col-lg-6">
-                            <p className="label-value">{doctor?.hipa==true? 'Yes': 'No'}</p>
+                            <p className="label-value">
+                              {doctor?.hipa == true ? "Yes" : "No"}
+                            </p>
                           </div>
                         </div>
-                        <div className="row">
+                        {/* <div className="row">
                           <div className="col-lg-6">
                             <label htmlFor className="my-label">
                               Insured
@@ -194,7 +202,7 @@ const ViewDoctor = ({ match, history }) => {
                           <div className="col-lg-6">
                             <p className="label-value">{doctor?.insurance==true? 'Yes': 'No'}</p>
                           </div>
-                        </div>
+                        </div> */}
                         <div className="row">
                           <div className="col-lg-6">
                             <label htmlFor className="my-label">

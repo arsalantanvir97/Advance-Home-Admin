@@ -4,6 +4,7 @@ import { baseURL, imageURL } from "../utils/api";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import DocumentCard from "../components/DocumentCard";
 
 const ViewUser = ({ match }) => {
   const adminLogin = useSelector((state) => state.adminLogin);
@@ -19,8 +20,8 @@ const ViewUser = ({ match }) => {
         url: `${baseURL}/user/getProfile/${match?.params?.id}`,
         method: "GET",
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       });
       console.log("res", res);
       setuser(res?.data?.user);
@@ -86,7 +87,9 @@ const ViewUser = ({ match }) => {
                             </label>
                           </div>
                           <div className="col-lg-6">
-                            <p className="label-value">{user?.firstname+ ' ' +user?.lastname}</p>
+                            <p className="label-value">
+                              {user?.firstname + " " + user?.lastname}
+                            </p>
                           </div>
                         </div>
                         <div className="row">
@@ -114,21 +117,99 @@ const ViewUser = ({ match }) => {
                         <div className="row">
                           <div className="col-lg-6">
                             <label htmlFor className="my-label">
-                              Insurance1
+                              Primary Insurance Co. Name
                             </label>
                           </div>
                           <div className="col-lg-6">
-                            <p className="label-value">{user?.insurance1}</p>
+                            <p className="label-value">
+                              {user?.InsuranceName1}
+                            </p>
                           </div>
                         </div>
                         <div className="row">
                           <div className="col-lg-6">
                             <label htmlFor className="my-label">
-                              Insurance2
+                              Primary Insurance Group
                             </label>
                           </div>
                           <div className="col-lg-6">
-                            <p className="label-value">{user?.insurance2}</p>
+                            <p className="label-value">
+                              {user?.InsuranceGroup1}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Primary Insurance Policy No
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">
+                              {user?.InsurancePolicyNo1}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Primary Insurance Address
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">
+                              {user?.InsuranceAddress1}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Secondary Insurance Co. Name
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">
+                              {user?.InsuranceName2}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Secondary Insurance Address
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">
+                              {user?.InsuranceAddress2}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Secondary Insurance Group
+                            </label>
+                          </div>
+
+                          <div className="col-lg-6">
+                            <p className="label-value">
+                              {user?.InsuranceGroup2}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                              Secondary Insurance Policy No
+                            </label>
+                          </div>
+
+                          <div className="col-lg-6">
+                            <p className="label-value">
+                              {user?.InsurancePolicyNo2}
+                            </p>
                           </div>
                         </div>
                         <div className="row">
@@ -138,7 +219,9 @@ const ViewUser = ({ match }) => {
                             </label>
                           </div>
                           <div className="col-lg-6">
-                            <p className="label-value">{user?.insured==true ?'Yes' : 'No'}</p>
+                            <p className="label-value">
+                              {user?.insured == true ? "Yes" : "No"}
+                            </p>
                           </div>
                         </div>
                         <div className="row">
@@ -164,14 +247,14 @@ const ViewUser = ({ match }) => {
                         <div className="row">
                           <div className="col-lg-6">
                             <label htmlFor className="my-label">
-                              Doctor Name
+                              Provider Name
                             </label>
                           </div>
                           <div className="col-lg-6">
-                            <p className="label-value">{user?.doctorname}</p>
+                            <p className="label-value">{user?.provider}</p>
                           </div>
                         </div>
-                        <div className="row">
+                        {/* <div className="row">
                           <div className="col-lg-6">
                             <label htmlFor className="my-label">
                               Company Name
@@ -180,7 +263,7 @@ const ViewUser = ({ match }) => {
                           <div className="col-lg-6">
                             <p className="label-value">{user?.companyname}</p>
                           </div>
-                        </div>
+                        </div> */}
                         <div className="row">
                           <div className="col-lg-6">
                             <label htmlFor className="my-label">
@@ -191,7 +274,7 @@ const ViewUser = ({ match }) => {
                             <p className="label-value">{user?.address}</p>
                           </div>
                         </div>
-                        <div className="row">
+                        {/* <div className="row">
                           <div className="col-lg-6">
                             <label htmlFor className="my-label">
                               Blood Type
@@ -202,8 +285,8 @@ const ViewUser = ({ match }) => {
                               {user?.bloodtype?.type + user?.bloodtype?.sign}
                             </p>
                           </div>
-                        </div>
-                        <div className="row">
+                        </div> */}
+                        {/* <div className="row">
                           <div className="col-lg-6">
                             <label htmlFor className="my-label">
                               Insurance No
@@ -214,7 +297,7 @@ const ViewUser = ({ match }) => {
                               {user?.insuranceNumber}
                             </p>
                           </div>
-                        </div>
+                        </div> */}
                         <div className="row">
                           <div className="col-lg-6">
                             <label htmlFor className="my-label">
@@ -243,6 +326,24 @@ const ViewUser = ({ match }) => {
                           </div>
                           <div className="col-lg-6">
                             <p className="label-value">{user?.email}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-12">
+                            <label htmlFor className="my-label">
+                              User Insuance Card
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <DocumentCard
+                              text={`Document`}
+                              doc={user?.insurancecard}
+                              key={0}
+                              index={user?._id}
+                              only_pdf={true}
+                              enable_delete={false}
+                              // handleDelete={()=>{handleDeleteLive(schedule?._id)}}
+                            />
                           </div>
                         </div>
                       </div>
