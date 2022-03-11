@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import InputPhone from "../components/InputPhone";
 import { baseURL } from "../utils/api";
 import { handleChange } from "../utils/InputNumberValidation";
 import Toasty from "../utils/toast";
@@ -199,17 +200,10 @@ const EditLabortary = ({ match, history }) => {
                         Phone*
                       </label>
                       {is_edit ? (
-                        <input
-                          type="number"
-                          min={0}
-                          maxlength="11"
-                          className="all-inputt w-100"
-                          placeholder="Enter Phone"
-                          value={phone}
-                          onChange={(e) => {
-                            handleChange(e, setphone) 
-                          }}
-                        />
+                         <InputPhone
+                         value={phone}
+                         onChange={setphone}
+                       />
                       ) : (
                         <p>{phone}</p>
                       )}{" "}
