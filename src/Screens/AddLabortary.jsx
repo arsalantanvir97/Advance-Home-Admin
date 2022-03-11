@@ -7,6 +7,8 @@ import Swal from "sweetalert2";
 import Toasty from "../utils/toast";
 import { handleChange } from "../utils/InputNumberValidation";
 import { validateEmail } from "../utils/ValidateEmail";
+import InputPhone from "../components/InputPhone";
+import InputNumber from "../components/InputNumber";
 
 const AddLabortary = ({ history }) => {
   const [fullname, setfullname] = useState("");
@@ -152,28 +154,15 @@ const AddLabortary = ({ history }) => {
                       <label htmlFor className="site-labell">
                         Phone*
                       </label>
-                      <input
-                        type="number"
-                        min={0}
-                        maxlength="11"
-                        className="all-inputt w-100"
-                        placeholder="Enter Phone"
-                        value={phone}
-                        onChange={(e) => handleChange(e, setphone)}
-                      />
+                      <InputPhone value={phone} onChange={setphone} />
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
                         Lab Manager Contact*
                       </label>
-                      <input
-                        type="number"
-                        maxlength="11"
-                        min={0}
-                        className="all-inputt w-100"
-                        placeholder="Enter Lab Manager Contact"
+                      <InputPhone
                         value={labmanagercontact}
-                        onChange={(e) => handleChange(e, setlabmanagercontact)}
+                        onChange={setlabmanagercontact}
                       />
                     </div>
                   </div>
@@ -194,14 +183,11 @@ const AddLabortary = ({ history }) => {
                       <label htmlFor className="site-labell">
                         Fax No*
                       </label>
-                      <input
-                        type="number"
-                        min={0}
-                        maxlength="11"
-                        className="all-inputt w-100"
-                        placeholder="Enter Fax No"
+                      <InputNumber
                         value={fax}
-                        onChange={(e) => handleChange(e, setfax)}
+                        onChange={setfax}
+                        max={5}
+                        className="all-inputt w-100"
                       />
                     </div>
                   </div>

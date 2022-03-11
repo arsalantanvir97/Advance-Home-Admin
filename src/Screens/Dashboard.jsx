@@ -8,8 +8,8 @@ import { gettingallNotif } from "../actions/notifAction";
 
 const Dashboard = () => {
   const [dashboardata, setdashboardata] = useState([]);
-  const [year1, setyear1] = useState('');
-  const [year2, setyear2] = useState('');
+  const [year1, setyear1] = useState("");
+  const [year2, setyear2] = useState("");
 
   const dispatch = useDispatch();
   const adminLogin = useSelector((state) => state.adminLogin);
@@ -17,11 +17,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     handleGetNotification();
-   
   }, []);
   useEffect(() => {
     handleGetDashboardData();
-  }, [year1,year2]);
+  }, [year1, year2]);
 
   const handleGetNotification = async () => {
     dispatch(gettingallNotif());
@@ -33,10 +32,10 @@ const Dashboard = () => {
       const res = await axios({
         url: `${baseURL}/admin/getCountofallCollection`,
         method: "GET",
-        params: {year1,year2},
+        params: { year1, year2 },
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       });
 
       console.log("res", res);
@@ -133,16 +132,29 @@ const Dashboard = () => {
                     <h2 className="sub-heading ml-1">Total Users per Month</h2>
                   </div>
                   <div className="col-lg-6 text-right mt-lg-0 mt-2">
-                    <select name id className="general-select w-50" value={year1} onChange={(e)=>{
-                      setyear1(e.target.value)
-                    }}>
-                      <option value={'2016'}>2016</option>
-                      <option  value={'2017'}>2017</option>
-                      <option  value={'2018'}>2018</option>
-                      <option  value={'2019'}>2019</option>
-                      <option  value={'2020'}>2020</option>
-                      <option  value={'2021'}>2021</option>
-
+                    <select
+                      name
+                      id
+                      className="general-select w-50"
+                      value={year1}
+                      onChange={(e) => {
+                        setyear1(e.target.value);
+                      }}
+                    >
+                      <option value={"2020"}>2020</option>
+                      <option value={"2021"}>2021</option>
+                      <option value={"2022"}>2022</option>
+                      <option value={"2023"}>2023</option>
+                      <option value={"2024"}>2024</option>
+                      <option value={"2025"}>2025</option>
+                      <option value={"2026"}>2026</option>
+                      <option value={"2027"}>2027</option>
+                      <option value={"2028"}>2028</option>
+                      <option value={"2029"}>2029</option>
+                      <option value={"2030"}>2030</option>
+                      <option value={"2031"}>2031</option>
+                      <option value={"2032"}>2032</option>
+                      <option value={"2033"}>2033</option>
                     </select>
                   </div>
                 </div>
@@ -160,16 +172,29 @@ const Dashboard = () => {
                     <h2 className="sub-heading ml-1">Total Tests per Month</h2>
                   </div>
                   <div className="col-lg-6 text-right mt-lg-0 mt-2">
-                    <select name id className="general-select w-50" value={year2} onChange={(e)=>{
-                      setyear2(e.target.value)
-                    }}>
-
-                      <option value={'2016'}>2016</option>
-                      <option  value={'2017'}>2017</option>
-                      <option  value={'2018'}>2018</option>
-                      <option  value={'2019'}>2019</option>
-                      <option  value={'2020'}>2020</option>
-                      <option  value={'2021'}>2021</option>
+                    <select
+                      name
+                      id
+                      className="general-select w-50"
+                      value={year2}
+                      onChange={(e) => {
+                        setyear2(e.target.value);
+                      }}
+                    >
+                      <option value={"2020"}>2020</option>
+                      <option value={"2021"}>2021</option>
+                      <option value={"2022"}>2022</option>
+                      <option value={"2023"}>2023</option>
+                      <option value={"2024"}>2024</option>
+                      <option value={"2025"}>2025</option>
+                      <option value={"2026"}>2026</option>
+                      <option value={"2027"}>2027</option>
+                      <option value={"2028"}>2028</option>
+                      <option value={"2029"}>2029</option>
+                      <option value={"2030"}>2030</option>
+                      <option value={"2031"}>2031</option>
+                      <option value={"2032"}>2032</option>
+                      <option value={"2033"}>2033</option>
                     </select>
                   </div>
                 </div>

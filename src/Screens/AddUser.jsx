@@ -10,6 +10,8 @@ import DatePick from "../components/DatePick";
 import Toasty from "../utils/toast";
 import { handleChange } from "../utils/InputNumberValidation";
 import { validateEmail } from "../utils/ValidateEmail";
+import InputPhone from "../components/InputPhone";
+import InputNumber from "../components/InputNumber";
 
 const AddUser = ({ history }) => {
   const [firstname, setfirstname] = useState("");
@@ -333,15 +335,11 @@ const AddUser = ({ history }) => {
                     <label htmlFor className="site-labell">
                       Primary Insurance Policy No*
                     </label>
-                    <input
-                      type="number"
-                      min={0}
-                      className="all-inputt w-100"
-                      placeholder="Enter Primary Insurance Policy No"
+                    <InputNumber
                       value={InsurancePolicyNo1}
-                      onChange={(e) => {
-                        setInsurancePolicyNo1(e.target.value);
-                      }}
+                      onChange={setInsurancePolicyNo1}
+                      max={12}
+                      className="all-inputt w-100"
                     />
                   </div>
                 </div>
@@ -414,16 +412,13 @@ const AddUser = ({ history }) => {
                     <label htmlFor className="site-labell">
                       Secondary Insurance Policy No*
                     </label>
-                    <input
-                      type="number"
-                      className="all-inputt w-100"
-                      min={0}
-                      placeholder="Enter Secondary Insurance Policy No"
+                    <InputNumber
                       value={InsurancePolicyNo2}
-                      onChange={(e) => {
-                        setInsurancePolicyNo2(e.target.value);
-                      }}
+                      onChange={setInsurancePolicyNo2}
+                      max={12}
+                      className="all-inputt w-100"
                     />
+                   
                   </div>
                 </div>
                 <div className="row">
@@ -431,17 +426,13 @@ const AddUser = ({ history }) => {
                     <label htmlFor className="site-labell">
                       Policy No*
                     </label>
-                    <input
-                      type="number"
-                      maxlength="9"
-                      min={0}
-                      className="all-inputt w-100"
-                      placeholder="Enter Policy No"
+                    <InputNumber
                       value={policyno}
-                      onChange={(e) => {
-                        setpolicyno(e.target.value);
-                      }}
+                      onChange={setpolicyno}
+                      max={12}
+                      className="all-inputt w-100"
                     />
+                   
                   </div>
                 </div>
                 <div className="row">
@@ -449,16 +440,7 @@ const AddUser = ({ history }) => {
                     <label htmlFor className="site-labell">
                       Phone*
                     </label>
-                    <input
-                      value={phoneNumber}
-                      type="number"
-                      maxlength="11"
-                      onChange={(e) => {
-                        setphoneNumber(e.target.value);
-                      }}
-                      className="all-inputt w-100"
-                      placeholder="Enter Phone Number"
-                    />
+                    <InputPhone value={phoneNumber} onChange={setphoneNumber} />
                   </div>
                 </div>
 
@@ -467,16 +449,13 @@ const AddUser = ({ history }) => {
                     <label htmlFor className="site-labell">
                       Fax No*
                     </label>
-                    <input
-                      type="number"
-                      maxlength="9"
-                      className="all-inputt w-100"
-                      placeholder="Enter Fax No"
+                    <InputNumber
                       value={fax}
-                      onChange={(e) => {
-                        setfax(e.target.value);
-                      }}
+                      onChange={setfax}
+                      max={12}
+                      className="all-inputt w-100"
                     />
+                  
                   </div>
                 </div>
 

@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import TagsInput from "react-tagsinput";
 import Swal from "sweetalert2";
 import ImageSelector from "../components/ImageSelector";
+import InputNumber from "../components/InputNumber";
+import InputPhone from "../components/InputPhone";
 import { baseURL } from "../utils/api";
 import Toasty from "../utils/toast";
 import { validateEmail } from "../utils/ValidateEmail";
@@ -248,16 +250,20 @@ const EditLabTEchnician = ({ match, history }) => {
                         Phone*
                       </label>
                       {is_edit ? (
-                        <input
-                          type="number"
-                          min={0}
-                          maxlength="11"
-                          className="all-inputt w-100"
-                          placeholder="Enter Phone"
-                          value={phoneNumber}
-                          onChange={(e) => {
-                            handleChange(e, setphoneNumber)                           }}
-                        />
+                         <InputPhone
+                         value={phoneNumber}
+                         onChange={setphoneNumber}
+                       />
+                        // <input
+                        //   type="number"
+                        //   min={0}
+                        //   maxlength="11"
+                        //   className="all-inputt w-100"
+                        //   placeholder="Enter Phone"
+                        //   value={phoneNumber}
+                        //   onChange={(e) => {
+                        //     handleChange(e, setphoneNumber)                           }}
+                        // />
                       ) : (
                         <p>{phoneNumber}</p>
                       )}
@@ -325,16 +331,13 @@ const EditLabTEchnician = ({ match, history }) => {
                         Modal*
                       </label>
                       {is_edit ? (
-                        <input
-                        min={0}
-                          type="number"
-                          className="all-inputt w-100"
-                          placeholder="Enter Modal No"
-                          value={modal}
-                          onChange={(e) => {
-                            handleChange(e, setmodal) 
-                          }}
-                        />
+                        <InputNumber
+                        value={modal}
+                        onChange={setmodal}
+                        max={12}
+                        className="all-inputt w-100"
+                      />
+                     
                       ) : (
                         <p>{modal}</p>
                       )}

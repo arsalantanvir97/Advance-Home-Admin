@@ -8,6 +8,8 @@ import Swal from "sweetalert2";
 import Toasty from "../utils/toast";
 import { handleChange } from "../utils/InputNumberValidation";
 import { validateEmail } from "../utils/ValidateEmail";
+import InputNumber from "../components/InputNumber";
+import InputPhone from "../components/InputPhone";
 
 const AddDoctor = ({ history }) => {
   const [firstName, setfirstName] = useState("");
@@ -183,26 +185,22 @@ const AddDoctor = ({ history }) => {
                       <label htmlFor className="site-labell">
                         Fax No*
                       </label>
-                      <input
-                        type="number"
-                        className="all-inputt w-100"
-                        placeholder="Enter Fax No"
-                        min={0}
+                      <InputNumber
                         value={fax}
-                        onChange={(e) => handleChange(e, setfax)}
+                        onChange={setfax}
+                        max={5}
+                        className="all-inputt w-100"
                       />
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
                         NPI*
                       </label>
-                      <input
-                        type="number"
-                        min={0}
-                        className="all-inputt w-100"
-                        placeholder="Enter NPI"
+                      <InputNumber
                         value={npi}
-                        onChange={(e) => handleChange(e, setnpi)}
+                        onChange={setnpi}
+                        max={14}
+                        className="all-inputt w-100"
                       />
                     </div>
                   </div>
@@ -212,14 +210,9 @@ const AddDoctor = ({ history }) => {
                       <label htmlFor className="site-labell">
                         Office Phone*
                       </label>
-                      <input
-                        type="number"
-                        maxlength="11"
-                        className="all-inputt w-100"
-                        placeholder="Enter Office Phone"
+                      <InputPhone
                         value={phoneNumber}
-                        min={0}
-                        onChange={(e) => handleChange(e, setphoneNumber)}
+                        onChange={setphoneNumber}
                       />
                     </div>
                   </div>
@@ -317,13 +310,9 @@ const AddDoctor = ({ history }) => {
                       <label htmlFor className="site-labell">
                         Direct Phone*
                       </label>
-                      <input
-                        type="number"
-                        className="all-inputt w-100"
-                        min={0}
-                        placeholder="Enter Direct Phone"
+                      <InputPhone
                         value={directphone}
-                        onChange={(e) => setdirectphone(e.target.value)}
+                        onChange={setdirectphone}
                       />
                     </div>
                   </div>

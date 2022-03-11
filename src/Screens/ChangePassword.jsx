@@ -13,7 +13,7 @@ const ChangePassword = ({ history }) => {
   const adminLogin = useSelector((state) => state.adminLogin);
   const { adminInfo } = adminLogin;
 
-  const submitHandler = async (e) => {
+  const submitHandler = async () => {
     console.log("submitHandler");
     console.log(
       "submitHandlerreqbody",
@@ -21,7 +21,6 @@ const ChangePassword = ({ history }) => {
       newpassword,
       confirm_password
     );
-    e.preventDefault();
     await dispatch(
       adminverfyadnresetpasword(
         existingpassword,
@@ -144,7 +143,13 @@ const ChangePassword = ({ history }) => {
                       <div className="col-12 mt-4">
                         <Link
                           to="#"
-                          onClick={submitHandler}
+                          onClick={
+                            existingpassword?.length > 0 &&
+                            newpassword?.length > 0 &&
+                            confirm_password?.length > 0
+                              ? submitHandler()
+                              : null
+                          }
                           className="general-btn d-inline-block px-3"
                         >
                           Update

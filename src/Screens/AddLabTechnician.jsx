@@ -10,6 +10,8 @@ import TagsInput from "react-tagsinput";
 import { MultiSelect } from "react-multi-select-component";
 import Toasty from "../utils/toast";
 import { validateEmail } from "../utils/ValidateEmail";
+import InputPhone from "../components/InputPhone";
+import InputNumber from "../components/InputNumber";
 
 const AddLabTechnician = ({ history }) => {
   const [firstName, setfirstName] = useState("");
@@ -22,7 +24,7 @@ const AddLabTechnician = ({ history }) => {
   const [email, setemail] = useState("");
   const [color, setcolor] = useState("");
   const [vehicle, setvehicle] = useState("");
-  const [modal, setmodal] = useState("");
+  const [modal, setmodal] = useState('');
 
   const [phoneNumber, setphoneNumber] = useState("");
   const [password, setpassword] = useState("");
@@ -37,7 +39,11 @@ const AddLabTechnician = ({ history }) => {
   const handleChange = (value) => {
     setqualification(value);
   };
-
+useEffect(()=>{
+console.log('phoneNumber',qualification,
+qualified,
+specialization);
+},[phoneNumber])
   const AddLabTechnicianHandler = async () => {
     try {
       const emailvalidation = validateEmail(email);
@@ -212,7 +218,11 @@ const AddLabTechnician = ({ history }) => {
                       <label htmlFor className="site-labell">
                         Phone*
                       </label>
-                      <input
+                      <InputPhone
+                        value={phoneNumber}
+                        onChange={setphoneNumber}
+                      />
+                      {/* <input
                         type="number"
                         min={0}
                         maxlength="11"
@@ -220,7 +230,7 @@ const AddLabTechnician = ({ history }) => {
                         placeholder="Enter Phone"
                         value={phoneNumber}
                         onChange={(e) => handleChange(e, setphoneNumber)}
-                      />
+                      /> */}
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
@@ -266,14 +276,13 @@ const AddLabTechnician = ({ history }) => {
                       <label htmlFor className="site-labell">
                         Modal*
                       </label>
-                      <input
-                        type="number"
-                        className="all-inputt w-100"
-                        placeholder={2002}
-                        value={modal}
-                        min={0}
-                        onChange={(e) => handleChange(e, setmodal)}
-                      />
+                      <InputNumber
+                                 value={modal}
+                                onChange={setmodal}
+                                max={14}
+                                className="all-inputt w-100"
+                              />
+                     
                     </div>
 
                     <div className="col-lg-4 mt-1">
@@ -320,8 +329,8 @@ const AddLabTechnician = ({ history }) => {
                           password?.length > 0 &&
                           email?.length > 0 &&
                           vehicle?.length > 0 &&
-                          phoneNumber?.length > 0 &&
-                          modal?.length > 0
+                          phoneNumber > 0 &&
+                          modal > 0
                             ? AddLabTechnicianHandler()
                             : Toasty(
                                 "error",

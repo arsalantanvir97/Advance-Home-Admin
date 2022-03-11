@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import ImageSelector from "../components/ImageSelector";
+import InputPhone from "../components/InputPhone";
 import { baseURL } from "../utils/api";
 import Toasty from "../utils/toast";
 import { validateEmail } from "../utils/ValidateEmail";
@@ -295,16 +296,11 @@ const EditDoctor = ({ match, history }) => {
                       Office Phone*
                       </label>
                       {is_edit ? (
-                        <input
-                          type="number"
-                          maxlength="11"
-                          className="all-inputt w-100"
-                          placeholder="Enter Office Phone"
-                          value={phoneNumber}
-                          onChange={(e) => {
-                            setphoneNumber(e.target.value);
-                          }}
-                        />
+                        <InputPhone
+                        value={phoneNumber}
+                        onChange={setphoneNumber}
+                      />
+                       
                       ) : (
                         <p>{phoneNumber}</p>
                       )}{" "}
@@ -314,15 +310,11 @@ const EditDoctor = ({ match, history }) => {
                       Direct Phone*
                       </label>
                       {is_edit ? (
-                        <input
-                          type="text"
-                          className="all-inputt w-100"
-                          placeholder="Enter ExperiDirect Phoneence"
+                          <InputPhone
                           value={directphone}
-                          onChange={(e) => {
-                            setdirectphone(e.target.value);
-                          }}
+                          onChange={setdirectphone}
                         />
+                      
                       ) : (
                         <p>{directphone}</p>
                       )}

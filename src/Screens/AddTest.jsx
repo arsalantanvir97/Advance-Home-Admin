@@ -6,23 +6,22 @@ import axios from "axios";
 import { baseURL } from "../utils/api";
 import Swal from "sweetalert2";
 import DatePicker from "react-datepicker";
+import Toasty from "../utils/toast";
 
 const AddTest = ({ history }) => {
- 
-  const [title, settitle] = useState();
-  const [dateadded, setdateadded] = useState();
-  const [amount, setamount] = useState();
-  const [longDesc, setlongDesc] = useState();
+  const [title, settitle] = useState("");
+  const [dateadded, setdateadded] = useState("");
+  const [amount, setamount] = useState("");
+  const [longDesc, setlongDesc] = useState("");
 
-  const [image, setimage] = useState();
+  const [image, setimage] = useState("");
   const [is_edit, setIsEdit] = useState(true);
   const dispatch = useDispatch();
 
   const adminLogin = useSelector((state) => state.adminLogin);
   const { adminInfo } = adminLogin;
 
-  const addTestHadndler = async (e) => {
-    e.preventDefault()
+  const addTestHadndler = async () => {
     try {
       const formData = new FormData();
       formData.append("user_image", image);
@@ -36,22 +35,22 @@ const AddTest = ({ history }) => {
       const body = formData;
       const config = {
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       };
       const res = await axios.post(
         `${baseURL}/testtype/createTestType`,
         body,
         config
       );
-      console.log('res',res);
+      console.log("res", res);
       if (res?.status == 201) {
         Swal.fire({
           icon: "success",
           title: "",
           text: "Test Created Successfully",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1500
         });
         history.replace("/TestManagement");
       }
@@ -61,7 +60,7 @@ const AddTest = ({ history }) => {
         title: "ERROR",
         text: "Internal Server Error",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1500
       });
     }
   };
@@ -89,7 +88,7 @@ const AddTest = ({ history }) => {
                     <h2 className="my-label my-1">Test.Id: 1246</h2>
                   </div>
                 </div>
-                <form >
+                <form>
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
@@ -165,7 +164,17 @@ const AddTest = ({ history }) => {
                     <div className="col-12">
                       <button
                         className="general-btn mt-3 px-3"
-                        onClick={addTestHadndler}
+                        onClick={() => {
+                          title?.length > 0 &&
+                          amount > 0 &&
+                          longDesc?.length > 0 &&
+                          image?.name?.length > 0
+                            ? addTestHadndler()
+                            : Toasty(
+                                "error",
+                                `Please fill out all the required fields`
+                              );
+                        }}
                       >
                         Add
                       </button>

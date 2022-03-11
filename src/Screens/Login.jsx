@@ -12,6 +12,7 @@ import Toasty from "../utils/toast";
 import "react-toastify/dist/ReactToastify.css";
 import { handleChange } from "../utils/InputNumberValidation";
 import { validateEmail } from "../utils/ValidateEmail";
+import InputNumber from "../components/InputNumber";
 
 const Login = ({ history }) => {
   const dispatch = useDispatch();
@@ -260,17 +261,11 @@ const Login = ({ history }) => {
                     }}
                   />
                 ) : forgotpasswordModal == 1 ? (
-                  <input
-                    type="number"
-                    min={0}
-                    className="w-100 all-input"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                    placeholder="Verification Code"
+                  <InputNumber
                     value={code}
-                    onChange={(e) => {
-                      handleChange(e, setcode);
-                    }}
+                    onChange={setcode}
+                    max={12}
+                    className="all-inputt w-100"
                   />
                 ) : forgotpasswordModal == 2 ? (
                   <>
