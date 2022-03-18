@@ -23,7 +23,7 @@ export const gettingallNotif = () => async (dispatch, getState) => {
     };
 
     const res = await axios.get(
-      `${baseURL}/notification/notifications`,
+      `${baseURL}/notification/adminnotifications`,
       config
     );
     console.log("res", res);

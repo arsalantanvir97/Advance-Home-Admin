@@ -58,7 +58,7 @@ const Notification = () => {
                     <h1 className="ml-1 main-heading">Notifications</h1>
                   </div>
                 </div>
-                {notifcation?.docs?.length > 0 &&
+                {notifcation?.docs?.length > 0 ?
                   notifcation?.docs?.map((not, index) => (
                     <>
                       <div className="row mt-2">
@@ -87,7 +87,7 @@ const Notification = () => {
                         </div>
                       </div>
                     </>
-                  ))}
+                  )): <h5 style={{marginTop:20}}>No Notifications</h5>}
                 {notifcation?.docs?.length > 0 && (
                   <Pagination
                     totalDocs={notifcation?.totalDocs}

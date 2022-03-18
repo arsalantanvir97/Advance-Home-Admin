@@ -121,7 +121,7 @@ const EditLabortary = ({ match, history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Full Name*
+                        Full Name{is_edit&&'*'}
                       </label>
                       {is_edit ? (
                         <input
@@ -139,7 +139,7 @@ const EditLabortary = ({ match, history }) => {
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Lab Specialization**
+                        Lab Specialization{is_edit&&'*'}
                       </label>
                       {is_edit ? (
                         <input
@@ -159,7 +159,7 @@ const EditLabortary = ({ match, history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Email*
+                        Email{is_edit&&'*'}
                       </label>
                       {is_edit ? (
                         <input
@@ -177,7 +177,7 @@ const EditLabortary = ({ match, history }) => {
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Password*
+                        Password{is_edit&&'*'}
                       </label>
                       {is_edit ? (
                         <input
@@ -197,7 +197,7 @@ const EditLabortary = ({ match, history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Phone*
+                        Phone{is_edit&&'*'}
                       </label>
                       {is_edit ? (
                          <InputPhone
@@ -212,7 +212,7 @@ const EditLabortary = ({ match, history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Address*
+                        Address{is_edit&&'*'}
                       </label>
                       {is_edit ? (
                         <input

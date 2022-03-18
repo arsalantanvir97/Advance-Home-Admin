@@ -8,13 +8,14 @@ import DatePicker from "react-datepicker";
 
 import { baseURL } from "../utils/api";
 import moment from "moment";
+import Toasty from "../utils/toast";
+import InputNumber from "../components/InputNumber";
 
 const EditTest = ({ match, history }) => {
   const [title, settitle] = useState("");
   const [testdetails, settestdetails] = useState([]);
 
   const [dateadded, setdateadded] = useState("");
-  const [dateaddedd, setdateaddedd] = useState("");
 
   const [amount, setamount] = useState("");
   const [longDesc, setlongDesc] = useState("");
@@ -29,19 +30,21 @@ const EditTest = ({ match, history }) => {
   useEffect(() => {
     getTestType();
   }, []);
-
+  useEffect(() => {
+    console.log('dateadded',dateadded);
+  }, [dateadded]);
   const getTestType = async () => {
     try {
       const res = await axios({
         url: `${baseURL}/testtype/testTypeById/${match?.params?.id}`,
         method: "GET",
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       });
       console.log("res", res);
       settitle(res?.data?.testtype?.title);
-      setdateadded(res?.data?.testtype?.dateadded);
+      setdateadded(new Date(res?.data?.testtype?.dateadded));
       setamount(res?.data?.testtype?.amount);
       setlongDesc(res?.data?.testtype?.longDesc);
       settestdetails(res?.data?.testtype);
@@ -52,51 +55,57 @@ const EditTest = ({ match, history }) => {
   };
 
   const updateProfileData = async (e) => {
-    console.log("updateProfileData");
-    try {
-      const formData = new FormData();
+    console.log("updateProfileData",title?.length);
+    if (title?.length > 0 && amount > 0 && longDesc?.length > 0)
+     {
+      try {
+        const formData = new FormData();
 
-      formData.append("user_image", image);
-      formData.append("title", title);
-      formData.append("dateadded", dateaddedd);
-      formData.append("id", match?.params?.id);
-      formData.append("amount", amount);
-      formData.append("longDesc", longDesc);
+        formData.append("user_image", image);
+        formData.append("title", title);
+        formData.append("dateadded", dateadded);
+        formData.append("id", match?.params?.id);
+        formData.append("amount", amount);
+        formData.append("longDesc", longDesc);
 
-      const body = formData;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
-      };
-      console.log("block1");
-      const res = await axios.post(
-        `${baseURL}/testtype/editProfile`,
-        body,
-        config
-      );
-      console.log("editres", res);
-      if (res?.status == 201) {
+        const body = formData;
+        const config = {
+          headers: {
+            Authorization: `Bearer ${adminInfo.token}`
+          }
+        };
+        console.log("block1");
+        const res = await axios.post(
+          `${baseURL}/testtype/editProfile`,
+          body,
+          config
+        );
+        console.log("editres", res);
+        if (res?.status == 201) {
+          Swal.fire({
+            icon: "success",
+            title: "",
+            text: "Test Updated Successfully",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          history.replace("/TestManagement");
+        }
+      } catch (error) {
         Swal.fire({
-          icon: "success",
-          title: "",
-          text: "Test Updated Successfully",
+          icon: "error",
+          title: "ERROR",
+          text: "Internal Server Error",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1500
         });
-        history.replace("/TestManagement");
+        
       }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "ERROR",
-        text: "Internal Server Error",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
+      setIsEdit(false);
 
-    setIsEdit(false);
+    } else {
+      Toasty("error", `Please fill out all the required fields`);
+    }
   };
   return (
     <div className="app-content content dashboard">
@@ -159,9 +168,10 @@ const EditTest = ({ match, history }) => {
                             className="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group"
                           >
                             <DatePicker
-                              selected={dateaddedd}
-                              onChange={(dateaddedd) =>
-                                setdateaddedd(dateaddedd)
+                              selected={dateadded}
+                              minDate={new Date()}
+                              onChange={(dateadded) =>
+                                setdateadded(dateadded)
                               }
                               className="sort-date customdate form-control"
                             />
@@ -195,14 +205,20 @@ const EditTest = ({ match, history }) => {
                         Amount:
                       </label>
                       {is_edit ? (
-                        <input
-                          type="text"
-                          className="all-inputt w-100"
-                          placeholder="Enter Amount"
+                        // <input
+                        //   type="text"
+                        //   className="all-inputt w-100"
+                        //   placeholder="Enter Amount"
+                        //   value={amount}
+                        //   onChange={(e) => {
+                        //     setamount(e.target.value);
+                        //   }}
+                        // />
+                        <InputNumber
                           value={amount}
-                          onChange={(e) => {
-                            setamount(e.target.value);
-                          }}
+                          onChange={setamount}
+                          max={5}
+                          className="all-inputt w-100"
                         />
                       ) : (
                         <p>{amount}</p>
@@ -232,7 +248,7 @@ const EditTest = ({ match, history }) => {
                   </div>
                   <div className="row">
                     <div className="col-12">
-                      <div style={{height:'30px'}}></div>
+                      <div style={{ height: "30px" }}></div>
                       <Link
                         to="#"
                         className="general-btn mt-3 px-3"

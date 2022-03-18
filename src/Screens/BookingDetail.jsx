@@ -24,8 +24,8 @@ const BookingDetail = ({ match, history }) => {
         url: `${baseURL}/testbooking/bookingDetails/${match?.params?.id}`,
         method: "GET",
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       });
       console.log("res", res);
       setbooking(res?.data?.booking);
@@ -43,8 +43,8 @@ const BookingDetail = ({ match, history }) => {
         url: `${baseURL}/LabTechnicianRoutes/getalllabTechnicians`,
         method: "GET",
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       });
       console.log("res", res);
       setlabtechnician(res?.data?.labTechnicians);
@@ -56,14 +56,14 @@ const BookingDetail = ({ match, history }) => {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       };
       const res = await axios.post(
         `${baseURL}/testbooking/addLabTechnian`,
         {
           bookingid: match?.params?.id,
-          labtechicianid: selectedlabtechnician?._id,
+          labtechicianid: selectedlabtechnician?._id
         },
         config
       );
@@ -74,7 +74,7 @@ const BookingDetail = ({ match, history }) => {
           title: "",
           text: "Lab Technician Added Successfully",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1500
         });
         history.replace("/Booking");
       }
@@ -90,14 +90,14 @@ const BookingDetail = ({ match, history }) => {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       };
       const res = await axios.post(
         `${baseURL}/testbooking/rejectBooking`,
         {
           bookingid: match?.params?.id,
-          rejectionReason: rejectionReason,
+          rejectionReason: rejectionReason
         },
         config
       );
@@ -108,7 +108,7 @@ const BookingDetail = ({ match, history }) => {
           title: "",
           text: "Booking Status Updated Successfully",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1500
         });
         history.replace("/Booking");
       }
@@ -214,7 +214,7 @@ const BookingDetail = ({ match, history }) => {
                               </div>
                               <div className="col-lg-6">
                                 <p className="label-value">
-                                  {booking?.userid?.username}
+                                  {booking?.userid?.firstname}
                                 </p>
                               </div>
                             </div>
@@ -255,7 +255,7 @@ const BookingDetail = ({ match, history }) => {
                                 </Link>
                                 <Link
                                   to="#_"
-                                  className="general-btn d-inline-block px-3"
+                                  className="general-btn d-inline-block px-3 ml-2"
                                   data-toggle="modal"
                                   data-target="#reject"
                                 >
@@ -330,7 +330,7 @@ const BookingDetail = ({ match, history }) => {
                                 <div className="col-lg-6">
                                   <p className="label-value">
                                     {" "}
-                                    {booking?.userid?.username}
+                                    {booking?.userid?.firstname}
                                   </p>
                                 </div>
                               </div>
@@ -376,7 +376,7 @@ const BookingDetail = ({ match, history }) => {
                                 </div>
                                 <div className="col-lg-6">
                                   <p className="label-value">
-                                    {booking?.labTechnicianId?.fullname}
+                                    {booking?.labTechnicianId?.firstName}
                                   </p>
                                 </div>
                               </div>
@@ -457,7 +457,7 @@ const BookingDetail = ({ match, history }) => {
                                 <div className="col-lg-6">
                                   <p className="label-value">
                                     {" "}
-                                    {booking?.userid?.username}
+                                    {booking?.userid?.firstname}
                                   </p>
                                 </div>
                               </div>
@@ -555,7 +555,7 @@ const BookingDetail = ({ match, history }) => {
                                 <div className="col-lg-6">
                                   <p className="label-value">
                                     {" "}
-                                    {booking?.userid?.username}
+                                    {booking?.userid?.firstname}
                                   </p>
                                 </div>
                               </div>
@@ -702,7 +702,7 @@ const BookingDetail = ({ match, history }) => {
                                 <div className="col-lg-6">
                                   <p className="label-value">
                                     {" "}
-                                    {booking?.userid?.username}
+                                    {booking?.userid?.firstname}
                                   </p>
                                 </div>
                               </div>
@@ -937,7 +937,7 @@ const BookingDetail = ({ match, history }) => {
                                 </div>
                                 <div className="col-lg-6">
                                   <p className="label-value">
-                                    {booking?.userid?.username}
+                                    {booking?.userid?.firstname}
                                   </p>
                                 </div>
                               </div>
@@ -1160,7 +1160,7 @@ const BookingDetail = ({ match, history }) => {
                                 <div className="col-lg-6">
                                   <p className="label-value">
                                     {" "}
-                                    {booking?.userid?.username}
+                                    {booking?.userid?.firstname}
                                   </p>
                                 </div>
                               </div>
@@ -1454,13 +1454,14 @@ const BookingDetail = ({ match, history }) => {
               <p className="modal-text">
                 Please Select a Lab technician to Continue *
               </p>
-              <div className="modal-search position-relative mb-lg-5 mb-3">
+              {/* <div className="modal-search position-relative mb-lg-5 mb-3">
                 <input
                   type="search"
                   className="w-75 all-inputt mx-auto"
                   placeholder="Serach Laboratory"
+
                 />
-              </div>
+              </div> */}
               <div className="doctor-div ss-container" ss-container>
                 <div className="ss-wrapper">
                   <div className="ss-content">
@@ -1506,14 +1507,14 @@ const BookingDetail = ({ match, history }) => {
                   style={{
                     height: "82.8947%",
                     top: "17.1053%",
-                    right: "-441px",
+                    right: "-441px"
                   }}
                 />
               </div>
               <div className="modal-btn-div">
                 <Link
                   className="general-btn d-inline-block px-3 mx-1 mt-1"
-                  to="#_"
+                  to="#"
                   data-target="#techinactivated"
                   data-toggle="modal"
                   data-dismiss="modal"

@@ -34,11 +34,11 @@ const Feedback = () => {
           searchString,
           from,
           to,
-          status,
+          status
         },
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       });
 
       console.log("res", res);
@@ -107,6 +107,8 @@ const Feedback = () => {
                             setStatus(e.target.value);
                           }}
                         >
+                          {" "}
+                          <option value="">All</option>
                           <option value={"User"}>User</option>
                           <option value={"Doctor"}>Doctor</option>
                           <option value={"Lab Technician"}>

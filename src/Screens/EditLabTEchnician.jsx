@@ -174,7 +174,7 @@ const EditLabTEchnician = ({ match, history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        First Name*
+                        First Name{is_edit&&'*'}
                       </label>
                       {is_edit ? (
                         <input
@@ -192,7 +192,7 @@ const EditLabTEchnician = ({ match, history }) => {
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Last Name*
+                        Last Name{is_edit&&'*'}
                       </label>
                       {is_edit ? (
                         <input
@@ -212,7 +212,7 @@ const EditLabTEchnician = ({ match, history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Email*
+                        Email{is_edit&&'*'}
                       </label>
                       {is_edit ? (
                         <input
@@ -230,7 +230,7 @@ const EditLabTEchnician = ({ match, history }) => {
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Qualification*
+                        Qualification{is_edit&&'*'}
                       </label>
                       {is_edit ? (
                         <TagsInput
@@ -247,7 +247,7 @@ const EditLabTEchnician = ({ match, history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Phone*
+                        Phone{is_edit&&'*'}
                       </label>
                       {is_edit ? (
                          <InputPhone
@@ -270,7 +270,7 @@ const EditLabTEchnician = ({ match, history }) => {
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Specialization*
+                        Specialization{is_edit&&'*'}
                       </label>
                       {is_edit ? (
                         <input
@@ -290,7 +290,7 @@ const EditLabTEchnician = ({ match, history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Car/Bike*
+                        Car/Bike{is_edit&&'*'}
                       </label>
                       {is_edit ? (
                         <input
@@ -308,7 +308,7 @@ const EditLabTEchnician = ({ match, history }) => {
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Password*
+                        Password{is_edit&&'*'}
                       </label>
                       {is_edit ? (
                         <input
@@ -328,7 +328,7 @@ const EditLabTEchnician = ({ match, history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Modal*
+                        Modal{is_edit&&'*'}
                       </label>
                       {is_edit ? (
                         <InputNumber
@@ -344,7 +344,7 @@ const EditLabTEchnician = ({ match, history }) => {
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Color*
+                        Color{is_edit&&'*'}
                       </label>
                       {is_edit ? (
                         <input
@@ -364,7 +364,7 @@ const EditLabTEchnician = ({ match, history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Qualified*
+                        Qualified{is_edit&&'*'}
                       </label>
                       {is_edit ? (
                         <MultiSelect

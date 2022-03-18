@@ -10,23 +10,23 @@ import Toasty from "../utils/toast";
 import { validateEmail } from "../utils/ValidateEmail";
 
 const EditDoctor = ({ match, history }) => {
-  const [firstName, setfirstName] = useState('');
-  const [lastName, setlastName] = useState('');
-  const [companyname, setcompanyname] = useState('');
-  const [fax, setfax] = useState('');
-  const [hipa, sethipa] = useState('');
-  const [npi, setnpi] = useState('');
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setlastName] = useState("");
+  const [companyname, setcompanyname] = useState("");
+  const [fax, setfax] = useState("");
+  const [hipa, sethipa] = useState("");
+  const [npi, setnpi] = useState("");
   // const [insurance, setinsurance] = useState('');
 
-  const [qualification, setqualification] = useState('');
-  const [specialization, setspecialization] = useState('');
-  const [email, setemail] = useState('');
-  const [address, setaddress] = useState('');
-  const [directphone, setdirectphone] = useState('');
-  const [phoneNumber, setphoneNumber] = useState('');
-  const [password, setpassword] = useState('');
+  const [qualification, setqualification] = useState("");
+  const [specialization, setspecialization] = useState("");
+  const [email, setemail] = useState("");
+  const [address, setaddress] = useState("");
+  const [directphone, setdirectphone] = useState("");
+  const [phoneNumber, setphoneNumber] = useState("");
+  const [password, setpassword] = useState("");
 
-  const [image, setimage] = useState('');
+  const [image, setimage] = useState("");
   const [is_edit, setIsEdit] = useState(false);
   const dispatch = useDispatch();
 
@@ -43,8 +43,8 @@ const EditDoctor = ({ match, history }) => {
         url: `${baseURL}/doctor/getProfile/${match?.params?.id}`,
         method: "GET",
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       });
       console.log("res", res);
       setfirstName(res?.data?.doctor?.firstName);
@@ -73,52 +73,51 @@ const EditDoctor = ({ match, history }) => {
 
   const updateProfileData = async (e) => {
     try {
-      
       const emailvalidation = validateEmail(email);
       console.log("emmmm", emailvalidation);
       console.log("addEmployeeHandler");
       if (emailvalidation == true) {
-      const formData = new FormData();
+        const formData = new FormData();
 
-   
-      formData.append("id", match?.params?.id);
-      formData.append("user_image", image);
-      formData.append("firstName", firstName);
-      formData.append("lastName", lastName);
-      formData.append("companyname", companyname);
-      formData.append("fax", fax);
-      formData.append("npi", npi);
-      formData.append("hipa", hipa);
-      // formData.append("insurance", insurance);
-      formData.append("qualification", qualification);
-      formData.append("specialization", specialization);
-      formData.append("address", address);
-      formData.append("password", password);
-      formData.append("email", email);
-      formData.append("directphone", directphone);
-      formData.append("phoneNumber", phoneNumber);
+        formData.append("id", match?.params?.id);
+        formData.append("user_image", image);
+        formData.append("firstName", firstName);
+        formData.append("lastName", lastName);
+        formData.append("companyname", companyname);
+        formData.append("fax", fax);
+        formData.append("npi", npi);
+        formData.append("hipa", hipa);
+        // formData.append("insurance", insurance);
+        formData.append("qualification", qualification);
+        formData.append("specialization", specialization);
+        formData.append("address", address);
+        formData.append("password", password);
+        formData.append("email", email);
+        formData.append("directphone", directphone);
+        formData.append("phoneNumber", phoneNumber);
 
-      const body = formData;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
-      };
-      const res = await axios.post(
-        `${baseURL}/doctor/editProfile`,
-        body,
-        config
-      );
-      if (res?.status == 201) {
-        Swal.fire({
-          icon: "success",
-          title: "",
-          text: "Doctor Updated Successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        history.replace("/Doctor");
-      }}else {
+        const body = formData;
+        const config = {
+          headers: {
+            Authorization: `Bearer ${adminInfo.token}`
+          }
+        };
+        const res = await axios.post(
+          `${baseURL}/doctor/editProfile`,
+          body,
+          config
+        );
+        if (res?.status == 201) {
+          Swal.fire({
+            icon: "success",
+            title: "",
+            text: "Doctor Updated Successfully",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          history.replace("/Doctor");
+        }
+      } else {
         Toasty("error", `Please enter a valid email`);
       }
     } catch (error) {
@@ -127,7 +126,7 @@ const EditDoctor = ({ match, history }) => {
         title: "ERROR",
         text: "Internal Server Error",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1500
       });
     }
 
@@ -178,7 +177,7 @@ const EditDoctor = ({ match, history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        First Name*
+                        First Name{is_edit && "*"}
                       </label>
                       {is_edit ? (
                         <input
@@ -196,7 +195,7 @@ const EditDoctor = ({ match, history }) => {
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Last Name*
+                        Last Name{is_edit && "*"}
                       </label>
                       {is_edit ? (
                         <input
@@ -216,7 +215,7 @@ const EditDoctor = ({ match, history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Company Name*
+                        Company Name{is_edit && "*"}
                       </label>
                       {is_edit ? (
                         <input
@@ -234,7 +233,7 @@ const EditDoctor = ({ match, history }) => {
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Fax No*
+                        Fax No{is_edit && "*"}
                       </label>
                       {is_edit ? (
                         <input
@@ -254,7 +253,7 @@ const EditDoctor = ({ match, history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Email*
+                        Email{is_edit && "*"}
                       </label>
                       {is_edit ? (
                         <input
@@ -272,7 +271,7 @@ const EditDoctor = ({ match, history }) => {
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Specialization*
+                        Specialization{is_edit && "*"}
                       </label>
                       {is_edit ? (
                         <input
@@ -289,32 +288,30 @@ const EditDoctor = ({ match, history }) => {
                       )}
                     </div>
                   </div>
-                  
+
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                      Office Phone*
+                        Office Phone{is_edit && "*"}
                       </label>
                       {is_edit ? (
                         <InputPhone
-                        value={phoneNumber}
-                        onChange={setphoneNumber}
-                      />
-                       
+                          value={phoneNumber}
+                          onChange={setphoneNumber}
+                        />
                       ) : (
                         <p>{phoneNumber}</p>
                       )}{" "}
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                      Direct Phone*
+                        Direct Phone{is_edit && "*"}
                       </label>
                       {is_edit ? (
-                          <InputPhone
+                        <InputPhone
                           value={directphone}
                           onChange={setdirectphone}
                         />
-                      
                       ) : (
                         <p>{directphone}</p>
                       )}
@@ -323,7 +320,7 @@ const EditDoctor = ({ match, history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Address*
+                        Address{is_edit && "*"}
                       </label>
                       {is_edit ? (
                         <input
@@ -341,7 +338,7 @@ const EditDoctor = ({ match, history }) => {
                     </div>
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Password*
+                        Password{is_edit && "*"}
                       </label>
                       {is_edit ? (
                         <input
@@ -357,12 +354,11 @@ const EditDoctor = ({ match, history }) => {
                         <p>{"*******"}</p>
                       )}
                     </div>
-                    
                   </div>
                   <div className="row">
-                  <div className="col-lg-4 mt-2">
+                    <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
-                        Qualification*
+                        Qualification{is_edit && "*"}
                       </label>
                       {is_edit ? (
                         <input
@@ -378,7 +374,7 @@ const EditDoctor = ({ match, history }) => {
                         <p>{qualification}</p>
                       )}
                     </div>
-                    </div>
+                  </div>
                   <div className="row">
                     <div className="col-12">
                       <div style={{ height: 25 }}></div>

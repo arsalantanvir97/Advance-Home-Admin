@@ -23,8 +23,8 @@ const PaymentDetail = ({ match, history }) => {
         url: `${baseURL}/testbooking/bookingDetails/${match?.params?.id}`,
         method: "GET",
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       });
       console.log("res", res);
       setbooking(res?.data?.booking);
@@ -51,7 +51,10 @@ const PaymentDetail = ({ match, history }) => {
                   </div>
                   <div className="col-lg-6 text-right my-auto">
                     <a href="#_" className="my-label d-inline-block">
-                      Status: <span className="pending-td">{booking?.paymentStatus}</span>
+                      Status:{" "}
+                      <span className="pending-td">
+                        {booking?.paymentStatus}
+                      </span>
                     </a>
                     <h2 className="my-label my-1">Test.Id: {booking?._id}</h2>
                   </div>
@@ -79,7 +82,9 @@ const PaymentDetail = ({ match, history }) => {
                             </label>
                           </div>
                           <div className="col-lg-6">
-                            <p className="label-value">{booking?.testTypeId?.title}</p>
+                            <p className="label-value">
+                              {booking?.testTypeId?.title}
+                            </p>
                           </div>
                         </div>
                         <div className="row">
@@ -89,7 +94,10 @@ const PaymentDetail = ({ match, history }) => {
                             </label>
                           </div>
                           <div className="col-lg-6">
-                            <p className="label-value">  {moment.utc(booking?.createdAt).format("LL")}</p>
+                            <p className="label-value">
+                              {" "}
+                              {moment.utc(booking?.createdAt).format("LL")}
+                            </p>
                           </div>
                         </div>
                         <div className="row">
@@ -119,7 +127,9 @@ const PaymentDetail = ({ match, history }) => {
                             </label>
                           </div>
                           <div className="col-lg-6">
-                            <p className="label-value">{booking?.paymentMethod }</p>
+                            <p className="label-value">
+                              {booking?.paymentMethod}
+                            </p>
                           </div>
                         </div>
                         <div className="row">
@@ -129,7 +139,9 @@ const PaymentDetail = ({ match, history }) => {
                             </label>
                           </div>
                           <div className="col-lg-6">
-                            <p className="label-value">{booking?.userid?.insuranceNumber}</p>
+                            <p className="label-value">
+                              {booking?.userid?.insuranceNumber}
+                            </p>
                           </div>
                         </div>
                         <div className="row">

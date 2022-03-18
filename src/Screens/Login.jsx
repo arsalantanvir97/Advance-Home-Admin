@@ -22,23 +22,28 @@ const Login = ({ history }) => {
   const [confirm_password, setconfirm_password] = useState();
   const [new_password, setnew_password] = useState();
   const [showicon, setshowicon] = useState(true);
+  const [loading, setloading] = useState(false);
+  const [loading2, setloading2] = useState(false);
 
   const [forgotpasswordModal, setforgotpasswordModal] = useState(0);
 
   const adminLogin = useSelector((state) => state.adminLogin);
   const { adminInfo } = adminLogin;
   const submitHandler = async (e) => {
-    console.log("submitHandler");
-    e.preventDefault();
-    const emailvalidation = validateEmail(email);
-    console.log("emmmm", emailvalidation);
-    console.log("addEmployeeHandler");
-    if (emailvalidation == true) {
-      await dispatch(adminLoginAction(email, password, history));
-      setemail("");
-      setpassword("");
+    if (email?.length > 0 && password?.length > 0) {
+      console.log("submitHandler");
+      const emailvalidation = validateEmail(email);
+      console.log("emmmm", emailvalidation);
+      console.log("addEmployeeHandler");
+      if (emailvalidation == true) {
+        await dispatch(adminLoginAction(email, password, history));
+        setemail("");
+        setpassword("");
+      } else {
+        Toasty("error", `Please enter a valid email`);
+      }
     } else {
-      Toasty("error", `Please enter a valid email`);
+      Toasty("error", `Please fill out all the required fields`);
     }
   };
 
@@ -47,63 +52,88 @@ const Login = ({ history }) => {
       history.replace("/dashboard");
     }
   }, [adminInfo]);
-  const forgotpasswordHandler = async (e) => {
-    e.preventDefault();
-    const body = { email };
-    console.log("TEST");
-    try {
-      const res = await api.post("/admin/adminRecoverPassword", body);
-      console.log("res", res);
-      if (res?.status == 201) {
-        // Swal.fire({
-        //   icon: "success",
-        //   title: "SUCCESS",
-        //   text: "Verification Code Sent to your mail",
-        //   showConfirmButton: false,
-        //   timer: 1500,
-        // });
-        setforgotpasswordModal(1); // history.push({
-        //   pathname: "/verificationcode",
-        //   state: { email },
-        // });
-      }
-    } catch (error) {
-      setforgotpasswordModal(0);
-
-      console.log("IN HERE");
-      console.log(error?.response?.data);
-      Toasty("error", `🦄 Invalid Email!`);
-    }
-  };
-  const verificationCodeHandler = async (e) => {
-    try {
-      e.preventDefault();
-      console.log("code, email", code, email);
-      const body = { code, email };
+  const forgotpasswordHandler = async () => {
+    const emailvalidation = validateEmail(email);
+    console.log("emmmm", emailvalidation);
+    console.log("addEmployeeHandler");
+    if (emailvalidation == true) {
+      setloading(true);
+      const body = { email };
       console.log("TEST");
-      // try {
-      const res = await api.post("/admin/adminverifyRecoverCode", body);
-      console.log("res", res);
-      setforgotpasswordModal(2);
-    } catch (error) {
-      console.log("error", error?.response);
-      // alert(error?.response?.data?.message)
-      Toasty("error", `🦄 ${error?.response?.data?.message}!`);
+      try {
+        const res = await api.post("/admin/adminRecoverPassword", body);
+        setloading(false);
+
+        console.log("res", res);
+        if (res?.status == 201) {
+          Swal.fire({
+            icon: "success",
+            title: "SUCCESS",
+            text: "Verification Code Sent to your mail",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setforgotpasswordModal(1); // history.push({
+          //   pathname: "/verificationcode",
+          //   state: { email },
+          // });
+        }
+      } catch (error) {
+        setloading(false);
+
+        setforgotpasswordModal(0);
+
+        console.log("IN HERE");
+        console.log(error?.response?.data);
+        Toasty("error", `🦄 Invalid Email!`);
+      }
+    } else {
+      Toasty("error", `Please enter a valid email`);
+      setloading(false);
     }
+    setloading(false);
+  };
+  const verificationCodeHandler = async () => {
+    if (code?.length > 0) {
+      try {
+        setloading2(true);
 
-    //   if(res?.status==201){
-    //     Toasty('success',`Verification Code Has Been Emailed To Your Email Address`);
-    //     history.push('/verificationcode')
+        console.log("code, email", code, email);
+        const body = { code, email };
+        console.log("TEST");
+        // try {
+        const res = await api.post("/admin/adminverifyRecoverCode", body);
+        setloading2(false);
 
-    //   }
-    // } catch (error) {
-    //   Toasty('error',`🦄 Invalid Email!`);
+        console.log("res", res);
+        setforgotpasswordModal(2);
+      } catch (error) {
+        setloading2(false);
 
-    // }
+        console.log("error", error?.response);
+        // alert(error?.response?.data?.message)
+        Toasty("error", `🦄 ${error?.response?.data?.message}!`);
+        setloading2(false);
+      }
+      setloading2(false);
+
+      //   if(res?.status==201){
+      //     Toasty('success',`Verification Code Has Been Emailed To Your Email Address`);
+      //     history.push('/verificationcode')
+
+      //   }
+      // } catch (error) {
+      //   Toasty('error',`🦄 Invalid Email!`);
+
+      // }
+    } else {
+      setloading2(false);
+      Toasty("error", `Please fill out all the required fields`);
+    }
+    setloading(false);
   };
 
-  const resetPasswordHandler = (e) => {
-    e.preventDefault();
+  const resetPasswordHandler = () => {
     console.log("resetPasswordHandler");
     dispatch(
       adminResetPasswordAction(
@@ -148,66 +178,67 @@ const Login = ({ history }) => {
                   <div className="text-center mb-lg-3">
                     <img src="images/logo.png" alt="" className="img-fluid" />
                   </div>
-                  <form onSubmit={submitHandler}>
-                    <div className="form-group position-relative">
-                      <label htmlFor>Email</label>
-                      <input
-                        type="email"
-                        className="w-100"
-                        id="exampleInputEmail1"
-                        aria-describedby="emailHelp"
-                        placeholder="Enter Email"
-                        value={email}
-                        onChange={(e) => {
-                          setemail(e.target.value);
-                        }}
-                      />
-                    </div>
-                    <div className="form-group position-relative">
-                      <label htmlFor>Password</label>
-                      <input
-                        type={showicon ? "password" : "text"}
-                        className="w-100 pass-field enter-input"
-                        id="exampleInputPassword1"
-                        placeholder="Enter Password"
-                        value={password}
-                        onChange={(e) => {
-                          setpassword(e.target.value);
-                        }}
-                      />
-                      <i
-                        onClick={() => setshowicon(!showicon)}
-                        className={
-                          showicon
-                            ? "fa enter-icon-3 right-icon fa-eye-slash right-icon-90"
-                            : "fa enter-icon-3 right-icon fa-eye right-icon-90"
-                        }
-                        aria-hidden="true"
-                      />
-                    </div>
-                    <div className="form-group form-check text-right w-90">
-                      <a
-                        href="#"
-                        className="decorated-link-aqua"
-                        data-toggle="modal"
-                        data-target=".forgot-modal"
-                      >
-                        Forgot Password?
-                      </a>
-                    </div>
-                    <div className="text-center pb-lg-0 pb-2">
-                      <button
-                        type="submit"
-                        className="aqua-btn mt-lg-3 mt-2 w-100"
-                      >
-                        Login
-                      </button>
-                      <Link to="#" className="d-block back-to-web mt-3">
-                        <i className="fas fa-long-arrow-alt-left mr-2" />
-                        Back To Website
-                      </Link>
-                    </div>
-                  </form>
+                  {/* <form > */}
+                  <div className="form-group position-relative">
+                    <label htmlFor>Email</label>
+                    <input
+                      type="email"
+                      className="w-100"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      placeholder="Enter Email"
+                      value={email}
+                      onChange={(e) => {
+                        setemail(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <div className="form-group position-relative">
+                    <label htmlFor>Password</label>
+                    <input
+                      type={showicon ? "password" : "text"}
+                      className="w-100 pass-field enter-input"
+                      id="exampleInputPassword1"
+                      placeholder="Enter Password"
+                      value={password}
+                      onChange={(e) => {
+                        setpassword(e.target.value);
+                      }}
+                    />
+                    <i
+                      onClick={() => setshowicon(!showicon)}
+                      className={
+                        showicon
+                          ? "fa enter-icon-3 right-icon fa-eye-slash right-icon-90"
+                          : "fa enter-icon-3 right-icon fa-eye right-icon-90"
+                      }
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <div className="form-group form-check text-right w-90">
+                    <a
+                      href="#"
+                      className="decorated-link-aqua"
+                      data-toggle="modal"
+                      data-target=".forgot-modal"
+                    >
+                      Forgot Password?
+                    </a>
+                  </div>
+                  <div className="text-center pb-lg-0 pb-2">
+                    <button
+                      type="button"
+                      onClick={submitHandler}
+                      className="aqua-btn mt-lg-3 mt-2 w-100"
+                    >
+                      Login
+                    </button>
+                    <Link to="#" className="d-block back-to-web mt-3">
+                      <i className="fas fa-long-arrow-alt-left mr-2" />
+                      Back To Website
+                    </Link>
+                  </div>
+                  {/* </form> */}
                 </div>
               </div>
             </div>
@@ -305,38 +336,53 @@ const Login = ({ history }) => {
               </div>
               {forgotpasswordModal == 1 && (
                 <div className="form-group form-check text-right">
-                  <Link
-                    to="#"
-                    className="decorated-link-aqua d-inline-block"
-                    onClick={forgotpasswordHandler}
-                  >
-                    Resend Code
-                  </Link>
+                  {!loading2 ? (
+                    <Link
+                      to="#"
+                      className="decorated-link-aqua d-inline-block"
+                      onClick={() => {
+                        email?.length > 0
+                          ? forgotpasswordHandler()
+                          : Toasty(
+                              "error",
+                              `Please fill out all the required fields`
+                            );
+                      }}
+                    >
+                      Resend Code
+                    </Link>
+                  ) : (
+                    <i className="fas fa-spinner fa-pulse"></i>
+                  )}
                 </div>
               )}
 
               <div className="text-center">
-                <Link
-                  to="#"
-                  onClick={
-                    forgotpasswordModal == 0
-                      ? forgotpasswordHandler
+                {!loading ? (
+                  <Link
+                    to="#"
+                    onClick={
+                      forgotpasswordModal == 0
+                        ? forgotpasswordHandler
+                        : forgotpasswordModal == 1
+                        ? verificationCodeHandler
+                        : forgotpasswordModal == 2
+                        ? resetPasswordHandler
+                        : null
+                    }
+                    className="general-btn mt-2 mb-5 w-100 d-inline-block"
+                  >
+                    {forgotpasswordModal == 0
+                      ? "Continue"
                       : forgotpasswordModal == 1
-                      ? verificationCodeHandler
+                      ? "Next"
                       : forgotpasswordModal == 2
-                      ? resetPasswordHandler
-                      : null
-                  }
-                  className="general-btn mt-2 mb-5 w-100 d-inline-block"
-                >
-                  {forgotpasswordModal == 0
-                    ? "Continue"
-                    : forgotpasswordModal == 1
-                    ? "Next"
-                    : forgotpasswordModal == 2
-                    ? "Update"
-                    : null}
-                </Link>
+                      ? "Update"
+                      : null}
+                  </Link>
+                ) : (
+                  <i className="fas fa-spinner fa-pulse"></i>
+                )}
               </div>
             </form>
           </div>

@@ -216,7 +216,7 @@ const Booking = () => {
                                   bookings?.docs?.map((book, index) => (
                                     <tr>
                                       <td>{index + 1}</td>
-                                      <td>{book?.userid?.username}</td>
+                                      <td>{book?.userid?.firstname}</td>
                                       <td>{book?._id}</td>
                                       <td>
                                         {" "}

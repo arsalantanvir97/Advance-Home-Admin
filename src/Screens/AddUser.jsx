@@ -224,7 +224,6 @@ const AddUser = ({ history }) => {
                           type="radio"
                           id="test1"
                           name="radio-group"
-                          defaultChecked
                         />
                         <label htmlFor="test1">Male</label>
                       </p>
@@ -257,7 +256,6 @@ const AddUser = ({ history }) => {
                           type="radio"
                           id="test6"
                           name="radio-groups"
-                          defaultChecked
                         />
                         <label htmlFor="test6">Yes</label>
                       </p>
@@ -532,7 +530,7 @@ const AddUser = ({ history }) => {
                       }}
                       type="password"
                       className="all-inputt w-100"
-                      placeholder="Enter Email"
+                      placeholder="Enter Password"
                     />
                   </div>
                 </div>

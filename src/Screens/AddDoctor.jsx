@@ -261,7 +261,7 @@ const AddDoctor = ({ history }) => {
                           type="radio"
                           id="test6"
                           name="radio-groups"
-                          defaultChecked
+                          
                         />
                         <label htmlFor="test6">Yes</label>
                       </p>

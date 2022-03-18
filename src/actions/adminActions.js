@@ -131,6 +131,13 @@ export const adminResetPasswordAction =
         });
 
         localStorage.setItem("adminInfo", JSON.stringify(res?.data));
+      await Swal.fire({
+          icon: "success",
+          title: "",
+          text: "Password updated successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         document.location.href = "/dashboard";
       }
     } catch (error) {

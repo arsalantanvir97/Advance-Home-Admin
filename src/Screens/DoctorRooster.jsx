@@ -38,11 +38,11 @@ const DoctorRooster = ({ match }) => {
           searchString,
           from,
           to,
-          status,
+          status
         },
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       });
 
       console.log("res", res);
@@ -58,15 +58,15 @@ const DoctorRooster = ({ match }) => {
         url: `${baseURL}/schedule/deleteSchedule/${id}`,
         method: "GET",
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       });
       Swal.fire({
         icon: "success",
         title: "",
         text: "Test Deleted Successfully",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1500
       });
 
       console.log("res", res);
@@ -192,7 +192,11 @@ const DoctorRooster = ({ match }) => {
                                   schedule?.docs?.map((sch, index) => (
                                     <tr>
                                       <td>{index + 1}</td>
-                                      <td>{sch?.doctorid?.fullname}</td>
+                                      <td>
+                                        {sch?.doctorid?.firstName +
+                                          " " +
+                                          sch?.doctorid?.lastName}
+                                      </td>
                                       <td>{sch?.pdfname}</td>
                                       <td>
                                         <Link

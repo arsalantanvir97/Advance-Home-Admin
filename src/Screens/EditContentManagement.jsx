@@ -4,7 +4,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
-let pushinginarray=[]
+import Toasty from "../utils/toast";
+let pushinginarray = [];
 const EditContentManagement = ({ history }) => {
   const [contentHome, setcontentHome] = useState([]);
   const [doctorscontent, setdoctorscontent] = useState("");
@@ -24,7 +25,7 @@ const EditContentManagement = ({ history }) => {
     handleGetContentHome();
   }, []);
   useEffect(() => {
-    console.log('showanswerindex',showanswerindex);
+    console.log("showanswerindex", showanswerindex);
   }, [showanswerindex]);
 
   useEffect(() => {
@@ -37,8 +38,8 @@ const EditContentManagement = ({ history }) => {
         method: "GET",
 
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       });
 
       console.log("res", res);
@@ -55,8 +56,8 @@ const EditContentManagement = ({ history }) => {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       };
       const res = await axios.post(
         `${baseURL}/contentHome/updateContent`,
@@ -70,7 +71,7 @@ const EditContentManagement = ({ history }) => {
           title: "",
           text: "Content Updated Successfully",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1500
         });
         history.replace("/ContentManagement");
       }
@@ -80,7 +81,7 @@ const EditContentManagement = ({ history }) => {
         title: "ERROR",
         text: "Internal Server Error",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1500
       });
     }
   };
@@ -88,14 +89,21 @@ const EditContentManagement = ({ history }) => {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       };
       const res = await axios.post(
         `${baseURL}/faqs/createFaqs`,
         { question, answer },
         config
       );
+      Swal.fire({
+        icon: "success",
+        title: "",
+        text: "FAQ Created Successfully",
+        showConfirmButton: false,
+        timer: 1500
+      });
       console.log("res", res);
     } catch (err) {
       console.log("err", err);
@@ -108,8 +116,8 @@ const EditContentManagement = ({ history }) => {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       };
       const res = await axios.get(`${baseURL}/faqs/getallfaqs`, config);
       setfaqs(res?.data?.faqs);
@@ -118,12 +126,12 @@ const EditContentManagement = ({ history }) => {
       console.log("err", err);
     }
   };
-  const setshowanswerindexhandler=async(index)=>{
+  const setshowanswerindexhandler = async (index) => {
     console.log("index", index);
     if (showanswerindex?.includes(index)) {
-      console.log("includesblock",pushinginarray);
+      console.log("includesblock", pushinginarray);
       pushinginarray = pushinginarray?.filter((indexx) => indexx !== index);
-      console.log('includesblockpushinginarray',pushinginarray);
+      console.log("includesblockpushinginarray", pushinginarray);
       setshowanswerindex(pushinginarray);
       // setdaysArray(daysArray?.filter((days) => days !== day))
     } else {
@@ -132,7 +140,7 @@ const EditContentManagement = ({ history }) => {
       // daysArray?.push(day + '');
       console.log("showanswerindex", showanswerindex);
     }
-  }
+  };
   return (
     <>
       <div className="app-content content dashboard">
@@ -309,13 +317,13 @@ const EditContentManagement = ({ history }) => {
                               <>
                                 <button
                                   className={
-                                   showanswerindex?.includes(index)
+                                    showanswerindex?.includes(index)
                                       ? "accordion active"
                                       : "accordion"
                                   }
                                   onClick={() => {
                                     setshowanswer(!showanswer);
-                                    setshowanswerindexhandler(index)
+                                    setshowanswerindexhandler(index);
                                   }}
                                 >
                                   {faq?.question}
@@ -323,14 +331,16 @@ const EditContentManagement = ({ history }) => {
                                 <div
                                   className="panel"
                                   style={{
-                                    maxHeight:  showanswerindex?.includes(index) ? "60px" : null,
+                                    maxHeight: showanswerindex?.includes(index)
+                                      ? "60px"
+                                      : null
                                   }}
                                 >
                                   <p>{faq?.answer}</p>
                                 </div>
                               </>
                             ))}
-                          <div className="row">
+                          {/* <div className="row">
                             <div className="col-12 text-center">
                               <Link
                                 to="#"
@@ -339,7 +349,7 @@ const EditContentManagement = ({ history }) => {
                                 Update
                               </Link>
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
@@ -375,7 +385,7 @@ const EditContentManagement = ({ history }) => {
                 <input
                   type="search"
                   className="w-100 all-inputt mx-auto"
-                  placeholder="Serach Lab technician"
+                  placeholder="Write Question"
                   value={question}
                   onChange={(e) => {
                     setquestion(e.target.value);
@@ -398,7 +408,14 @@ const EditContentManagement = ({ history }) => {
               </div>
               <div className="modal-btn-div">
                 <Link
-                  onClick={addfaqsHandler}
+                  onClick={() => {
+                    question?.length > 0 && answer?.length > 0
+                      ? addfaqsHandler()
+                      : Toasty(
+                          "error",
+                          `Please fill out all the required fields`
+                        );
+                  }}
                   className="general-btn d-inline-block px-3 mt-1"
                   to="#"
                   data-dismiss="modal"
