@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import ImageSelector from "../components/ImageSelector";
@@ -16,13 +16,37 @@ const AddTest = ({ history }) => {
   const [longDesc, setlongDesc] = useState("");
 
   const [image, setimage] = useState("");
+  const [category, setcategory] = useState("");
+
+  const [allcategory, setallcategory] = useState([]);
+  const [loading, setloading] = useState(false);
+
   const [is_edit, setIsEdit] = useState(true);
   const dispatch = useDispatch();
 
   const adminLogin = useSelector((state) => state.adminLogin);
   const { adminInfo } = adminLogin;
 
+  useEffect(() => {
+    handleGetCategories();
+  }, []);
+
+  const handleGetCategories = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${adminInfo.token}`
+        }
+      };
+      const res = await axios.get(`${baseURL}/category/getAllCategory`, config);
+      console.log("resssssss", res);
+      setallcategory(res?.data?.category);
+    } catch (error) {}
+  };
+
   const addTestHadndler = async () => {
+    setloading(true)
+
     try {
       const formData = new FormData();
       formData.append("user_image", image);
@@ -30,6 +54,7 @@ const AddTest = ({ history }) => {
       formData.append("dateadded", dateadded);
       formData.append("amount", amount);
       formData.append("longDesc", longDesc);
+      formData.append("categoryid", category);
 
       formData.append("type", "Admin");
 
@@ -44,6 +69,7 @@ const AddTest = ({ history }) => {
         body,
         config
       );
+      setloading(false)
       console.log("res", res);
       if (res?.status == 201) {
         Swal.fire({
@@ -64,6 +90,8 @@ const AddTest = ({ history }) => {
         timer: 1500
       });
     }
+    setloading(false)
+
   };
   return (
     <div className="app-content content dashboard">
@@ -133,6 +161,31 @@ const AddTest = ({ history }) => {
                 <div className="row">
                   <div className="col-lg-4 mt-2">
                     <label htmlFor className="site-labell">
+                      Category:
+                    </label>
+                    <div className="row">
+                      <select
+                        name
+                        id
+                        className="general-select w-100 ml-1"
+                        value={category}
+                        onChange={(e) => {
+                          setcategory(e.target.value);
+                        }}
+                      >
+                        {" "}
+                        <option>Select</option>
+                        {allcategory?.length > 0 &&
+                          allcategory?.map((cat) => (
+                            <option value={cat?._id}>{cat?.name}</option>
+                          ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
                       Amount:
                     </label>
                     <InputNumber
@@ -169,10 +222,12 @@ const AddTest = ({ history }) => {
                 </div>
                 <div className="row">
                   <div className="col-12">
+                  {!loading ? (
                     <button
                       className="general-btn mt-3 px-3"
                       onClick={() => {
                         title?.length > 0 &&
+                        category?.length > 0 &&
                         amount > 0 &&
                         longDesc?.length > 0 &&
                         image?.name?.length > 0
@@ -184,7 +239,9 @@ const AddTest = ({ history }) => {
                       }}
                     >
                       Add
-                    </button>
+                    </button>  ) : (
+                        <i className="fas fa-spinner fa-pulse"></i>
+                      )}
                   </div>
                 </div>
               </div>

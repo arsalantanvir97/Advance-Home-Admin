@@ -19,12 +19,14 @@ const AddLabortary = ({ history }) => {
   const [email, setemail] = useState("");
   const [fax, setfax] = useState("");
   const [labmanagercontact, setlabmanagercontact] = useState("");
+  const [loading, setloading] = useState(false);
 
   const dispatch = useDispatch();
 
   const adminLogin = useSelector((state) => state.adminLogin);
   const { adminInfo } = adminLogin;
   const addLabortaryHandler = async () => {
+    setloading(true);
     try {
       const emailvalidation = validateEmail(email);
       console.log("emmmm", emailvalidation);
@@ -51,6 +53,8 @@ const AddLabortary = ({ history }) => {
           },
           config
         );
+        setloading(false);
+
         console.log("res", res);
         if (res?.status == 201) {
           Swal.fire({
@@ -74,6 +78,7 @@ const AddLabortary = ({ history }) => {
         timer: 1500
       });
     }
+    setloading(false);
   };
   return (
     <div className="app-content content dashboard">
@@ -193,30 +198,34 @@ const AddLabortary = ({ history }) => {
                   </div>
                   <div className="row">
                     <div className="col-12">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          fullname?.length > 0 &&
-                          labspecialization?.length > 0 &&
-                          address?.length > 0 &&
-                          phone?.length > 0 &&
-                          password?.length > 0 &&
-                          password?.length > 0 &&
-                          email?.length > 0 &&
-                          fax?.length > 0 &&
-                          labmanagercontact?.length > 0
-                            ? addLabortaryHandler()
-                            : Toasty(
-                                "error",
-                                `Please fill out all the required fields`
-                              );
-                        }}
-                        data-toggle="modal"
-                        data-target="#useractivated"
-                        className="general-btn mt-3 px-3"
-                      >
-                        Add
-                      </button>
+                      {!loading ? (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            fullname?.length > 0 &&
+                            labspecialization?.length > 0 &&
+                            address?.length > 0 &&
+                            phone?.length > 0 &&
+                            password?.length > 0 &&
+                            password?.length > 0 &&
+                            email?.length > 0 &&
+                            fax?.length > 0 &&
+                            labmanagercontact?.length > 0
+                              ? addLabortaryHandler()
+                              : Toasty(
+                                  "error",
+                                  `Please fill out all the required fields`
+                                );
+                          }}
+                          data-toggle="modal"
+                          data-target="#useractivated"
+                          className="general-btn mt-3 px-3"
+                        >
+                          Add
+                        </button>
+                      ) : (
+                        <i className="fas fa-spinner fa-pulse"></i>
+                      )}
                     </div>
                   </div>
                 </form>

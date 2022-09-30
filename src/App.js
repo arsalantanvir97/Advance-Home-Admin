@@ -37,6 +37,9 @@ import ViewDoctor from "./Screens/ViewDoctor";
 import ViewFeedback from "./Screens/ViewFeedback";
 import ViewUser from "./Screens/ViewUser";
 import PrivateRoute from "./components/PrivateRoute";
+import CategoryManagement from "./Screens/CategoryManagement";
+import AddCategory from "./Screens/AddCategory";
+
 
 const App = () => {
   return (
@@ -52,6 +55,8 @@ const App = () => {
         component={AddLabTechnician}
       />{" "}
       <PrivateRoute exact path="/AddTest" component={AddTest} />{" "}
+      <PrivateRoute exact path="/AddCategory" component={AddCategory} />{" "}
+
       <PrivateRoute exact path="/AddUser" component={AddUser} />{" "}
       <PrivateRoute exact path="/Booking" component={Booking} />{" "}
       <PrivateRoute exact path="/BookingDetail/:id" component={BookingDetail} />{" "}
@@ -104,6 +109,8 @@ const App = () => {
       <PrivateRoute exact path="/Profile" component={Profile} />{" "}
       <PrivateRoute exact path="/TestDetail" component={TestDetail} />{" "}
       <PrivateRoute exact path="/TestManagement" component={TestManagement} />{" "}
+      <PrivateRoute exact path="/CategoryManagement" component={CategoryManagement} />{" "}
+
       <PrivateRoute exact path="/User" component={User} />{" "}
       <PrivateRoute exact path="/ViewDoctor/:id" component={ViewDoctor} />{" "}
       <PrivateRoute exact path="/ViewFeedback" component={ViewFeedback} />{" "}

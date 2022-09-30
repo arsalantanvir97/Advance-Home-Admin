@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Pagination from "../components/Padgination";
 import Swal from "sweetalert2";
+import Loader from "../components/Loader";
 
 const User = () => {
   const adminLogin = useSelector((state) => state.adminLogin);
@@ -20,12 +21,14 @@ const User = () => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [status, setStatus] = useState("");
+  const [loading, setloading] = useState(false);
 
   useEffect(() => {
     handleGetUsers();
   }, [page, perPage, from, to, status, searchString]);
 
   const handleGetUsers = async () => {
+    setloading(true)
     try {
       const res = await axios({
         url: `${baseURL}/user/userlogs`,
@@ -42,12 +45,15 @@ const User = () => {
           Authorization: `Bearer ${adminInfo.token}`,
         },
       });
+      setloading(false)
 
       console.log("res", res);
       setUsers(res.data?.users);
     } catch (err) {
       console.log("err", err);
     }
+    setloading(false)
+
   };
 
   const handleChangeStatus = async (id, status) => {
@@ -205,6 +211,9 @@ const User = () => {
                       </div>
                     </div>
                   </div>
+                  {loading ? (
+                      <Loader />
+                    ) : (
                   <div className="row row-table">
                     <div className="main-tabble table-responsive">
                       <div className="dataTables_wrapper container-fluid dt-bootstrap4">
@@ -303,7 +312,7 @@ const User = () => {
                         )}
                       </div>
                     </div>
-                  </div>
+                  </div>)}
                 </div>
               </div>
             </div>

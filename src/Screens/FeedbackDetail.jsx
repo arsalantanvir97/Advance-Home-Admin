@@ -4,10 +4,12 @@ import { baseURL, imageURL } from "../utils/api";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Loader from "../components/Loader";
 const FeedbackDetail = ({ match }) => {
   const adminLogin = useSelector((state) => state.adminLogin);
   const { adminInfo } = adminLogin;
   const [feedback, setFeedback] = useState("");
+  const [loading, setloading] = useState(false);
 
   useEffect(() => {
     handleGetFeedback();
@@ -15,6 +17,7 @@ const FeedbackDetail = ({ match }) => {
 
   const handleGetFeedback = async () => {
     try {
+      setloading(true)
       const res = await axios({
         url: `${baseURL}/feedback/feedback-details/${match?.params?.id}`,
         method: "GET",
@@ -22,17 +25,24 @@ const FeedbackDetail = ({ match }) => {
           Authorization: `Bearer ${adminInfo.token}`,
         },
       });
+      setloading(false)
+
       console.log("res", res);
       setFeedback(res?.data?.feedback);
     } catch (err) {
       console.log(err);
     }
+    setloading(false)
+
   };
   return (
     <div className="app-content content dashboard">
       <div className="content-wrapper content-wrapper-2">
         <div className="content-body">
           {/* Basic form layout section start */}
+          {loading ? (
+            <Loader />
+          ) : (
           <section id="configuration">
             <div className="row card px-lg-5 pb-5">
               <div className="col-12">
@@ -123,7 +133,7 @@ const FeedbackDetail = ({ match }) => {
                 </div>
               </div>
             </div>
-          </section>
+          </section>)}
         </div>
       </div>
     </div>

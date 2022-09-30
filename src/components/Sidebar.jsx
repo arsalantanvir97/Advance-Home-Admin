@@ -92,6 +92,20 @@ const Sidebar = (props) => {
           </li>
           <li
             className={
+              props?.match?.path == "/CategoryManagement"
+                ? "nav-item active "
+                : "nav-item"
+            }
+          >
+            <Link to="/CategoryManagement">
+              <img src="images/test.png" className="mr-1" alt="" />
+              <span className="menu-title" data-i18n>
+                Category Management
+              </span>
+            </Link>
+          </li>
+          <li
+            className={
               props?.match?.path == "/TestManagement"
                 ? "nav-item active "
                 : "nav-item"

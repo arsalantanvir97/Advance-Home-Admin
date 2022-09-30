@@ -7,6 +7,7 @@ import Pagination from "../components/Padgination";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
+import Loader from "../components/Loader";
 
 const TestManagement = () => {
   const adminLogin = useSelector((state) => state.adminLogin);
@@ -19,12 +20,14 @@ const TestManagement = () => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [status, setStatus] = useState("");
+  const [loading, setloading] = useState(false);
 
   useEffect(() => {
     handleGetTestTypes();
   }, [page, perPage, from, to, status, searchString]);
 
   const handleGetTestTypes = async () => {
+    setloading(true);
     try {
       const res = await axios({
         url: `${baseURL}/testtype/testTypeLogs`,
@@ -35,18 +38,20 @@ const TestManagement = () => {
           searchString,
           from,
           to,
-          status,
+          status
         },
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       });
+      setloading(false);
 
       console.log("res", res);
       settesttypes(res.data?.testtypes);
     } catch (err) {
       console.log("err", err);
     }
+    setloading(false);
   };
 
   const toggleActiveStatus = async (id, status) => {
@@ -55,15 +60,15 @@ const TestManagement = () => {
         url: `${baseURL}/testtype/toggleActiveStatus/${id}`,
         method: "GET",
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       });
       Swal.fire({
         icon: "success",
         title: "SUCCESS",
         text: res.data.message,
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1500
       });
       handleGetTestTypes();
     } catch (err) {
@@ -74,7 +79,7 @@ const TestManagement = () => {
           ? err?.response?.data?.message
           : "Internal Server Error",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1500
       });
     }
   };
@@ -83,6 +88,7 @@ const TestManagement = () => {
       <div className="content-wrapper content-wrapper-2">
         <div className="content-body">
           {/* Basic form layout section start */}
+
           <section id="configuration">
             <div className="row card py-lg-5 py-3">
               <div className="col-12">
@@ -188,100 +194,104 @@ const TestManagement = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="row row-table">
-                    <div className="main-tabble table-responsive">
-                      <div className="dataTables_wrapper container-fluid dt-bootstrap4">
-                        <div className="row">
-                          <div className="col-sm-12">
-                            <table className="table table-borderless dataTable">
-                              <thead>
-                                <tr>
-                                  <th className="sorting_asc">SR. No.</th>
-                                  <th className="sorting">Test Name</th>
-                                  <th className="sorting">Test.ID</th>
-                                  <th className="sorting">Date</th>
-                                  <th className="sorting_asc">Status</th>
-                                  <th className="sorting">ACTIONs</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {testtypes?.docs?.length > 0 &&
-                                  testtypes?.docs?.map((test, index) => (
-                                    <tr>
-                                      <td>{index + 1}</td>
-                                      <td>{test?.title}</td>
-                                      <td>{test?._id}</td>
-                                      <td>
-                                        {" "}
-                                        {moment
-                                          .utc(test?.createdAt)
-                                          .format("LL")}
-                                      </td>
-                                      <td>
-                                        <span
-                                          className={
-                                            test?.status == "Active"
-                                              ? "active-td"
-                                              : "inactive-td"
-                                          }
-                                        >
-                                          {test?.status}
-                                        </span>
-                                      </td>
-                                      <td>
-                                        <div className="btn-group ml-1">
-                                          <button
-                                            type="button"
-                                            className="btn dropdown-toggle"
-                                            data-toggle="dropdown"
+                  {loading ? (
+                    <Loader />
+                  ) : (
+                    <div className="row row-table">
+                      <div className="main-tabble table-responsive">
+                        <div className="dataTables_wrapper container-fluid dt-bootstrap4">
+                          <div className="row">
+                            <div className="col-sm-12">
+                              <table className="table table-borderless dataTable">
+                                <thead>
+                                  <tr>
+                                    <th className="sorting_asc">SR. No.</th>
+                                    <th className="sorting">Test Name</th>
+                                    <th className="sorting">Test.ID</th>
+                                    <th className="sorting">Date</th>
+                                    <th className="sorting_asc">Status</th>
+                                    <th className="sorting">ACTIONs</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {testtypes?.docs?.length > 0 &&
+                                    testtypes?.docs?.map((test, index) => (
+                                      <tr>
+                                        <td>{index + 1}</td>
+                                        <td>{test?.title}</td>
+                                        <td>{test?._id}</td>
+                                        <td>
+                                          {" "}
+                                          {moment
+                                            .utc(test?.createdAt)
+                                            .format("LL")}
+                                        </td>
+                                        <td>
+                                          <span
+                                            className={
+                                              test?.status == "Active"
+                                                ? "active-td"
+                                                : "inactive-td"
+                                            }
                                           >
-                                            <i className="fa fa-ellipsis-v" />
-                                          </button>
-                                          <div className="dropdown-menu">
-                                            <Link
-                                              className="dropdown-item"
-                                              to={`/EditTest/${test?._id}`}
+                                            {test?.status}
+                                          </span>
+                                        </td>
+                                        <td>
+                                          <div className="btn-group ml-1">
+                                            <button
+                                              type="button"
+                                              className="btn dropdown-toggle"
+                                              data-toggle="dropdown"
                                             >
-                                              View
-                                            </Link>
-                                            <Link
-                                              to="#"
-                                              onClick={() =>
-                                                toggleActiveStatus(
-                                                  test._id,
-                                                  !test.status
-                                                )
-                                              }
-                                              className="dropdown-item"
-                                              data-toggle="modal"
-                                              data-target="#activate"
-                                            >
-                                              {test?.status == "Active"
-                                                ? "Inactive"
-                                                : "Active"}
-                                            </Link>
+                                              <i className="fa fa-ellipsis-v" />
+                                            </button>
+                                            <div className="dropdown-menu">
+                                              <Link
+                                                className="dropdown-item"
+                                                to={`/EditTest/${test?._id}`}
+                                              >
+                                                View
+                                              </Link>
+                                              <Link
+                                                to="#"
+                                                onClick={() =>
+                                                  toggleActiveStatus(
+                                                    test._id,
+                                                    !test.status
+                                                  )
+                                                }
+                                                className="dropdown-item"
+                                                data-toggle="modal"
+                                                data-target="#activate"
+                                              >
+                                                {test?.status == "Active"
+                                                  ? "Inactive"
+                                                  : "Active"}
+                                              </Link>
+                                            </div>
                                           </div>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  ))}
-                              </tbody>
-                            </table>
+                                        </td>
+                                      </tr>
+                                    ))}
+                                </tbody>
+                              </table>
+                            </div>
                           </div>
+                          {testtypes?.docs?.length > 0 && (
+                            <Pagination
+                              totalDocs={testtypes?.totalDocs}
+                              totalPages={testtypes?.totalPages}
+                              currentPage={testtypes?.page}
+                              setPage={setPage}
+                              hasNextPage={testtypes?.hasNextPage}
+                              hasPrevPage={testtypes?.hasPrevPage}
+                            />
+                          )}
                         </div>
-                        {testtypes?.docs?.length > 0 && (
-                          <Pagination
-                            totalDocs={testtypes?.totalDocs}
-                            totalPages={testtypes?.totalPages}
-                            currentPage={testtypes?.page}
-                            setPage={setPage}
-                            hasNextPage={testtypes?.hasNextPage}
-                            hasPrevPage={testtypes?.hasPrevPage}
-                          />
-                        )}
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>

@@ -19,6 +19,9 @@ const EditTest = ({ match, history }) => {
 
   const [amount, setamount] = useState("");
   const [longDesc, setlongDesc] = useState("");
+  const [category, setcategory] = useState("");
+  const [categoryid, setcategoryid] = useState("");
+  const [allcategory, setallcategory] = useState([]);
 
   const [image, setimage] = useState("");
   const [is_edit, setIsEdit] = useState(false);
@@ -29,10 +32,21 @@ const EditTest = ({ match, history }) => {
 
   useEffect(() => {
     getTestType();
+    handleGetCategories();
   }, []);
-  useEffect(() => {
-    console.log('dateadded',dateadded);
-  }, [dateadded]);
+
+  const handleGetCategories = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${adminInfo.token}`
+        }
+      };
+      const res = await axios.get(`${baseURL}/category/getAllCategory`, config);
+      console.log("resssssss", res);
+      setallcategory(res?.data?.category);
+    } catch (error) {}
+  };
   const getTestType = async () => {
     try {
       const res = await axios({
@@ -47,6 +61,9 @@ const EditTest = ({ match, history }) => {
       setdateadded(new Date(res?.data?.testtype?.dateadded));
       setamount(res?.data?.testtype?.amount);
       setlongDesc(res?.data?.testtype?.longDesc);
+      setcategory(res?.data?.testtype?.categoryid?.name);
+      setcategoryid(res?.data?.testtype?.categoryid?._id);
+
       settestdetails(res?.data?.testtype);
       setimage(res?.data?.testtype?.images[0]);
     } catch (err) {
@@ -55,9 +72,8 @@ const EditTest = ({ match, history }) => {
   };
 
   const updateProfileData = async (e) => {
-    console.log("updateProfileData",title?.length);
-    if (title?.length > 0 && amount > 0 && longDesc?.length > 0)
-     {
+    console.log("updateProfileData", title?.length);
+    if (title?.length > 0 && amount > 0 && longDesc?.length > 0) {
       try {
         const formData = new FormData();
 
@@ -67,6 +83,7 @@ const EditTest = ({ match, history }) => {
         formData.append("id", match?.params?.id);
         formData.append("amount", amount);
         formData.append("longDesc", longDesc);
+        formData.append("categoryid", categoryid);
 
         const body = formData;
         const config = {
@@ -99,10 +116,8 @@ const EditTest = ({ match, history }) => {
           showConfirmButton: false,
           timer: 1500
         });
-        
       }
       setIsEdit(false);
-
     } else {
       Toasty("error", `Please fill out all the required fields`);
     }
@@ -158,6 +173,35 @@ const EditTest = ({ match, history }) => {
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
+                        Category Name:
+                      </label>
+                      {is_edit ? (
+                        <div className="row">
+                          <select
+                            name
+                            id
+                            className="general-select w-100 ml-1"
+                            value={categoryid}
+                            onChange={(e) => {
+                              setcategoryid(e.target.value);
+                            }}
+                          >
+                            {" "}
+                            <option>Select</option>
+                            {allcategory?.length > 0 &&
+                              allcategory?.map((cat) => (
+                                <option value={cat?._id}>{cat?.name}</option>
+                              ))}
+                          </select>
+                        </div>
+                      ) : (
+                        <p>{category}</p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-lg-4 mt-2">
+                      <label htmlFor className="site-labell">
                         Date Added:
                       </label>
                       <p className="label-value">
@@ -170,9 +214,7 @@ const EditTest = ({ match, history }) => {
                             <DatePicker
                               selected={dateadded}
                               minDate={new Date()}
-                              onChange={(dateadded) =>
-                                setdateadded(dateadded)
-                              }
+                              onChange={(dateadded) => setdateadded(dateadded)}
                               className="sort-date customdate form-control"
                             />
                           </div>

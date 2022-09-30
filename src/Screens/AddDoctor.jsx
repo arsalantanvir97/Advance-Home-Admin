@@ -30,12 +30,15 @@ const AddDoctor = ({ history }) => {
 
   const [image, setimage] = useState();
   const [is_edit, setIsEdit] = useState(true);
+  const [loading, setloading] = useState(false);
+
   const dispatch = useDispatch();
 
   const adminLogin = useSelector((state) => state.adminLogin);
   const { adminInfo } = adminLogin;
 
   const addDoctorHandler = async () => {
+    setloading(true);
     try {
       const emailvalidation = validateEmail(email);
       console.log("emmmm", emailvalidation);
@@ -71,6 +74,8 @@ const AddDoctor = ({ history }) => {
           body,
           config
         );
+        setloading(false);
+
         if (res?.status == 201) {
           Swal.fire({
             icon: "success",
@@ -93,6 +98,7 @@ const AddDoctor = ({ history }) => {
         timer: 1500
       });
     }
+    setloading(false);
   };
   return (
     <div className="app-content content dashboard">
@@ -261,7 +267,6 @@ const AddDoctor = ({ history }) => {
                           type="radio"
                           id="test6"
                           name="radio-groups"
-                          
                         />
                         <label htmlFor="test6">Yes</label>
                       </p>
@@ -344,34 +349,38 @@ const AddDoctor = ({ history }) => {
                   </div>
                   <div className="row">
                     <div className="col-12">
-                      <button
-                        type="button"
-                        data-toggle="modal"
-                        data-target="#useractivated"
-                        className="general-btn mt-3 px-3"
-                        onClick={() => {
-                          image?.name?.length > 0 &&
-                          firstName?.length > 0 &&
-                          lastName?.length > 0 &&
-                          companyname?.length > 0 &&
-                          fax > 0 &&
-                          npi > 0 &&
-                          qualification?.length > 0 &&
-                          specialization?.length > 0 &&
-                          directphone > 0 &&
-                          password?.length > 0 &&
-                          address?.length > 0 &&
-                          email?.length > 0 &&
-                          phoneNumber > 0
-                            ? addDoctorHandler()
-                            : Toasty(
-                                "error",
-                                `Please fill out all the required fields`
-                              );
-                        }}
-                      >
-                        Add
-                      </button>
+                      {!loading ? (
+                        <button
+                          type="button"
+                          data-toggle="modal"
+                          data-target="#useractivated"
+                          className="general-btn mt-3 px-3"
+                          onClick={() => {
+                            image?.name?.length > 0 &&
+                            firstName?.length > 0 &&
+                            lastName?.length > 0 &&
+                            companyname?.length > 0 &&
+                            fax > 0 &&
+                            npi > 0 &&
+                            qualification?.length > 0 &&
+                            specialization?.length > 0 &&
+                            directphone > 0 &&
+                            password?.length > 0 &&
+                            address?.length > 0 &&
+                            email?.length > 0 &&
+                            phoneNumber > 0
+                              ? addDoctorHandler()
+                              : Toasty(
+                                  "error",
+                                  `Please fill out all the required fields`
+                                );
+                          }}
+                        >
+                          Add
+                        </button>
+                      ) : (
+                        <i className="fas fa-spinner fa-pulse"></i>
+                      )}
                     </div>
                   </div>
                 </form>

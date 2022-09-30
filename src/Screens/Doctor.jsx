@@ -282,6 +282,7 @@ const Doctor = () => {
                               </div>
                             </div>
                           </div>
+
                           <div className="row row-table">
                             <div className="main-tabble table-responsive">
                               <div className="dataTables_wrapper container-fluid dt-bootstrap4">

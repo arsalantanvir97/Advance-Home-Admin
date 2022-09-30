@@ -5,16 +5,20 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import Swal from "sweetalert2";
+import Loader from "../components/Loader";
 
 const LabTechnicianDetails = ({ match, history }) => {
   const adminLogin = useSelector((state) => state.adminLogin);
   const { adminInfo } = adminLogin;
   const [labtechnician, setlabtechnician] = useState([]);
+  const [loading, setloading] = useState(false);
+
   useEffect(() => {
     handleGetLabTechnician();
   }, []);
 
   const handleGetLabTechnician = async () => {
+    setloading(true)
     try {
       const config = {
         headers: {
@@ -26,17 +30,24 @@ const LabTechnicianDetails = ({ match, history }) => {
         { id: match?.params?.id },
         config
       );
+      setloading(false)
+
       console.log("res", res);
       setlabtechnician(res?.data?.labTechnicians);
     } catch (err) {
       console.log(err);
     }
+    setloading(false)
+
   };
   return (
     <div className="app-content content dashboard">
       <div className="content-wrapper content-wrapper-2">
         <div className="content-body">
           {/* Basic form layout section start */}
+          {loading ? (
+                    <Loader />
+                  ) : (
           <section id="configuration">
             <div className="row card px-lg-5 pb-5">
               <div className="col-12">
@@ -423,7 +434,7 @@ const LabTechnicianDetails = ({ match, history }) => {
                 </div>
               </div>
             </div>
-          </section>
+          </section>)}
         </div>
       </div>
     </div>

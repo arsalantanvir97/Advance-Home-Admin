@@ -16,6 +16,7 @@ import InputNumber from "../components/InputNumber";
 const AddLabTechnician = ({ history }) => {
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
+  const [loading, setloading] = useState(false);
 
   const [qualification, setqualification] = useState([]);
   const [qualified, setqualified] = useState([]);
@@ -24,7 +25,7 @@ const AddLabTechnician = ({ history }) => {
   const [email, setemail] = useState("");
   const [color, setcolor] = useState("");
   const [vehicle, setvehicle] = useState("");
-  const [modal, setmodal] = useState('');
+  const [modal, setmodal] = useState("");
 
   const [phoneNumber, setphoneNumber] = useState("");
   const [password, setpassword] = useState("");
@@ -39,12 +40,11 @@ const AddLabTechnician = ({ history }) => {
   const handleChange = (value) => {
     setqualification(value);
   };
-useEffect(()=>{
-console.log('phoneNumber',qualification,
-qualified,
-specialization);
-},[phoneNumber])
+  useEffect(() => {
+    console.log("phoneNumber", qualification, qualified, specialization);
+  }, [phoneNumber]);
   const AddLabTechnicianHandler = async () => {
+    setloading(true)
     try {
       const emailvalidation = validateEmail(email);
       console.log("emmmm", emailvalidation);
@@ -78,6 +78,8 @@ specialization);
           body,
           config
         );
+        setloading(false)
+
         if (res?.status == 201) {
           Swal.fire({
             icon: "success",
@@ -100,6 +102,8 @@ specialization);
         timer: 1500
       });
     }
+    setloading(false)
+
   };
 
   const options = [
@@ -277,12 +281,11 @@ specialization);
                         Modal*
                       </label>
                       <InputNumber
-                                 value={modal}
-                                onChange={setmodal}
-                                max={14}
-                                className="all-inputt w-100"
-                              />
-                     
+                        value={modal}
+                        onChange={setmodal}
+                        max={14}
+                        className="all-inputt w-100"
+                      />
                     </div>
 
                     <div className="col-lg-4 mt-1">
@@ -313,33 +316,37 @@ specialization);
                   </div>
                   <div className="row">
                     <div className="col-12">
-                      <button
-                        type="button"
-                        data-toggle="modal"
-                        data-target="#useractivated"
-                        className="general-btn mt-3 px-3"
-                        onClick={() => {
-                          image?.name?.length > 0 &&
-                          firstName?.length > 0 &&
-                          lastName?.length > 0 &&
-                          qualification?.length > 0 &&
-                          qualified?.length > 0 &&
-                          specialization?.length > 0 &&
-                          color?.length > 0 &&
-                          password?.length > 0 &&
-                          email?.length > 0 &&
-                          vehicle?.length > 0 &&
-                          phoneNumber > 0 &&
-                          modal > 0
-                            ? AddLabTechnicianHandler()
-                            : Toasty(
-                                "error",
-                                `Please fill out all the required fields`
-                              );
-                        }}
-                      >
-                        Add
-                      </button>
+                      {!loading ? (
+                        <button
+                          type="button"
+                          data-toggle="modal"
+                          data-target="#useractivated"
+                          className="general-btn mt-3 px-3"
+                          onClick={() => {
+                            image?.name?.length > 0 &&
+                            firstName?.length > 0 &&
+                            lastName?.length > 0 &&
+                            qualification?.length > 0 &&
+                            qualified?.length > 0 &&
+                            specialization?.length > 0 &&
+                            color?.length > 0 &&
+                            password?.length > 0 &&
+                            email?.length > 0 &&
+                            vehicle?.length > 0 &&
+                            phoneNumber > 0 &&
+                            modal > 0
+                              ? AddLabTechnicianHandler()
+                              : Toasty(
+                                  "error",
+                                  `Please fill out all the required fields`
+                                );
+                          }}
+                        >
+                          Add
+                        </button>
+                      ) : (
+                        <i className="fas fa-spinner fa-pulse"></i>
+                      )}
                     </div>
                   </div>
                 </form>

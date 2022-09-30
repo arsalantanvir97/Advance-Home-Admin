@@ -7,6 +7,7 @@ import Pagination from "../components/Padgination";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
+import Loader from "../components/Loader";
 
 const Booking = () => {
   const adminLogin = useSelector((state) => state.adminLogin);
@@ -19,12 +20,14 @@ const Booking = () => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [status, setStatus] = useState("");
+  const [loading, setloading] = useState(false);
 
   useEffect(() => {
     handleGetBookings();
   }, [page, perPage, from, to, status, searchString]);
 
   const handleGetBookings = async () => {
+    setloading(true);
     try {
       const res = await axios({
         url: `${baseURL}/testbooking/bookingLogs`,
@@ -35,18 +38,20 @@ const Booking = () => {
           searchString,
           from,
           to,
-          status,
+          status
         },
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       });
+      setloading(false);
 
       console.log("res", res);
       setbookings(res.data?.bookings);
     } catch (err) {
       console.log("err", err);
     }
+    setloading(false);
   };
 
   const toggleActiveStatus = async (id, status) => {
@@ -55,15 +60,15 @@ const Booking = () => {
         url: `${baseURL}/testtype/toggleActiveStatus/${id}`,
         method: "GET",
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       });
       Swal.fire({
         icon: "success",
         title: "SUCCESS",
         text: res.data.message,
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1500
       });
       handleGetBookings();
     } catch (err) {
@@ -74,7 +79,7 @@ const Booking = () => {
           ? err?.response?.data?.message
           : "Internal Server Error",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1500
       });
     }
   };
@@ -195,78 +200,82 @@ const Booking = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="row row-table">
-                    <div className="main-tabble table-responsive">
-                      <div className="dataTables_wrapper container-fluid dt-bootstrap4">
-                        <div className="row">
-                          <div className="col-sm-12">
-                            <table className="table table-borderless dataTable">
-                              <thead>
-                                <tr>
-                                  <th className="sorting_asc">SR. No.</th>
-                                  <th className="sorting">User Name</th>
-                                  <th className="sorting">MR.No</th>
-                                  <th className="sorting">Date</th>
-                                  <th className="sorting">Status</th>
-                                  <th className="sorting">ACTIONs</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {bookings?.docs?.length > 0 &&
-                                  bookings?.docs?.map((book, index) => (
-                                    <tr>
-                                      <td>{index + 1}</td>
-                                      <td>{book?.userid?.firstname}</td>
-                                      <td>{book?._id}</td>
-                                      <td>
-                                        {" "}
-                                        {moment
-                                          .utc(book?.createdAt)
-                                          .format("LL")}
-                                      </td>
-                                      <td>
-                                        <span className="active-td">
-                                          {book?.status}
-                                        </span>
-                                      </td>
-                                      <td>
-                                        <div className="btn-group ml-1">
-                                          <button
-                                            type="button"
-                                            className="btn dropdown-toggle"
-                                            data-toggle="dropdown"
-                                          >
-                                            <i className="fa fa-ellipsis-v" />
-                                          </button>
-                                          <div className="dropdown-menu">
-                                            <Link
-                                              className="dropdown-item"
-                                              to={`/BookingDetail/${book?._id}`}
+                  {loading ? (
+                    <Loader />
+                  ) : (
+                    <div className="row row-table">
+                      <div className="main-tabble table-responsive">
+                        <div className="dataTables_wrapper container-fluid dt-bootstrap4">
+                          <div className="row">
+                            <div className="col-sm-12">
+                              <table className="table table-borderless dataTable">
+                                <thead>
+                                  <tr>
+                                    <th className="sorting_asc">SR. No.</th>
+                                    <th className="sorting">User Name</th>
+                                    <th className="sorting">MR.No</th>
+                                    <th className="sorting">Date</th>
+                                    <th className="sorting">Status</th>
+                                    <th className="sorting">ACTIONs</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {bookings?.docs?.length > 0 &&
+                                    bookings?.docs?.map((book, index) => (
+                                      <tr>
+                                        <td>{index + 1}</td>
+                                        <td>{book?.userid?.firstname}</td>
+                                        <td>{book?._id}</td>
+                                        <td>
+                                          {" "}
+                                          {moment
+                                            .utc(book?.createdAt)
+                                            .format("LL")}
+                                        </td>
+                                        <td>
+                                          <span className="active-td">
+                                            {book?.status}
+                                          </span>
+                                        </td>
+                                        <td>
+                                          <div className="btn-group ml-1">
+                                            <button
+                                              type="button"
+                                              className="btn dropdown-toggle"
+                                              data-toggle="dropdown"
                                             >
-                                              View
-                                            </Link>
+                                              <i className="fa fa-ellipsis-v" />
+                                            </button>
+                                            <div className="dropdown-menu">
+                                              <Link
+                                                className="dropdown-item"
+                                                to={`/BookingDetail/${book?._id}`}
+                                              >
+                                                View
+                                              </Link>
+                                            </div>
                                           </div>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  ))}
-                              </tbody>
-                            </table>
+                                        </td>
+                                      </tr>
+                                    ))}
+                                </tbody>
+                              </table>
+                            </div>
                           </div>
+                          {bookings?.docs?.length > 0 && (
+                            <Pagination
+                              totalDocs={bookings?.totalDocs}
+                              totalPages={bookings?.totalPages}
+                              currentPage={bookings?.page}
+                              setPage={setPage}
+                              hasNextPage={bookings?.hasNextPage}
+                              hasPrevPage={bookings?.hasPrevPage}
+                            />
+                          )}
                         </div>
-                        {bookings?.docs?.length > 0 && (
-                          <Pagination
-                            totalDocs={bookings?.totalDocs}
-                            totalPages={bookings?.totalPages}
-                            currentPage={bookings?.page}
-                            setPage={setPage}
-                            hasNextPage={bookings?.hasNextPage}
-                            hasPrevPage={bookings?.hasPrevPage}
-                          />
-                        )}
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>

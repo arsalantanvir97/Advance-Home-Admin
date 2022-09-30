@@ -9,28 +9,28 @@ import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import Loader from "../components/Loader";
 
-const LabTechnician = () => {
+const CategoryManagement = () => {
   const adminLogin = useSelector((state) => state.adminLogin);
   const { adminInfo } = adminLogin;
 
-  const [labtechnician, setlabtechnician] = useState([]);
+  const [category, setcategory] = useState([]);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [searchString, setSearchString] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [status, setStatus] = useState("");
-  const [loading, setloading] = useState("");
+  const [loading, setloading] = useState(false);
 
   useEffect(() => {
-    handleGetLabTechnician();
+    handleGetCategories();
   }, [page, perPage, from, to, status, searchString]);
 
-  const handleGetLabTechnician = async () => {
+  const handleGetCategories = async () => {
     setloading(true)
     try {
       const res = await axios({
-        url: `${baseURL}/LabTechnicianRoutes/labTechnicianLogs`,
+        url: `${baseURL}/category/categorylogs`,
         method: "GET",
         params: {
           page,
@@ -38,16 +38,16 @@ const LabTechnician = () => {
           searchString,
           from,
           to,
-          status,
+          status
         },
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       });
       setloading(false)
 
       console.log("res", res);
-      setlabtechnician(res.data?.labtechnician);
+      setcategory(res?.data?.category);
     } catch (err) {
       console.log("err", err);
     }
@@ -58,20 +58,20 @@ const LabTechnician = () => {
   const toggleActiveStatus = async (id, status) => {
     try {
       const res = await axios({
-        url: `${baseURL}/LabTechnicianRoutes/toggleActiveStatus/${id}`,
+        url: `${baseURL}/category/toggleActiveStatus/${id}`,
         method: "GET",
         headers: {
-          Authorization: `Bearer ${adminInfo.token}`,
-        },
+          Authorization: `Bearer ${adminInfo.token}`
+        }
       });
       Swal.fire({
         icon: "success",
         title: "SUCCESS",
         text: res.data.message,
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1500
       });
-      handleGetLabTechnician();
+      handleGetCategories();
     } catch (err) {
       Swal.fire({
         icon: "error",
@@ -80,11 +80,10 @@ const LabTechnician = () => {
           ? err?.response?.data?.message
           : "Internal Server Error",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1500
       });
     }
   };
-
   return (
     <div className="app-content content dashboard">
       <div className="content-wrapper content-wrapper-2">
@@ -95,11 +94,11 @@ const LabTechnician = () => {
               <div className="col-12">
                 <div className="row">
                   <div className="col-lg-6">
-                    <h1 className="ml-1 main-heading">Lab Technician</h1>
+                    <h1 className="ml-1 main-heading">Category Management</h1>
                   </div>
                   <div className="col-lg-6 text-right">
                     <Link
-                      to="/AddLabTechnician"
+                      to="/AddCategory"
                       className="general-btn d-inline-block"
                     >
                       Add New
@@ -150,8 +149,10 @@ const LabTechnician = () => {
                             setPage(1);
                           }}
                         >
-                          <option value={"Active"}>Active</option>
-                          <option value={"Inactive"}>Inactive</option>
+                          <option value={""}>All</option>
+
+                          <option value={true}>Active</option>
+                          <option value={false}>Inactive</option>
                         </select>
                       </div>
                     </div>
@@ -189,7 +190,7 @@ const LabTechnician = () => {
                               }}
                               onKeyDown={(e) => {
                                 if (e.key === "Enter") {
-                                  handleGetLabTechnician();
+                                  CategoryManagement();
                                 }
                               }}
                             />
@@ -197,7 +198,7 @@ const LabTechnician = () => {
                         </div>
                       </div>
                     </div>
-                  </div>{loading ? (
+                  </div> {loading ? (
                     <Loader />
                   ) : (
                   <div className="row row-table">
@@ -209,36 +210,35 @@ const LabTechnician = () => {
                               <thead>
                                 <tr>
                                   <th className="sorting_asc">SR. No.</th>
-                                  <th className="sorting">Full Name</th>
-                                  <th className="sorting">Technician.Id</th>
-                                  <th className="sorting">Email</th>
+                                  <th className="sorting">Category Name</th>
+                                  <th className="sorting">Category.ID</th>
                                   <th className="sorting">Date</th>
                                   <th className="sorting_asc">Status</th>
                                   <th className="sorting">ACTIONs</th>
                                 </tr>
                               </thead>
                               <tbody>
-                                {labtechnician?.docs?.length > 0 &&
-                                  labtechnician?.docs?.map((labt, index) => (
+                                {category?.docs?.length > 0 &&
+                                  category?.docs?.map((cat, index) => (
                                     <tr>
                                       <td>{index + 1}</td>
-                                      <td>{labt?.firstName + ' '+labt?.lastName}</td>
-                                      <td>{labt?._id}</td>
-                                      <td>{labt?.email}</td>
+                                      <td>{cat?.name}</td>
+                                      <td>{cat?._id}</td>
                                       <td>
+                                        {" "}
                                         {moment
-                                          .utc(labt?.createdAt)
+                                          .utc(cat?.createdAt)
                                           .format("LL")}
                                       </td>
                                       <td>
                                         <span
                                           className={
-                                            labt?.status == "Active"
+                                            cat?.status
                                               ? "active-td"
                                               : "inactive-td"
                                           }
                                         >
-                                          {labt?.status}
+                                          {cat?.status ? "Active" : "Inactive"}
                                         </span>
                                       </td>
                                       <td>
@@ -251,34 +251,27 @@ const LabTechnician = () => {
                                             <i className="fa fa-ellipsis-v" />
                                           </button>
                                           <div className="dropdown-menu">
-                                            <Link
+                                            {/* <Link
                                               className="dropdown-item"
-                                              to={`/LabTechnicianDetails/${labt?._id}`}
+                                              to={`/EditCat/${cat?._id}`}
                                             >
                                               View
-                                            </Link>
-
+                                            </Link> */}
                                             <Link
                                               to="#"
                                               onClick={() =>
                                                 toggleActiveStatus(
-                                                  labt._id,
-                                                  !labt.status
+                                                  cat._id,
+                                                  !cat.status
                                                 )
                                               }
                                               className="dropdown-item"
                                               data-toggle="modal"
                                               data-target="#activate"
                                             >
-                                              {labt?.status == "Active"
+                                              {cat?.status
                                                 ? "Inactive"
                                                 : "Active"}
-                                            </Link>
-                                            <Link
-                                              className="dropdown-item"
-                                              to={`/EditLabTEchnician/${labt?._id}`}
-                                            >
-                                              Edit
                                             </Link>
                                           </div>
                                         </div>
@@ -289,14 +282,14 @@ const LabTechnician = () => {
                             </table>
                           </div>
                         </div>
-                        {labtechnician?.docs?.length > 0 && (
+                        {category?.docs?.length > 0 && (
                           <Pagination
-                            totalDocs={labtechnician?.totalDocs}
-                            totalPages={labtechnician?.totalPages}
-                            currentPage={labtechnician?.page}
+                            totalDocs={category?.totalDocs}
+                            totalPages={category?.totalPages}
+                            currentPage={category?.page}
                             setPage={setPage}
-                            hasNextPage={labtechnician?.hasNextPage}
-                            hasPrevPage={labtechnician?.hasPrevPage}
+                            hasNextPage={category?.hasNextPage}
+                            hasPrevPage={category?.hasPrevPage}
                           />
                         )}
                       </div>
@@ -312,4 +305,4 @@ const LabTechnician = () => {
   );
 };
 
-export default LabTechnician;
+export default CategoryManagement;

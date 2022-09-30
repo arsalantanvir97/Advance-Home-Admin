@@ -7,6 +7,7 @@ import Pagination from "../components/Padgination";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
+import Loader from "../components/Loader";
 
 const Feedback = () => {
   const adminLogin = useSelector((state) => state.adminLogin);
@@ -18,12 +19,14 @@ const Feedback = () => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [status, setStatus] = useState("");
+  const [loading, setloading] = useState(false);
 
   useEffect(() => {
     handleGetFeedbacks();
   }, [page, perPage, from, to, status, searchString]);
 
   const handleGetFeedbacks = async () => {
+    setloading(true);
     try {
       const res = await axios({
         url: `${baseURL}/feedback/Feedbacklogs`,
@@ -40,12 +43,15 @@ const Feedback = () => {
           Authorization: `Bearer ${adminInfo.token}`
         }
       });
+      setloading(false);
 
       console.log("res", res);
       setFeedback(res.data?.feedback);
     } catch (err) {
       console.log("err", err);
+      setloading(false);
     }
+    setloading(false);
   };
   useEffect(() => {
     console.log("feedback", feedback);
@@ -55,6 +61,7 @@ const Feedback = () => {
       <div className="content-wrapper content-wrapper-2">
         <div className="content-body">
           {/* Basic form layout section start */}
+
           <section id="configuration">
             <div className="row card py-lg-5 py-3">
               <div className="col-12">
@@ -159,76 +166,80 @@ const Feedback = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="row row-table">
-                    <div className="main-tabble table-responsive">
-                      <div className="dataTables_wrapper container-fluid dt-bootstrap4">
-                        <div className="row">
-                          <div className="col-sm-12">
-                            <table className="table table-borderless dataTable">
-                              <thead>
-                                <tr>
-                                  <th className="sorting_asc">SR. No.</th>
-                                  <th className="sorting">Full Name</th>
-                                  <th className="sorting">Email</th>
-                                  <th className="sorting">Date</th>
-                                  <th className="sorting">User Type</th>
-                                  <th className="sorting">ACTIONs</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {feedback?.docs?.length > 0 &&
-                                  feedback?.docs?.map((feed, index) => (
-                                    <>
-                                      <tr>
-                                        <td>{index + 1}</td>
-                                        <td>{feed?.name}</td>
-                                        <td>{feed?.email}</td>
-                                        <td>
-                                          {moment
-                                            .utc(feed?.createdAt)
-                                            .format("LL")}
-                                        </td>
-                                        <td>{feed?.type}</td>
-                                        <td>
-                                          <div className="btn-group ml-1">
-                                            <button
-                                              type="button"
-                                              className="btn dropdown-toggle"
-                                              data-toggle="dropdown"
-                                            >
-                                              <i className="fa fa-ellipsis-v" />
-                                            </button>
-                                            <div className="dropdown-menu">
-                                              <Link
-                                                to={`/FeedbackDetail/${feed?._id}`}
-                                                className="dropdown-item"
+                  </div>{" "}
+                  {loading ? (
+                    <Loader />
+                  ) : (
+                    <div className="row row-table">
+                      <div className="main-tabble table-responsive">
+                        <div className="dataTables_wrapper container-fluid dt-bootstrap4">
+                          <div className="row">
+                            <div className="col-sm-12">
+                              <table className="table table-borderless dataTable">
+                                <thead>
+                                  <tr>
+                                    <th className="sorting_asc">SR. No.</th>
+                                    <th className="sorting">Full Name</th>
+                                    <th className="sorting">Email</th>
+                                    <th className="sorting">Date</th>
+                                    <th className="sorting">User Type</th>
+                                    <th className="sorting">ACTIONs</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {feedback?.docs?.length > 0 &&
+                                    feedback?.docs?.map((feed, index) => (
+                                      <>
+                                        <tr>
+                                          <td>{index + 1}</td>
+                                          <td>{feed?.name}</td>
+                                          <td>{feed?.email}</td>
+                                          <td>
+                                            {moment
+                                              .utc(feed?.createdAt)
+                                              .format("LL")}
+                                          </td>
+                                          <td>{feed?.type}</td>
+                                          <td>
+                                            <div className="btn-group ml-1">
+                                              <button
+                                                type="button"
+                                                className="btn dropdown-toggle"
+                                                data-toggle="dropdown"
                                               >
-                                                View
-                                              </Link>
+                                                <i className="fa fa-ellipsis-v" />
+                                              </button>
+                                              <div className="dropdown-menu">
+                                                <Link
+                                                  to={`/FeedbackDetail/${feed?._id}`}
+                                                  className="dropdown-item"
+                                                >
+                                                  View
+                                                </Link>
+                                              </div>
                                             </div>
-                                          </div>
-                                        </td>
-                                      </tr>
-                                    </>
-                                  ))}
-                              </tbody>
-                            </table>
+                                          </td>
+                                        </tr>
+                                      </>
+                                    ))}
+                                </tbody>
+                              </table>
+                            </div>
                           </div>
+                          {feedback?.docs?.length > 0 && (
+                            <Pagination
+                              totalDocs={feedback?.totalDocs}
+                              totalPages={feedback?.totalPages}
+                              currentPage={feedback?.page}
+                              setPage={setPage}
+                              hasNextPage={feedback?.hasNextPage}
+                              hasPrevPage={feedback?.hasPrevPage}
+                            />
+                          )}
                         </div>
-                        {feedback?.docs?.length > 0 && (
-                          <Pagination
-                            totalDocs={feedback?.totalDocs}
-                            totalPages={feedback?.totalPages}
-                            currentPage={feedback?.page}
-                            setPage={setPage}
-                            hasNextPage={feedback?.hasNextPage}
-                            hasPrevPage={feedback?.hasPrevPage}
-                          />
-                        )}
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>

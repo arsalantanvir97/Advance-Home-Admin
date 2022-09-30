@@ -10,10 +10,13 @@ const ChangePassword = ({ history }) => {
   const [showicon, setshowicon] = useState(true);
   const [showicon2, setshowicon2] = useState(true);
   const [showicon3, setshowicon3] = useState(true);
+  const [loading, setloading] = useState(false);
+
   const adminLogin = useSelector((state) => state.adminLogin);
   const { adminInfo } = adminLogin;
 
   const submitHandler = async () => {
+    setloading(true);
     console.log("submitHandler");
     console.log(
       "submitHandlerreqbody",
@@ -30,6 +33,8 @@ const ChangePassword = ({ history }) => {
         history
       )
     );
+    setloading(false);
+
     setexistingpassword("");
     setnewpassword("");
     setconfirm_password("");
@@ -141,19 +146,23 @@ const ChangePassword = ({ history }) => {
                     </div>
                     <div className="row">
                       <div className="col-12 mt-4">
-                        <Link
-                          to="#"
-                          onClick={
-                            existingpassword?.length > 0 &&
-                            newpassword?.length > 0 &&
-                            confirm_password?.length > 0
-                              ? submitHandler()
-                              : null
-                          }
-                          className="general-btn d-inline-block px-3"
-                        >
-                          Update
-                        </Link>
+                        {!loading ? (
+                          <Link
+                            to="#"
+                            onClick={
+                              existingpassword?.length > 0 &&
+                              newpassword?.length > 0 &&
+                              confirm_password?.length > 0
+                                ? submitHandler()
+                                : null
+                            }
+                            className="general-btn d-inline-block px-3"
+                          >
+                            Update
+                          </Link>
+                        ) : (
+                          <i className="fas fa-spinner fa-pulse"></i>
+                        )}
                       </div>
                     </div>
                   </div>

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import Swal from "sweetalert2";
+import Loader from "../components/Loader";
 const BookingDetail = ({ match, history }) => {
   const adminLogin = useSelector((state) => state.adminLogin);
   const { adminInfo } = adminLogin;
@@ -12,6 +13,7 @@ const BookingDetail = ({ match, history }) => {
   const [labtechnician, setlabtechnician] = useState([]);
   const [selectedlabtechnician, setselectedlabtechnician] = useState("");
   const [rejectionReason, setrejectionReason] = useState("");
+  const [loading, setloading] = useState(false);
 
   useEffect(() => {
     handleGetBooking();
@@ -19,6 +21,7 @@ const BookingDetail = ({ match, history }) => {
   }, []);
 
   const handleGetBooking = async () => {
+    setloading(true);
     try {
       const res = await axios({
         url: `${baseURL}/testbooking/bookingDetails/${match?.params?.id}`,
@@ -27,11 +30,14 @@ const BookingDetail = ({ match, history }) => {
           Authorization: `Bearer ${adminInfo.token}`
         }
       });
+      setloading(false);
+
       console.log("res", res);
       setbooking(res?.data?.booking);
     } catch (err) {
       console.log(err);
     }
+    setloading(false);
   };
   useEffect(() => {
     console.log("selectedlabtechnician", selectedlabtechnician);
@@ -123,7 +129,9 @@ const BookingDetail = ({ match, history }) => {
         <div className="content-wrapper content-wrapper-2">
           <div className="content-body">
             {/* Basic form layout section start */}
-
+            {loading ? (
+                    <Loader />
+                  ) : (
             <section id="configuration">
               <div className="row card px-lg-5 pb-5">
                 <div className="col-12">
@@ -1338,7 +1346,7 @@ const BookingDetail = ({ match, history }) => {
                   ) : null}
                 </div>
               </div>
-            </section>
+            </section>)}
           </div>
         </div>
       </div>

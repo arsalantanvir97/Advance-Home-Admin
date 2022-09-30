@@ -5,16 +5,20 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import DocumentCard from "../components/DocumentCard";
+import Loader from "../components/Loader";
 
 const ViewUser = ({ match }) => {
   const adminLogin = useSelector((state) => state.adminLogin);
   const { adminInfo } = adminLogin;
   const [user, setuser] = useState([]);
+  const [loading, setloading] = useState(false);
+
   useEffect(() => {
     handleGetUser();
   }, []);
 
   const handleGetUser = async () => {
+    setloading(true)
     try {
       const res = await axios({
         url: `${baseURL}/user/getProfile/${match?.params?.id}`,
@@ -23,11 +27,15 @@ const ViewUser = ({ match }) => {
           Authorization: `Bearer ${adminInfo.token}`
         }
       });
+      setloading(false)
+
       console.log("res", res);
       setuser(res?.data?.user);
     } catch (err) {
       console.log(err);
     }
+    setloading(false)
+
   };
 
   return (
@@ -35,6 +43,9 @@ const ViewUser = ({ match }) => {
       <div className="content-wrapper content-wrapper-2">
         <div className="content-body">
           {/* Basic form layout section start */}
+          {loading ? (
+                      <Loader />
+                    ) : (
           <section id="configuration">
             <div className="row card px-lg-5 pb-5">
               <div className="col-12">
@@ -352,7 +363,7 @@ const ViewUser = ({ match }) => {
                 </div>
               </div>
             </div>
-          </section>
+          </section>)}
         </div>
       </div>
     </div>

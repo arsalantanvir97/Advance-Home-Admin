@@ -5,11 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import Graph from "../components/Graph";
 import moment from "moment";
 import { gettingallNotif } from "../actions/notifAction";
+import Loader from "../components/Loader";
 
 const Dashboard = () => {
   const [dashboardata, setdashboardata] = useState([]);
   const [year1, setyear1] = useState("");
   const [year2, setyear2] = useState("");
+  const [loading, setloading] = useState(false);
 
   const dispatch = useDispatch();
   const adminLogin = useSelector((state) => state.adminLogin);
@@ -29,6 +31,7 @@ const Dashboard = () => {
   const handleGetDashboardData = async () => {
     console.log("handleGetDashboardData");
     try {
+      setloading(true);
       const res = await axios({
         url: `${baseURL}/admin/getCountofallCollection`,
         method: "GET",
@@ -37,12 +40,15 @@ const Dashboard = () => {
           Authorization: `Bearer ${adminInfo.token}`
         }
       });
+      setloading(false);
 
       console.log("res", res);
       setdashboardata(res.data);
     } catch (err) {
       console.log("err", err);
+      setloading(false);
     }
+    setloading(false);
   };
   return (
     <div className="app-content content dashboard">
@@ -55,26 +61,35 @@ const Dashboard = () => {
                 <h1 className="ml-1 main-heading">Admin Dashboard</h1>
                 <div className="row mt-md-2 mt-1">
                   <div className="col-xl-3 col-md-6 mt-2">
-                    <div className=" circlebox card-1-box">
-                      <div className="text-right">
-                        <h3 className="dash-card-heading-2 mb-0">
-                          {dashboardata?.doctorcount}
-                        </h3>
-                      </div>
-                      <div className="d-flex align-items-center">
-                        <img
-                          src="images/card-1.png"
-                          alt=""
-                          className="img-fluid mr-1"
-                        />
-                        <div>
-                          <h6 className="dash-card-heading mb-0">Total</h6>
-                          <h6 className="dash-card-heading-2 mb-0">Doctors</h6>
+                    {loading ? (
+                      <Loader />
+                    ) : (
+                      <div className=" circlebox card-1-box">
+                        <div className="text-right">
+                          <h3 className="dash-card-heading-2 mb-0">
+                            {dashboardata?.doctorcount}
+                          </h3>
+                        </div>
+                        <div className="d-flex align-items-center">
+                          <img
+                            src="images/card-1.png"
+                            alt=""
+                            className="img-fluid mr-1"
+                          />
+                          <div>
+                            <h6 className="dash-card-heading mb-0">Total</h6>
+                            <h6 className="dash-card-heading-2 mb-0">
+                              Doctors
+                            </h6>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                   <div className="col-xl-3 col-md-6 mt-2">
+                  {loading ? (
+                      <Loader />
+                    ) : (
                     <div className=" circlebox card-2-box">
                       <div className="text-right">
                         <h3 className="dash-card-heading-2 mb-0">
@@ -90,9 +105,12 @@ const Dashboard = () => {
                           </h6>
                         </div>
                       </div>
-                    </div>
+                    </div>)}
                   </div>
                   <div className="col-xl-3 col-md-6 mt-2">
+                  {loading ? (
+                      <Loader />
+                    ) : (
                     <div className=" circlebox card-3-box">
                       <div className="text-right">
                         <h3 className="dash-card-heading-2 mb-0">
@@ -108,9 +126,12 @@ const Dashboard = () => {
                           </h6>
                         </div>
                       </div>
-                    </div>
+                    </div>)}
                   </div>
                   <div className="col-xl-3 col-md-6 mt-2">
+                  {loading ? (
+                      <Loader />
+                    ) : (
                     <div className=" circlebox card-1-box">
                       <div className="text-right">
                         <h3 className="dash-card-heading-2 mb-0">
@@ -124,9 +145,10 @@ const Dashboard = () => {
                           <h6 className="dash-card-heading-2 mb-0">Users</h6>
                         </div>
                       </div>
-                    </div>
+                    </div>)}
                   </div>
                 </div>
+                
                 <div className="row mt-2">
                   <div className="col-lg-6">
                     <h2 className="sub-heading ml-1">Total Users per Month</h2>
@@ -158,15 +180,19 @@ const Dashboard = () => {
                     </select>
                   </div>
                 </div>
+                {loading ? (
+                      <Loader />
+                    ) : (
                 <div className="row mt-2">
                   <div className="col-lg-1 my-auto">
                     <h3 className="no-of-user">No.of Users</h3>
                   </div>
+                  
                   <Graph graph_data={dashboardata?.graph_data} />
                   <div className="col-12 text-center">
                     <h3 className="no-of-user">Months</h3>
                   </div>
-                </div>
+                </div>)}
                 <div className="row mt-4">
                   <div className="col-lg-6">
                     <h2 className="sub-heading ml-1">Total Tests per Month</h2>
@@ -198,6 +224,9 @@ const Dashboard = () => {
                     </select>
                   </div>
                 </div>
+                {loading ? (
+                      <Loader />
+                    ) : (
                 <div className="row mt-2">
                   <Graph graph_data={dashboardata?.graph_datatest} />
                   {/* <div className="col-12">
@@ -210,7 +239,7 @@ const Dashboard = () => {
                   <div className="col-12 text-center">
                     <h3 className="no-of-user">Months</h3>
                   </div>
-                </div>
+                </div>)}
               </div>
             </div>
           </section>

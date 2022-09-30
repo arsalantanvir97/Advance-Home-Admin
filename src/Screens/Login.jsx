@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { handleChange } from "../utils/InputNumberValidation";
 import { validateEmail } from "../utils/ValidateEmail";
 import InputNumber from "../components/InputNumber";
+import { set } from "date-fns/esm";
 
 const Login = ({ history }) => {
   const dispatch = useDispatch();
@@ -36,9 +37,11 @@ const Login = ({ history }) => {
       console.log("emmmm", emailvalidation);
       console.log("addEmployeeHandler");
       if (emailvalidation == true) {
+        setloading(true);
         await dispatch(adminLoginAction(email, password, history));
         setemail("");
         setpassword("");
+        setloading(false);
       } else {
         Toasty("error", `Please enter a valid email`);
       }
@@ -71,7 +74,7 @@ const Login = ({ history }) => {
             title: "SUCCESS",
             text: "Verification Code Sent to your mail",
             showConfirmButton: false,
-            timer: 1500,
+            timer: 1500
           });
           setforgotpasswordModal(1); // history.push({
           //   pathname: "/verificationcode",
@@ -226,13 +229,17 @@ const Login = ({ history }) => {
                     </a>
                   </div>
                   <div className="text-center pb-lg-0 pb-2">
-                    <button
-                      type="button"
-                      onClick={submitHandler}
-                      className="aqua-btn mt-lg-3 mt-2 w-100"
-                    >
-                      Login
-                    </button>
+                    {!loading2 ? (
+                      <button
+                        type="button"
+                        onClick={submitHandler}
+                        className="aqua-btn mt-lg-3 mt-2 w-100"
+                      >
+                        Login
+                      </button>
+                    ) : (
+                      <i className="fas fa-spinner fa-pulse"></i>
+                    )}
                     <Link to="#" className="d-block back-to-web mt-3">
                       <i className="fas fa-long-arrow-alt-left mr-2" />
                       Back To Website

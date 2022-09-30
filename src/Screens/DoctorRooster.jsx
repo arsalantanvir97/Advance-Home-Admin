@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import Pagination from "../components/Padgination";
+import Loader from "../components/Loader";
 
 const DoctorRooster = ({ match }) => {
   const [page, setPage] = useState(1);
@@ -17,6 +18,8 @@ const DoctorRooster = ({ match }) => {
   const [status, setStatus] = useState("");
   const [schedule, setschedule] = useState([]);
   const [rerender, setrerender] = useState(true);
+  const [loading, setloading] = useState(false);
+
   const adminLogin = useSelector((state) => state.adminLogin);
   const { adminInfo } = adminLogin;
 
@@ -27,6 +30,7 @@ const DoctorRooster = ({ match }) => {
   const getDoctorTests = async () => {
     const id = match?.params?.id;
     console.log(id, "id");
+    setloading(true);
     try {
       const res = await axios({
         url: `${baseURL}/schedule/schedulelogs`,
@@ -44,12 +48,14 @@ const DoctorRooster = ({ match }) => {
           Authorization: `Bearer ${adminInfo.token}`
         }
       });
+      setloading(false);
 
       console.log("res", res);
       setschedule(res.data?.schedule);
     } catch (err) {
       console.log("err", err);
     }
+    setloading(false);
   };
 
   const deleteTestHandler = async (id) => {
@@ -171,113 +177,117 @@ const DoctorRooster = ({ match }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="row row-table">
-                    <div className="main-tabble table-responsive">
-                      <div className="dataTables_wrapper container-fluid dt-bootstrap4">
-                        <div className="row">
-                          <div className="col-sm-12">
-                            <table className="table table-borderless dataTable">
-                              <thead>
-                                <tr>
-                                  <th className="sorting_asc">SR. No.</th>
-                                  <th className="sorting">Doctor Name</th>
-                                  <th className="sorting">File Name</th>
-                                  <th className="sorting">File</th>
-                                  <th className="sorting">Date</th>
-                                  <th className="sorting">ACTIONs</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {schedule?.docs?.length > 0 &&
-                                  schedule?.docs?.map((sch, index) => (
-                                    <tr>
-                                      <td>{index + 1}</td>
-                                      <td>
-                                        {sch?.doctorid?.firstName +
-                                          " " +
-                                          sch?.doctorid?.lastName}
-                                      </td>
-                                      <td>{sch?.pdfname}</td>
-                                      <td>
-                                        <Link
-                                          to="#"
-                                          onClick={() =>
-                                            window.open(
-                                              `${baseURL}/download/${sch?.pdfdocs}`,
-                                              "_blank"
-                                            )
-                                          }
-                                          className="active-td"
-                                        >
-                                          <img
-                                            src="images/download-file.png"
-                                            alt=""
-                                          />
-                                          Download
-                                        </Link>
-                                      </td>
-                                      <td>
-                                        {moment
-                                          .utc(sch?.createdAt)
-                                          .format("LL")}
-                                      </td>
-                                      <td>
-                                        <div className="btn-group ml-1">
-                                          <button
-                                            type="button"
-                                            className="btn dropdown-toggle"
-                                            data-toggle="dropdown"
+                  {loading ? (
+                    <Loader />
+                  ) : (
+                    <div className="row row-table">
+                      <div className="main-tabble table-responsive">
+                        <div className="dataTables_wrapper container-fluid dt-bootstrap4">
+                          <div className="row">
+                            <div className="col-sm-12">
+                              <table className="table table-borderless dataTable">
+                                <thead>
+                                  <tr>
+                                    <th className="sorting_asc">SR. No.</th>
+                                    <th className="sorting">Doctor Name</th>
+                                    <th className="sorting">File Name</th>
+                                    <th className="sorting">File</th>
+                                    <th className="sorting">Date</th>
+                                    <th className="sorting">ACTIONs</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {schedule?.docs?.length > 0 &&
+                                    schedule?.docs?.map((sch, index) => (
+                                      <tr>
+                                        <td>{index + 1}</td>
+                                        <td>
+                                          {sch?.doctorid?.firstName +
+                                            " " +
+                                            sch?.doctorid?.lastName}
+                                        </td>
+                                        <td>{sch?.pdfname}</td>
+                                        <td>
+                                          <Link
+                                            to="#"
+                                            onClick={() =>
+                                              window.open(
+                                                `${baseURL}/download/${sch?.pdfdocs}`,
+                                                "_blank"
+                                              )
+                                            }
+                                            className="active-td"
                                           >
-                                            <i className="fa fa-ellipsis-v" />
-                                          </button>
-                                          <div className="dropdown-menu">
-                                            <Link
-                                              className="dropdown-item"
-                                              onClick={() =>
-                                                window.open(
-                                                  `${baseURL}/download/${sch?.pdfdocs}`,
-                                                  "_blank"
-                                                )
-                                              }
-                                              to="#"
-                                              data-target="#import"
-                                              data-toggle="modal"
+                                            <img
+                                              src="images/download-file.png"
+                                              alt=""
+                                            />
+                                            Download
+                                          </Link>
+                                        </td>
+                                        <td>
+                                          {moment
+                                            .utc(sch?.createdAt)
+                                            .format("LL")}
+                                        </td>
+                                        <td>
+                                          <div className="btn-group ml-1">
+                                            <button
+                                              type="button"
+                                              className="btn dropdown-toggle"
+                                              data-toggle="dropdown"
                                             >
-                                              Import
-                                            </Link>
-                                            <Link
-                                              className="dropdown-item"
-                                              to="#"
-                                              data-target="#delete"
-                                              data-toggle="modal"
-                                              onClick={() => {
-                                                deleteTestHandler(sch?._id);
-                                              }}
-                                            >
-                                              Delete
-                                            </Link>
+                                              <i className="fa fa-ellipsis-v" />
+                                            </button>
+                                            <div className="dropdown-menu">
+                                              <Link
+                                                className="dropdown-item"
+                                                onClick={() =>
+                                                  window.open(
+                                                    `${baseURL}/download/${sch?.pdfdocs}`,
+                                                    "_blank"
+                                                  )
+                                                }
+                                                to="#"
+                                                data-target="#import"
+                                                data-toggle="modal"
+                                              >
+                                                Import
+                                              </Link>
+                                              <Link
+                                                className="dropdown-item"
+                                                to="#"
+                                                data-target="#delete"
+                                                data-toggle="modal"
+                                                onClick={() => {
+                                                  deleteTestHandler(sch?._id);
+                                                }}
+                                              >
+                                                Delete
+                                              </Link>
+                                            </div>
                                           </div>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  ))}
-                              </tbody>
-                            </table>
+                                        </td>
+                                      </tr>
+                                    ))}
+                                </tbody>
+                              </table>
+                            </div>
                           </div>
+                          {schedule?.docs?.length > 0 && (
+                            <Pagination
+                              totalDocs={schedule?.totalDocs}
+                              totalPages={schedule?.totalPages}
+                              currentPage={schedule?.page}
+                              setPage={setPage}
+                              hasNextPage={schedule?.hasNextPage}
+                              hasPrevPage={schedule?.hasPrevPage}
+                            />
+                          )}
                         </div>
-                        {schedule?.docs?.length > 0 && (
-                          <Pagination
-                            totalDocs={schedule?.totalDocs}
-                            totalPages={schedule?.totalPages}
-                            currentPage={schedule?.page}
-                            setPage={setPage}
-                            hasNextPage={schedule?.hasNextPage}
-                            hasPrevPage={schedule?.hasPrevPage}
-                          />
-                        )}
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>

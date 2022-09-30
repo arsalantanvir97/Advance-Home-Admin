@@ -26,6 +26,7 @@ const AddUser = ({ history }) => {
   const [InsuranceGroup2, setInsuranceGroup2] = useState("");
   const [InsurancePolicyNo2, setInsurancePolicyNo2] = useState("");
   const [doc_schedule, setdoc_schedule] = useState("");
+  const [loading, setloading] = useState(false);
 
   const [companyname, setcompanyname] = useState("");
   const [policyno, setpolicyno] = useState("");
@@ -60,7 +61,7 @@ const AddUser = ({ history }) => {
     //     : null;
 
     // console.log("bloodtype", bloodtype);
-
+    setloading(true);
     try {
       const emailvalidation = validateEmail(email);
       console.log("emmmm", emailvalidation);
@@ -106,6 +107,8 @@ const AddUser = ({ history }) => {
           body,
           config
         );
+        setloading(false);
+
         if (res?.status == 201) {
           Swal.fire({
             icon: "success",
@@ -128,6 +131,7 @@ const AddUser = ({ history }) => {
         timer: 1500
       });
     }
+    setloading(false);
   };
   const filedocsHandler = (e) => {
     console.log("eeee", e?.target?.files[0]);
@@ -416,7 +420,6 @@ const AddUser = ({ history }) => {
                       max={12}
                       className="all-inputt w-100"
                     />
-                   
                   </div>
                 </div>
                 <div className="row">
@@ -430,7 +433,6 @@ const AddUser = ({ history }) => {
                       max={12}
                       className="all-inputt w-100"
                     />
-                   
                   </div>
                 </div>
                 <div className="row">
@@ -453,7 +455,6 @@ const AddUser = ({ history }) => {
                       max={12}
                       className="all-inputt w-100"
                     />
-                  
                   </div>
                 </div>
 
@@ -556,42 +557,46 @@ const AddUser = ({ history }) => {
 
                 <div className="row">
                   <div className="col-12">
-                    <button
-                      type="submit"
-                      className="general-btn mt-3 px-3"
-                      data-toggle="modal"
-                      data-target="#user-added"
-                      onClick={() => {
-                        image?.name?.length > 0 &&
-                        firstname?.length > 0 &&
-                        lastname?.length > 0 &&
-                        provider?.length > 0 &&
-                        InsuranceAddress1?.length > 0 &&
-                        InsuranceGroup1?.length > 0 &&
-                        InsurancePolicyNo1 > 0 &&
-                        InsuranceName2?.length > 0 &&
-                        InsuranceAddress2?.length > 0 &&
-                        InsuranceGroup2?.length > 0 &&
-                        InsurancePolicyNo2 > 0 &&
-                        InsuranceName1?.length > 0 &&
-                        companyname?.length > 0 &&
-                        policyno?.length > 0 &&
-                        fax?.length > 0 &&
-                        password?.length > 0 &&
-                        gender?.length > 0 &&
-                        address?.length > 0 &&
-                        email?.length > 0 &&
-                        // bloodtypee?.length > 0 &&
-                        phoneNumber?.length > 0
-                          ? addUserHandler()
-                          : Toasty(
-                              "error",
-                              `Please fill out all the required fields`
-                            );
-                      }}
-                    >
-                      Add
-                    </button>
+                    {!loading ? (
+                      <button
+                        type="submit"
+                        className="general-btn mt-3 px-3"
+                        data-toggle="modal"
+                        data-target="#user-added"
+                        onClick={() => {
+                          image?.name?.length > 0 &&
+                          firstname?.length > 0 &&
+                          lastname?.length > 0 &&
+                          provider?.length > 0 &&
+                          InsuranceAddress1?.length > 0 &&
+                          InsuranceGroup1?.length > 0 &&
+                          InsurancePolicyNo1 > 0 &&
+                          InsuranceName2?.length > 0 &&
+                          InsuranceAddress2?.length > 0 &&
+                          InsuranceGroup2?.length > 0 &&
+                          InsurancePolicyNo2 > 0 &&
+                          InsuranceName1?.length > 0 &&
+                          companyname?.length > 0 &&
+                          policyno?.length > 0 &&
+                          fax?.length > 0 &&
+                          password?.length > 0 &&
+                          gender?.length > 0 &&
+                          address?.length > 0 &&
+                          email?.length > 0 &&
+                          // bloodtypee?.length > 0 &&
+                          phoneNumber?.length > 0
+                            ? addUserHandler()
+                            : Toasty(
+                                "error",
+                                `Please fill out all the required fields`
+                              );
+                        }}
+                      >
+                        Add
+                      </button>
+                    ) : (
+                      <i className="fas fa-spinner fa-pulse"></i>
+                    )}
                   </div>
                 </div>
               </div>
