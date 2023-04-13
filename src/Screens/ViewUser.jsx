@@ -340,6 +340,147 @@ const ViewUser = ({ match }) => {
                           </div>
                         </div>
                         <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                            Phone Number 2
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.phone_number_2}</p>
+                          </div>
+                        </div>  <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                            Provider npl Number
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.provider_npl_number}</p>
+                          </div>
+                        </div>  <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                            Provider Address
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.provider_address}</p>
+                          </div>
+                        </div>  <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                            Provider Phone
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.provider_phone}</p>
+                          </div>
+                        </div>  <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                            Provider Fax
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.provider_fax}</p>
+                          </div>
+                        </div>  <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                            Provider Email
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.provider_email}</p>
+                          </div>
+                        </div>  <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                            Primary Insurance Name
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.primary_insurance_name}</p>
+                          </div>
+                        </div>  <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                            Primary Insurance State
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.primary_insurance_state}</p>
+                          </div>
+                        </div>  <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                            Primary Policy Number
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.primary_policy_number}</p>
+                          </div>
+                        </div>  <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                            Primary Group Number
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.priimary_group_number}</p>
+                          </div>
+                        </div>  <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                            Secondary Insurance Name
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.secondary_insurance_name}</p>
+                          </div>
+                        </div>  <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                            Secondary State Name
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.secondary_state_name}</p>
+                          </div>
+                        </div>  <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                            Secondary Policy Number
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.secondary_policy_number}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                            Insurance Group Number
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            <p className="label-value">{user?.insurance_group_number}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <label htmlFor className="my-label">
+                            Picture Features
+                            </label>
+                          </div>
+                          <div className="col-lg-6">
+                            {user?.pictures_features?.length>0 &&user?.pictures_features?.map(ss=>(
+                            <p className="label-value">{ss}</p>
+
+                            ))}
+                          </div>
+                        </div>
+                        <div className="row">
                           <div className="col-lg-12">
                             <label htmlFor className="my-label">
                               User Insuance Card

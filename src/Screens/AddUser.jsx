@@ -12,6 +12,8 @@ import { handleChange } from "../utils/InputNumberValidation";
 import { validateEmail } from "../utils/ValidateEmail";
 import InputPhone from "../components/InputPhone";
 import InputNumber from "../components/InputNumber";
+import ImageSelectDropzone from "../components/ImageSelectDropzone";
+import TagsInput from 'react-tagsinput'
 
 const AddUser = ({ history }) => {
   const [firstname, setfirstname] = useState("");
@@ -27,6 +29,7 @@ const AddUser = ({ history }) => {
   const [InsurancePolicyNo2, setInsurancePolicyNo2] = useState("");
   const [doc_schedule, setdoc_schedule] = useState("");
   const [loading, setloading] = useState(false);
+  const [pictures_features, setpictures_features] = useState([]);
 
   const [companyname, setcompanyname] = useState("");
   const [policyno, setpolicyno] = useState("");
@@ -40,14 +43,32 @@ const AddUser = ({ history }) => {
   const [phoneNumber, setphoneNumber] = useState("");
   const [birthDate, setbirthDate] = useState("");
   const [image, setimage] = useState("");
+  const [phone_number_2, setphone_number_2] = useState("");
+  const [provider_npl_number, setprovider_npl_number] = useState("");
+  const [provider_address, setprovider_address] = useState("");
+  const [provider_phone, setprovider_phone] = useState("");
+  const [provider_fax, setprovider_fax] = useState("");
+  const [provider_email, setprovider_email] = useState("");
+  const [primary_insurance_name, setprimary_insurance_name] = useState("");
+  const [primary_insurance_state, setprimary_insurance_state] = useState("");
+  const [primary_policy_number, setprimary_policy_number] = useState("");
+  const [priimary_group_number, setpriimary_group_number] = useState("");
+  const [secondary_insurance_name, setsecondary_insurance_name] = useState("");
+  const [secondary_state_name, setsecondary_state_name] = useState("");
+  const [secondary_policy_number, setsecondary_policy_number] = useState("");
+  const [insurance_group_number, setinsurance_group_number] = useState("");
+  const [data, setData] = useState({
+    project_images: []
+  });
+
   const [is_edit, setIsEdit] = useState(true);
   const dispatch = useDispatch();
 
   const adminLogin = useSelector((state) => state.adminLogin);
   const { adminInfo } = adminLogin;
   useEffect(() => {
-    console.log(birthDate, "birthDate");
-  }, [birthDate]);
+    console.log(pictures_features, "pictures_features");
+  }, [pictures_features]);
   const addUserHandler = async () => {
     // let bloodtype =
     //   bloodtypee == "A+"
@@ -87,10 +108,25 @@ const AddUser = ({ history }) => {
         formData.append("insured", insured);
         formData.append("fax", fax);
         formData.append("password", password);
-
+        formData.append("phone_number_2", phone_number_2);
+        formData.append("provider_npl_number", provider_npl_number);
+        formData.append("provider_address", provider_address);
+        formData.append("provider_phone", provider_phone);
+        formData.append("provider_fax", provider_fax);
+        formData.append("provider_email", provider_email);
+        formData.append("primary_insurance_name", primary_insurance_name);
+        formData.append("primary_insurance_state", primary_insurance_state);
+        formData.append("primary_policy_number", primary_policy_number);
+        formData.append("priimary_group_number", priimary_group_number);
+        formData.append("secondary_insurance_name", secondary_insurance_name);
+        formData.append("secondary_state_name", secondary_state_name);
+        formData.append("secondary_policy_number", secondary_policy_number);
+        formData.append("insurance_group_number", insurance_group_number);
         formData.append("gender", gender);
         formData.append("address", address);
         formData.append("email", email);
+        formData.append("pictures_features", pictures_features);
+
         // formData.append("bloodtype", JSON.stringify(bloodtype));
         formData.append("phoneNumber", phoneNumber);
         formData.append("birthDate", birthDate);
@@ -137,6 +173,11 @@ const AddUser = ({ history }) => {
     console.log("eeee", e?.target?.files[0]);
     setdoc_schedule(e?.target?.files[0]);
   };
+
+  const handleChange = (tags) => {
+    setpictures_features(tags)
+  }
+
   return (
     <div className="app-content content dashboard">
       <div className="content-wrapper content-wrapper-2">
@@ -160,12 +201,28 @@ const AddUser = ({ history }) => {
                 </div>
                 <form action>
                   <div className="main-over-box">
+                    <label htmlFor className="site-labell">
+                      Upload User Image
+                    </label>
                     <ImageSelector
                       setImage={setimage}
                       image={image}
                       is_edit={is_edit}
                     />
                   </div>
+
+                  {/* <ImageSelectDropzone
+                      max={5}
+                      setproductimage={setpictures_features}
+                      files={data?.project_images}
+                      setFiles={(project_images) =>
+                        setData({ ...data, project_images })
+                      }
+                      accept="image/*"
+                    />{" "}
+                    <p className="primary-text pt-2 pl-2">
+                      Upload Features Pictures
+                    </p> */}
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
@@ -535,6 +592,218 @@ const AddUser = ({ history }) => {
                     />
                   </div>
                 </div>
+                <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Home Address*
+                    </label>
+                    <input
+                      type="text"
+                      value={address}
+                      onChange={(e) => {
+                        setaddress(e.target.value);
+                      }}
+                      className="all-inputt w-100"
+                      placeholder="Enter Address"
+                    />
+                  </div>
+                </div> <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Phone Number 2*
+                    </label>
+                    <InputPhone value={phone_number_2} onChange={setphone_number_2} />
+
+                  </div>
+                </div> <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Provider npl Number*
+                    </label>
+                    <InputNumber
+                      value={provider_npl_number}
+                      onChange={setprovider_npl_number}
+                      max={12}
+                      className="all-inputt w-100"
+                    />
+                  </div>
+                </div> <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Provider Address*
+                    </label>
+                    <input
+                      type="text"
+                      value={provider_address}
+                      onChange={(e) => {
+                        setprovider_address(e.target.value);
+                      }}
+                      className="all-inputt w-100"
+                      placeholder="Enter Provider Address"
+                    />
+                  </div>
+                </div> <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Provider Phone*
+                    </label>
+                    <InputPhone value={provider_phone} onChange={setprovider_phone} />
+
+                  </div>
+                </div> <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Provider Fax*
+                    </label>
+                    <input
+                      type="text"
+                      value={provider_fax}
+                      onChange={(e) => {
+                        setprovider_fax(e.target.value);
+                      }}
+                      className="all-inputt w-100"
+                      placeholder="Enter Provider Fax"
+                    />
+                  </div>
+                </div> <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Provider Email*
+                    </label>
+                    <input
+                      type="email"
+                      value={provider_email}
+                      onChange={(e) => {
+                        setprovider_email(e.target.value);
+                      }}
+                      className="all-inputt w-100"
+                      placeholder="Enter Provider Email"
+                    />
+                  </div>
+                </div> <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Primary Insurance Name*
+                    </label>
+                    <input
+                      type="text"
+                      value={primary_insurance_name}
+                      onChange={(e) => {
+                        setprimary_insurance_name(e.target.value);
+                      }}
+                      className="all-inputt w-100"
+                      placeholder="Enter Primary Insurance Name"
+                    />
+                  </div>
+                </div> <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Primary Insurance State*
+                    </label>
+                    <input
+                      type="text"
+                      value={primary_insurance_state}
+                      onChange={(e) => {
+                        setprimary_insurance_state(e.target.value);
+                      }}
+                      className="all-inputt w-100"
+                      placeholder="Enter Primary Insurance State"
+                    />
+                  </div>
+                </div> <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Primary Policy Number*
+                    </label>
+                    <InputNumber
+                      value={primary_policy_number}
+                      onChange={setprimary_policy_number}
+                      max={12}
+                      className="all-inputt w-100"
+                    />
+                  </div>
+                </div> <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Primary Group Number*
+                    </label>
+                    <InputNumber
+                      value={priimary_group_number}
+                      onChange={setpriimary_group_number}
+                      max={12}
+                      className="all-inputt w-100"
+                    />
+                  </div>
+                </div> <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Secondary Insurance Name*
+                    </label>
+                    <input
+                      type="text"
+                      value={secondary_insurance_name}
+                      onChange={(e) => {
+                        setsecondary_insurance_name(e.target.value);
+                      }}
+                      className="all-inputt w-100"
+                      placeholder="Enter Secondary Insurance Name"
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Secondary State Name*
+                    </label>
+                    <input
+                      type="text"
+                      value={secondary_state_name}
+                      onChange={(e) => {
+                        setsecondary_state_name(e.target.value);
+                      }}
+                      className="all-inputt w-100"
+                      placeholder="Enter Secondary State Name"
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Secondary Policy Number*
+                    </label>
+                    <InputNumber
+                      value={secondary_policy_number}
+                      onChange={setsecondary_policy_number}
+                      max={12}
+                      className="all-inputt w-100"
+                    />
+                  </div>
+                </div>  <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Insurance Group Number*
+                    </label>
+                    <InputNumber
+                      value={insurance_group_number}
+                      onChange={setinsurance_group_number}
+                      max={12}
+                      className="all-inputt w-100"
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Picture Features*
+                    </label>
+                    <TagsInput
+                      style={{ color: 'black' }}
+                      value={pictures_features}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+
 
                 <div className="row ">
                   <div className="col-lg-4 mt-2">
@@ -564,32 +833,32 @@ const AddUser = ({ history }) => {
                         data-toggle="modal"
                         data-target="#user-added"
                         onClick={() => {
-                          image?.name?.length > 0 &&
-                          firstname?.length > 0 &&
-                          lastname?.length > 0 &&
-                          provider?.length > 0 &&
-                          InsuranceAddress1?.length > 0 &&
-                          InsuranceGroup1?.length > 0 &&
-                          InsurancePolicyNo1 > 0 &&
-                          InsuranceName2?.length > 0 &&
-                          InsuranceAddress2?.length > 0 &&
-                          InsuranceGroup2?.length > 0 &&
-                          InsurancePolicyNo2 > 0 &&
-                          InsuranceName1?.length > 0 &&
-                          companyname?.length > 0 &&
-                          policyno?.length > 0 &&
-                          fax?.length > 0 &&
-                          password?.length > 0 &&
-                          gender?.length > 0 &&
-                          address?.length > 0 &&
-                          email?.length > 0 &&
-                          // bloodtypee?.length > 0 &&
-                          phoneNumber?.length > 0
+                          // image?.name?.length > 0 &&
+                          // firstname?.length > 0 &&
+                          // lastname?.length > 0 &&
+                          // provider?.length > 0 &&
+                          // InsuranceAddress1?.length > 0 &&
+                          // InsuranceGroup1?.length > 0 &&
+                          // InsurancePolicyNo1 > 0 &&
+                          // InsuranceName2?.length > 0 &&
+                          // InsuranceAddress2?.length > 0 &&
+                          // InsuranceGroup2?.length > 0 &&
+                          // InsurancePolicyNo2 > 0 &&
+                          // InsuranceName1?.length > 0 &&
+                          // companyname?.length > 0 &&
+                          // policyno?.length > 0 &&
+                          // fax?.length > 0 &&
+                          // password?.length > 0 &&
+                          // gender?.length > 0 &&
+                          // address?.length > 0 &&
+                          email?.length > 0
+                            // bloodtypee?.length > 0 &&
+                            // phoneNumber?.length > 0
                             ? addUserHandler()
                             : Toasty(
-                                "error",
-                                `Please fill out all the required fields`
-                              );
+                              "error",
+                              `Please fill out all the required fields`
+                            );
                         }}
                       >
                         Add

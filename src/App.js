@@ -39,6 +39,7 @@ import ViewUser from "./Screens/ViewUser";
 import PrivateRoute from "./components/PrivateRoute";
 import CategoryManagement from "./Screens/CategoryManagement";
 import AddCategory from "./Screens/AddCategory";
+import EditCategory from "./Screens/EditCategory";
 
 
 const App = () => {
@@ -106,6 +107,8 @@ const App = () => {
         component={LabortaryDetails}
       />{" "}
       <PrivateRoute exact path="/PaymentDetail/:id" component={PaymentDetail} />{" "}
+      <PrivateRoute exact path="/EditCategory/:id" component={EditCategory} />{" "}
+
       <PrivateRoute exact path="/Profile" component={Profile} />{" "}
       <PrivateRoute exact path="/TestDetail" component={TestDetail} />{" "}
       <PrivateRoute exact path="/TestManagement" component={TestManagement} />{" "}

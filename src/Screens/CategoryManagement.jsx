@@ -251,12 +251,12 @@ const CategoryManagement = () => {
                                             <i className="fa fa-ellipsis-v" />
                                           </button>
                                           <div className="dropdown-menu">
-                                            {/* <Link
+                                            <Link
                                               className="dropdown-item"
-                                              to={`/EditCat/${cat?._id}`}
+                                              to={`/EditCategory/${cat?._id}`}
                                             >
                                               View
-                                            </Link> */}
+                                            </Link>
                                             <Link
                                               to="#"
                                               onClick={() =>

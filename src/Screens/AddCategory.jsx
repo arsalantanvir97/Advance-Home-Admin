@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import ImageSelector from "../components/ImageSelector";
@@ -6,15 +6,39 @@ import axios from "axios";
 import { baseURL } from "../utils/api";
 import Swal from "sweetalert2";
 import Toasty from "../utils/toast";
+import { MultiSelect } from "react-multi-select-component";
 
 const AddTest = ({ history }) => {
   const [name, setname] = useState("");
   const [loading, setloading] = useState(false);
+  const [subcategory, setsubcategory] = useState([]);
+  const [options, setoptions] = useState([]);
 
   const dispatch = useDispatch();
 
   const adminLogin = useSelector((state) => state.adminLogin);
   const { adminInfo } = adminLogin;
+  useEffect(() => {
+    handleGetCategories();
+  }, []);
+
+  const handleGetCategories = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${adminInfo.token}`
+        }
+      };
+      const res = await axios.get(`${baseURL}/category/getAllCategory`, config);
+      console.log("resssssss", res);
+      res?.data?.category?.length > 0 &&
+        res?.data?.category?.map((cour) =>
+          options?.push({ label: cour?.name, value: cour?._id })
+        );
+    } catch (error) { }
+  };
+
+
 
   const addCategoryHadndler = async () => {
     try {
@@ -29,6 +53,7 @@ const AddTest = ({ history }) => {
         { name },
         config
       );
+
       setloading(false);
 
       console.log("res", res);
@@ -67,7 +92,7 @@ const AddTest = ({ history }) => {
                     <Link to="/TestManagement">
                       <h1 className="ml-1 main-heading">
                         <i className="fas fa-angle-left mr-1" />
-                        Category Details Add
+                        Category Add
                       </h1>
                     </Link>
                   </div>
@@ -92,6 +117,19 @@ const AddTest = ({ history }) => {
                     />
                   </div>
                 </div>
+                <div className="row">
+                  <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell">
+                      Subcategory:
+                    </label>
+                    <MultiSelect
+                      options={options}
+                      value={subcategory}
+                      onChange={setsubcategory}
+                      labelledBy="Select"
+                    />
+                  </div>
+                </div>
 
                 <div className="row">
                   <div className="col-12">
@@ -102,9 +140,9 @@ const AddTest = ({ history }) => {
                           name?.length > 0
                             ? addCategoryHadndler()
                             : Toasty(
-                                "error",
-                                `Please fill out all the required fields`
-                              );
+                              "error",
+                              `Please fill out all the required fields`
+                            );
                         }}
                       >
                         Add

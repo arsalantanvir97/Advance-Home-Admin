@@ -7,6 +7,7 @@ import store from "./store";
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-tagsinput/react-tagsinput.css' 
 import { ToastContainer } from "react-toastify";
+import 'react-tagsinput/react-tagsinput.css' // If using WebPack and style-loader.
 
 ReactDOM.render(
   <Provider store={store}>
