@@ -65,6 +65,7 @@ const EditCategory = ({ history ,match}) => {
 
 
   const editCategoryHadndler = async () => {
+    let subcat=[]
     try {
       const config = {
         headers: {
@@ -72,9 +73,13 @@ const EditCategory = ({ history ,match}) => {
         }
       };
       setloading(true);
+      console.log('subcategory',subcategory)
+      subcategory?.length > 0 &&
+      subcategory?.map((sel) => subcat?.push(sel?.value));
+  
       const res = await axios.post(
         `${baseURL}/category/editcategory`,
-        { name,id:match?.params?.id,subcategory },
+        { name,id:match?.params?.id,subcategory:subcat },
         config
       );
 

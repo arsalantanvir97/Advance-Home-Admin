@@ -49,14 +49,6 @@ const AddUser = ({ history }) => {
   const [provider_phone, setprovider_phone] = useState("");
   const [provider_fax, setprovider_fax] = useState("");
   const [provider_email, setprovider_email] = useState("");
-  const [primary_insurance_name, setprimary_insurance_name] = useState("");
-  const [primary_insurance_state, setprimary_insurance_state] = useState("");
-  const [primary_policy_number, setprimary_policy_number] = useState("");
-  const [priimary_group_number, setpriimary_group_number] = useState("");
-  const [secondary_insurance_name, setsecondary_insurance_name] = useState("");
-  const [secondary_state_name, setsecondary_state_name] = useState("");
-  const [secondary_policy_number, setsecondary_policy_number] = useState("");
-  const [insurance_group_number, setinsurance_group_number] = useState("");
   const [data, setData] = useState({
     project_images: []
   });
@@ -114,14 +106,6 @@ const AddUser = ({ history }) => {
         formData.append("provider_phone", provider_phone);
         formData.append("provider_fax", provider_fax);
         formData.append("provider_email", provider_email);
-        formData.append("primary_insurance_name", primary_insurance_name);
-        formData.append("primary_insurance_state", primary_insurance_state);
-        formData.append("primary_policy_number", primary_policy_number);
-        formData.append("priimary_group_number", priimary_group_number);
-        formData.append("secondary_insurance_name", secondary_insurance_name);
-        formData.append("secondary_state_name", secondary_state_name);
-        formData.append("secondary_policy_number", secondary_policy_number);
-        formData.append("insurance_group_number", insurance_group_number);
         formData.append("gender", gender);
         formData.append("address", address);
         formData.append("email", email);
@@ -680,117 +664,9 @@ const AddUser = ({ history }) => {
                       placeholder="Enter Provider Email"
                     />
                   </div>
-                </div> <div className="row">
-                  <div className="col-lg-4 mt-2">
-                    <label htmlFor className="site-labell">
-                      Primary Insurance Name*
-                    </label>
-                    <input
-                      type="text"
-                      value={primary_insurance_name}
-                      onChange={(e) => {
-                        setprimary_insurance_name(e.target.value);
-                      }}
-                      className="all-inputt w-100"
-                      placeholder="Enter Primary Insurance Name"
-                    />
-                  </div>
-                </div> <div className="row">
-                  <div className="col-lg-4 mt-2">
-                    <label htmlFor className="site-labell">
-                      Primary Insurance State*
-                    </label>
-                    <input
-                      type="text"
-                      value={primary_insurance_state}
-                      onChange={(e) => {
-                        setprimary_insurance_state(e.target.value);
-                      }}
-                      className="all-inputt w-100"
-                      placeholder="Enter Primary Insurance State"
-                    />
-                  </div>
-                </div> <div className="row">
-                  <div className="col-lg-4 mt-2">
-                    <label htmlFor className="site-labell">
-                      Primary Policy Number*
-                    </label>
-                    <InputNumber
-                      value={primary_policy_number}
-                      onChange={setprimary_policy_number}
-                      max={12}
-                      className="all-inputt w-100"
-                    />
-                  </div>
-                </div> <div className="row">
-                  <div className="col-lg-4 mt-2">
-                    <label htmlFor className="site-labell">
-                      Primary Group Number*
-                    </label>
-                    <InputNumber
-                      value={priimary_group_number}
-                      onChange={setpriimary_group_number}
-                      max={12}
-                      className="all-inputt w-100"
-                    />
-                  </div>
-                </div> <div className="row">
-                  <div className="col-lg-4 mt-2">
-                    <label htmlFor className="site-labell">
-                      Secondary Insurance Name*
-                    </label>
-                    <input
-                      type="text"
-                      value={secondary_insurance_name}
-                      onChange={(e) => {
-                        setsecondary_insurance_name(e.target.value);
-                      }}
-                      className="all-inputt w-100"
-                      placeholder="Enter Secondary Insurance Name"
-                    />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-lg-4 mt-2">
-                    <label htmlFor className="site-labell">
-                      Secondary State Name*
-                    </label>
-                    <input
-                      type="text"
-                      value={secondary_state_name}
-                      onChange={(e) => {
-                        setsecondary_state_name(e.target.value);
-                      }}
-                      className="all-inputt w-100"
-                      placeholder="Enter Secondary State Name"
-                    />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-lg-4 mt-2">
-                    <label htmlFor className="site-labell">
-                      Secondary Policy Number*
-                    </label>
-                    <InputNumber
-                      value={secondary_policy_number}
-                      onChange={setsecondary_policy_number}
-                      max={12}
-                      className="all-inputt w-100"
-                    />
-                  </div>
-                </div>  <div className="row">
-                  <div className="col-lg-4 mt-2">
-                    <label htmlFor className="site-labell">
-                      Insurance Group Number*
-                    </label>
-                    <InputNumber
-                      value={insurance_group_number}
-                      onChange={setinsurance_group_number}
-                      max={12}
-                      className="all-inputt w-100"
-                    />
-                  </div>
-                </div>
+                </div> 
+              
+             
                 <div className="row">
                   <div className="col-lg-4 mt-2">
                     <label htmlFor className="site-labell">
