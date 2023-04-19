@@ -62,6 +62,8 @@ const AddUser = ({ history }) => {
     console.log(pictures_features, "pictures_features");
   }, [pictures_features]);
   const addUserHandler = async () => {
+    const { project_images } = data;
+
     // let bloodtype =
     //   bloodtypee == "A+"
     //     ? { type: "A", sign: "+" }
@@ -109,7 +111,9 @@ const AddUser = ({ history }) => {
         formData.append("gender", gender);
         formData.append("address", address);
         formData.append("email", email);
-        formData.append("pictures_features", pictures_features);
+        project_images.forEach((reciept) => formData.append("pictures_features", reciept));
+
+        // formData.append("pictures_features", pictures_features);
 
         // formData.append("bloodtype", JSON.stringify(bloodtype));
         formData.append("phoneNumber", phoneNumber);
@@ -195,7 +199,7 @@ const AddUser = ({ history }) => {
                     />
                   </div>
 
-                  {/* <ImageSelectDropzone
+                  <ImageSelectDropzone
                       max={5}
                       setproductimage={setpictures_features}
                       files={data?.project_images}
@@ -206,7 +210,7 @@ const AddUser = ({ history }) => {
                     />{" "}
                     <p className="primary-text pt-2 pl-2">
                       Upload Features Pictures
-                    </p> */}
+                    </p>
                   <div className="row">
                     <div className="col-lg-4 mt-2">
                       <label htmlFor className="site-labell">
@@ -667,7 +671,7 @@ const AddUser = ({ history }) => {
                 </div> 
               
              
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-lg-4 mt-2">
                     <label htmlFor className="site-labell">
                       Picture Features*
@@ -678,7 +682,7 @@ const AddUser = ({ history }) => {
                       onChange={handleChange}
                     />
                   </div>
-                </div>
+                </div> */}
 
 
                 <div className="row ">
