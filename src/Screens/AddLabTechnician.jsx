@@ -136,10 +136,9 @@ const AddLabTechnician = ({ history }) => {
                       </h1>
                     </Link>
                   </div>
-                  <div className="col-lg-6 text-right mt-lg-0 mt-2">
-                    <h3 className="mr-no">Lab Techncian.Id: 1246</h3>
-                  </div>
+                  
                 </div>
+                <br/><br/>
                 <form>
                   <div className="row">
                     <div className="col-lg-12">
@@ -167,7 +166,7 @@ const AddLabTechnician = ({ history }) => {
                       </div>
                     </div> */}
                   <div className="row">
-                    <div className="col-lg-4 mt-2">
+                    <div className="col-lg-6 mt-2">
                       <label htmlFor className="site-labell">
                         First Name*
                       </label>
@@ -179,7 +178,7 @@ const AddLabTechnician = ({ history }) => {
                         onChange={(e) => setfirstName(e.target.value)}
                       />
                     </div>
-                    <div className="col-lg-4 mt-2">
+                    <div className="col-lg-6 mt-2">
                       <label htmlFor className="site-labell">
                         Last Name*
                       </label>
@@ -193,7 +192,7 @@ const AddLabTechnician = ({ history }) => {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-lg-4 mt-2">
+                    <div className="col-lg-6 mt-2">
                       <label htmlFor className="site-labell">
                         Email*
                       </label>
@@ -205,7 +204,50 @@ const AddLabTechnician = ({ history }) => {
                         onChange={(e) => setemail(e.target.value)}
                       />
                     </div>
-                    <div className="col-lg-4 mt-2">
+                    <div className="col-lg-6 mt-2 phoneInput">
+                      <label htmlFor className="site-labell">
+                        Phone*
+                      </label>
+                      <InputPhone
+                        value={phoneNumber}
+                        onChange={setphoneNumber}
+                      />
+                      </div>
+
+                      <div className="col-lg-6 mt-2">
+                      <label htmlFor className="site-labell">
+                        Password*
+                      </label>
+                      <input
+                        type="password"
+                        className="all-inputt w-100"
+                        placeholder="*******"
+                        value={password}
+                        onChange={(e) => setpassword(e.target.value)}
+                      />
+                    </div>
+
+
+
+                    
+                  
+                  </div>
+                  <br/>
+                  <hr/>
+                  <div className="row">
+                  <div className="col-lg-6 mt-1">
+                      <label htmlFor className="site-labell selectBox">
+                        Qualified
+                      </label>
+                      <MultiSelect
+                        options={options}
+                        value={qualified}
+                        onChange={setqualified}
+                        labelledBy="Qualified"
+                      />
+                    </div>
+                   
+                  <div className="col-lg-6 mt-2">
                       <label htmlFor className="site-labell">
                         Qualification*
                       </label>
@@ -216,27 +258,8 @@ const AddLabTechnician = ({ history }) => {
                         onChange={handleChange}
                       />
                     </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-4 mt-2">
-                      <label htmlFor className="site-labell">
-                        Phone*
-                      </label>
-                      <InputPhone
-                        value={phoneNumber}
-                        onChange={setphoneNumber}
-                      />
-                      {/* <input
-                        type="number"
-                        min={0}
-                        maxlength="11"
-                        className="all-inputt w-100"
-                        placeholder="Enter Phone"
-                        value={phoneNumber}
-                        onChange={(e) => handleChange(e, setphoneNumber)}
-                      /> */}
-                    </div>
-                    <div className="col-lg-4 mt-2">
+
+                    <div className="col-lg-6 mt-2">
                       <label htmlFor className="site-labell">
                         Specialization*
                       </label>
@@ -249,8 +272,12 @@ const AddLabTechnician = ({ history }) => {
                       />
                     </div>
                   </div>
+<br/>
+
+<hr/>
+
                   <div className="row">
-                    <div className="col-lg-4 mt-2">
+                    <div className="col-lg-6 mt-2">
                       <label htmlFor className="site-labell">
                         Car/Bike*
                       </label>
@@ -262,23 +289,11 @@ const AddLabTechnician = ({ history }) => {
                         onChange={(e) => setvehicle(e.target.value)}
                       />
                     </div>
-                    <div className="col-lg-4 mt-2">
+                   
+
+                    <div className="col-lg-6 mt-2">
                       <label htmlFor className="site-labell">
-                        Password*
-                      </label>
-                      <input
-                        type="password"
-                        className="all-inputt w-100"
-                        placeholder="*******"
-                        value={password}
-                        onChange={(e) => setpassword(e.target.value)}
-                      />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-4 mt-2">
-                      <label htmlFor className="site-labell">
-                        Modal*
+                        Model*
                       </label>
                       <InputNumber
                         value={modal}
@@ -288,20 +303,10 @@ const AddLabTechnician = ({ history }) => {
                       />
                     </div>
 
-                    <div className="col-lg-4 mt-1">
-                      <label htmlFor className="site-labell">
-                        Qualified
-                      </label>
-                      <MultiSelect
-                        options={options}
-                        value={qualified}
-                        onChange={setqualified}
-                        labelledBy="Qualified"
-                      />
-                    </div>
+                  
                   </div>{" "}
                   <div className="row">
-                    <div className="col-lg-4 mt-2">
+                    <div className="col-lg-6 mt-2">
                       <label htmlFor className="site-labell">
                         Color*
                       </label>

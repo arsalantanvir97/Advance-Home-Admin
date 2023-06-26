@@ -5,8 +5,10 @@ export let imageURL;
 
 if (window.location.hostname == "localhost") {
    
-  baseURL = "https://localhost:5092/api";
-  imageURL = "https://localhost:5092/";
+  // baseURL = "https://localhost:5092/api";
+  // imageURL = "https://localhost:5092/";
+  baseURL = "http://localhost:5092/api";
+  imageURL = "http://localhost:5092/";
 } else {
   baseURL = "https://dev74.onlinetestingserver.com:5092/api";
   imageURL = "https://dev74.onlinetestingserver.com:5092/";

@@ -98,6 +98,13 @@ const LabTechnician = () => {
                     <h1 className="ml-1 main-heading">Lab Technician</h1>
                   </div>
                   <div className="col-lg-6 text-right">
+                  <Link
+                      to="/LabTechnicianTrack"
+                      className="general-btn d-inline-block"
+                    >
+                      Track Technitians
+                    </Link>
+                    &emsp;
                     <Link
                       to="/AddLabTechnician"
                       className="general-btn d-inline-block"

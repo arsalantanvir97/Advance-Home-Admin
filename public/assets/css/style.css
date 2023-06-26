@@ -6754,7 +6754,7 @@ td.bio-fields.bio-fields {
 /*================================================================ My Css Start Here =============================================================*/
 
 .general-select {
-  background: url(../../images/down.png) 97% center no-repeat;
+  background-color: white;
   font-size: 14px;
   color: #999999;
   font-weight: 500;

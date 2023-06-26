@@ -403,7 +403,7 @@ const BookingDetail = ({ match, history }) => {
                               <div className="row">
                                 <div className="col-12 mt-2">
                                   <Link
-                                    to="#_"
+                                    to="/TrackTechnician"
                                     className="general-btn d-inline-block px-5"
                                   >
                                     Track
@@ -1474,15 +1474,17 @@ const BookingDetail = ({ match, history }) => {
                 <div className="ss-wrapper">
                   <div className="ss-content">
                     {labtechnician?.length > 0 &&
-                      labtechnician?.map((lab, index) => (
-                        <div
+                      labtechnician?.map((lab, index) => {
+
+                        console.log(lab,"lab")
+                        return( <div
                           className="d-flex justify-content-between align-items-center  px-1 mt-1"
                           onClick={() => setselectedlabtechnicianHandler(lab)}
                         >
                           <div className="d-flex">
                             <img
                               src={
-                                lab?.userImage && lab?.userImage !== null
+                                (lab?.userImage && lab?.userImage !== null)
                                   ? `${imageURL}${lab?.userImage}`
                                   : "images/online-avatar.png"
                               }
@@ -1491,9 +1493,9 @@ const BookingDetail = ({ match, history }) => {
                             />
                             <div className="text-left">
                               <h6 className="doctor-heading">
-                                {lab?.fullname}
+                                {lab?.firstName}  {lab?.lastName}
                               </h6>
-                              <h6 className="doctor-heading">ID. {lab?._id}</h6>
+                              <h6 className="doctor-heading">ID:  {lab?._id}</h6>
                             </div>
                           </div>
                           <p>
@@ -1506,8 +1508,9 @@ const BookingDetail = ({ match, history }) => {
                             />
                             <label htmlFor="test5" />
                           </p>
-                        </div>
-                      ))}
+                        </div>);
+                       
+})}
                   </div>
                 </div>
                 <div

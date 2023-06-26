@@ -97,9 +97,7 @@ const AddLabortary = ({ history }) => {
                       </h1>
                     </Link>
                   </div>
-                  <div className="col-lg-6 text-right mt-lg-0 mt-2">
-                    <h3 className="mr-no">Lab.Id: 1246</h3>
-                  </div>
+                 
                 </div>
                 <form>
                   <div className="row">
@@ -155,13 +153,13 @@ const AddLabortary = ({ history }) => {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-lg-4 mt-2">
+                    <div className="col-lg-4 mt-2 phoneInput">
                       <label htmlFor className="site-labell">
                         Phone*
                       </label>
                       <InputPhone value={phone} onChange={setphone} />
                     </div>
-                    <div className="col-lg-4 mt-2">
+                    <div className="col-lg-4 mt-2 phoneInput">
                       <label htmlFor className="site-labell">
                         Lab Manager Contact*
                       </label>
@@ -185,7 +183,7 @@ const AddLabortary = ({ history }) => {
                       />
                     </div>
                     <div className="col-lg-4 mt-2">
-                      <label htmlFor className="site-labell">
+                      <label htmlFor className="site-labell ">
                         Fax No*
                       </label>
                       <InputNumber

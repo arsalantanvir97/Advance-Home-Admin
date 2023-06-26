@@ -24,6 +24,7 @@ import Feedback from "./Screens/Feedback";
 import FeedbackDetail from "./Screens/FeedbackDetail";
 import LabTechnician from "./Screens/LabTechnician";
 import LabTechnicianDetails from "./Screens/LabTechnicianDetails";
+import LabTechnicianTrack from "./Screens/LabTechnicianTrack";
 import Labortaries from "./Screens/Labortaries";
 import LabortaryDetails from "./Screens/LabortaryDetails";
 import Login from "./Screens/Login";
@@ -40,7 +41,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import CategoryManagement from "./Screens/CategoryManagement";
 import AddCategory from "./Screens/AddCategory";
 import EditCategory from "./Screens/EditCategory";
-
+import SingleTrack from "./Screens/SingleTrack"
 
 const App = () => {
   return (
@@ -100,6 +101,19 @@ const App = () => {
         path="/LabTechnicianDetails/:id"
         component={LabTechnicianDetails}
       />{" "}
+
+<PrivateRoute
+        exact
+        path="/LabTechnicianTrack"
+        component={LabTechnicianTrack}
+      />{" "}
+
+<PrivateRoute
+        exact
+        path="/TrackTechnician"
+        component={SingleTrack}
+      />{" "}
+
       <PrivateRoute exact path="/Labortaries" component={Labortaries} />{" "}
       <PrivateRoute
         exact

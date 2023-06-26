@@ -183,7 +183,7 @@ const PaymentDetail = ({ match, history }) => {
                           <div className="row">
                             <div className="col-12 mt-2">
                               <Link
-                                to="#_"
+                                to="/TrackTechnician"
                                 className="general-btn d-inline-block px-5"
                               >
                                 Track

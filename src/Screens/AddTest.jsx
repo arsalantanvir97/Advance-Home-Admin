@@ -119,6 +119,20 @@ const AddTest = ({ history }) => {
                 </div>
                 <div className="row">
                   <div className="col-lg-4 mt-2">
+                    <label htmlFor className="site-labell d-block">
+                      Image:
+                    </label>
+                    <div className="main-over-box">
+                      <ImageSelector
+                        setImage={setimage}
+                        image={image}
+                        is_edit={is_edit}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-4 mt-2">
                     <label htmlFor className="site-labell">
                       Test Name:
                     </label>
@@ -132,8 +146,8 @@ const AddTest = ({ history }) => {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-lg-4 mt-2">
-                    <label htmlFor className="site-labell">
+                  <div className="col-lg-4 mt-2 Date-inputt">
+                    <label htmlFor className="site-labell d-block">
                       Date Added:
                     </label>
                     <DatePicker
@@ -144,20 +158,7 @@ const AddTest = ({ history }) => {
                     />
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-lg-4 mt-2">
-                    <label htmlFor className="site-labell d-block">
-                      Image:
-                    </label>
-                    <div className="main-over-box">
-                      <ImageSelector
-                        setImage={setimage}
-                        image={image}
-                        is_edit={is_edit}
-                      />
-                    </div>
-                  </div>
-                </div>
+                
                 <div className="row">
                   <div className="col-lg-4 mt-2">
                     <label htmlFor className="site-labell">
