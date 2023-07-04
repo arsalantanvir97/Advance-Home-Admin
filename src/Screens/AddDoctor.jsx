@@ -18,7 +18,9 @@ const AddDoctor = ({ history }) => {
   const [companyname, setcompanyname] = useState("");
   const [fax, setfax] = useState("");
   const [npi, setnpi] = useState("");
-  const [hipa, sethipa] = useState(true);
+  const [hipa, sethipa] = useState(false);
+  const [hipaEmail,setHipaEmail]= useState("");
+  const [icd,setIcd] = useState("")
   // const [insurance, setinsurance] = useState(true);
 
   const [qualification, setqualification] = useState("");
@@ -137,20 +139,7 @@ const AddDoctor = ({ history }) => {
                     </div>
                   </div>
 
-                  <div className="row">
-                    <div className="col-lg-6 mt-2">
-                      <label htmlFor className="site-labell">
-                        Practice Name*
-                      </label>
-                      <input
-                        type="text"
-                        className="all-inputt w-100"
-                        placeholder="Enter Practice Name"
-                        value={practiceName}
-                        onChange={(e) => setpracticeName(e.target.value)}
-                      />
-                    </div>
-                  </div>
+                 
 
 
                   <div className="row">
@@ -199,6 +188,36 @@ const AddDoctor = ({ history }) => {
 
                   <div className="row">
                     <div className="col-lg-6 mt-2">
+                      <label htmlFor className="site-labell">
+                        Company Name*
+                      </label>
+                      <input
+                        type="text"
+                        className="all-inputt w-100"
+                        placeholder="Enter Company Name"
+                        value={companyname}
+                        onChange={(e) => setcompanyname(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-lg-6 mt-2">
+                      <label htmlFor className="site-labell">
+                        Practice Name*
+                      </label>
+                      <input
+                        type="text"
+                        className="all-inputt w-100"
+                        placeholder="Enter Practice Name"
+                        value={practiceName}
+                        onChange={(e) => setpracticeName(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-lg-6 mt-2">
                       <label htmlFor className="site-labell d-block">
                         Select HIPAA*
                       </label>
@@ -230,6 +249,40 @@ const AddDoctor = ({ history }) => {
                   </div>
 
 
+                 {hipa && <div className="row">
+                    <div className="col-lg-6 mt-0">
+                      <label htmlFor className="site-labell">
+                        HIPA Email
+                      </label>
+                      <input
+                        type="text"
+                        className="all-inputt w-100"
+                        placeholder="Enter Hipa Email"
+                        value={hipaEmail}
+                        onChange={(e) => setHipaEmail(e.target.value)}
+                      />
+                    </div>
+                  </div>}
+
+                
+
+
+                    <div className="row">
+                    <div className="col-lg-6 mt-2">
+                      <label htmlFor className="site-labell">
+                      ICD-10 *
+                      </label>
+                      <input
+                        type="text"
+                        className="all-inputt w-100"
+                        placeholder="Enter ICD-10 No"
+                        value={icd}
+                        onChange={(e) => setIcd(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+
                   <div className="row">
                     <div className="col-lg-6 mt-2 phoneInput">
                       <label htmlFor className="site-labell">
@@ -255,36 +308,26 @@ const AddDoctor = ({ history }) => {
                     </div>
                   </div>
 
+                  <br/>
+
                   
                   <div className="row">
-                    <div className="col-lg-6 mt-2">
+                    <div className="col-lg-6 mt-0">
                       <label htmlFor className="site-labell">
-                        Fax No*
-                      </label>
-                      <InputNumber
-                        value={fax}
-                        onChange={setfax}
-                        max={5}
-                        className="all-inputt w-100"
-                      />
-                    </div>
-                  </div>
-
-
-                  <div className="row">
-                    <div className="col-lg-6 mt-2">
-                      <label htmlFor className="site-labell">
-                        Company Name*
+                        Email
                       </label>
                       <input
                         type="text"
                         className="all-inputt w-100"
-                        placeholder="Enter Company Name"
-                        value={companyname}
-                        onChange={(e) => setcompanyname(e.target.value)}
+                        placeholder="Enter Email"
+                        value={email}
+                        onChange={(e) => setemail(e.target.value)}
                       />
                     </div>
                   </div>
+
+
+                
 
                   
 

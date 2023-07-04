@@ -209,16 +209,16 @@ const ViewDoctor = ({ match, history }) => {
                               </p>
                             </div>
                           </div>
-                          {/* <div className="row">
-                          <div className="col-lg-6">
+                          {doctor?.hipa == true && doctor?.hipaEmail && <div className="row">
+                          <div className="col-lg-6 mb-2">
                             <label htmlFor className="my-label">
-                              Insured
+                              HIPAA Email
                             </label>
                           </div>
                           <div className="col-lg-6">
-                            <p className="label-value">{doctor?.insurance==true? 'Yes': 'No'}</p>
+                            <p className="label-value">{doctor?.hipaEmail}</p>
                           </div>
-                        </div> */}
+                        </div>}
                           <div className="row">
                             <div className="col-lg-6">
                               <label htmlFor className="my-label">

@@ -30,7 +30,7 @@ const AddUser = ({ history }) => {
   const [doc_schedule, setdoc_schedule] = useState("");
   const [loading, setloading] = useState(false);
   const [pictures_features, setpictures_features] = useState([]);
-
+const [icd,setIcd]= useState("")
   const [companyname, setcompanyname] = useState("");
   const [policyno, setpolicyno] = useState("");
   const [insured, setinsured] = useState(true);
@@ -88,6 +88,7 @@ const AddUser = ({ history }) => {
         formData.append("lastname", lastname);
         formData.append("provider", provider);
         formData.append("doc_schedule", doc_schedule);
+        formData.append("icd",icd);
 
         formData.append("companyname", companyname);
         formData.append("InsuranceName1", InsuranceName1);
@@ -366,6 +367,23 @@ const AddUser = ({ history }) => {
                   </div>
                 </div>
               
+
+                <div className="row">
+                    <div className="col-lg-6 mt-2">
+                      <label htmlFor className="site-labell">
+                      ICD-10 *
+                      </label>
+                      <input
+                        type="text"
+                        className="all-inputt w-100"
+                        placeholder="Enter ICD-10 No"
+                        value={icd}
+                        onChange={(e) => setIcd(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+
                  
 
 
@@ -441,11 +459,15 @@ const AddUser = ({ history }) => {
                     <label htmlFor className="site-labell">
                       Primary Insurance Policy No*
                     </label>
-                    <InputNumber
-                      value={InsurancePolicyNo1}
-                      onChange={setInsurancePolicyNo1}
-                      max={12}
+                    <input
+                      type="text"
                       className="all-inputt w-100"
+                      placeholder="Enter Primary Insurance No"
+                      value={InsurancePolicyNo1}
+                      onChange={(e) => {
+                        setInsurancePolicyNo1(e.target.value);
+                      }}
+                    
                     />
                   </div>
                 </div>
@@ -523,16 +545,20 @@ const AddUser = ({ history }) => {
                     <label htmlFor className="site-labell">
                       Secondary Insurance Policy No*
                     </label>
-                    <InputNumber
-                      value={InsurancePolicyNo2}
-                      onChange={setInsurancePolicyNo2}
-                      max={12}
+                    <input
+                      type="text"
                       className="all-inputt w-100"
+                      placeholder="Enter Secondary Insurance No"
+                      value={InsurancePolicyNo2}
+                      onChange={(e) => {
+                        setInsurancePolicyNo2(e.target.value);
+                      }}
+                
                     />
                   </div>
                 </div>
 
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-lg-6 mt-2">
                     <label htmlFor className="site-labell">
                       Policy No*
@@ -544,7 +570,7 @@ const AddUser = ({ history }) => {
                       className="all-inputt w-100"
                     />
                   </div>
-                </div>
+                </div> */}
 
                
 
